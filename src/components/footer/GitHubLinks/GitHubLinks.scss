@@ -1,0 +1,28 @@
+@import '../../../styles/constants';
+
+.github-links {
+  &__list {
+    display: flex;
+    column-gap: 5px;
+
+    list-style: none;
+  }
+
+  &__contact-icon {
+    &:hover {
+      fill: $hover-footer-icon;
+    }
+
+    &--purple {
+      fill: $primary;
+    }
+
+    &--red {
+      fill: $red;
+    }
+
+    &--pink {
+      fill: $pink;
+    }
+  }
+}

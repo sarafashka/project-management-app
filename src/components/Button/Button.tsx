@@ -1,12 +1,12 @@
 import React from 'react';
-import './Button.scss';
+import styles from './Button.module.scss';
 
 type ButtonType = 'button' | 'submit' | 'reset';
 
 interface ButtonProps {
   className?: string;
   isDisabled?: boolean;
-  handleClick?: React.MouseEventHandler<HTMLButtonElement>;
+  onClick?: React.MouseEventHandler<HTMLButtonElement>;
   type?: ButtonType;
   children: React.ReactNode;
 }
@@ -14,15 +14,15 @@ interface ButtonProps {
 const Button: React.FC<ButtonProps> = ({
   className = '',
   isDisabled = false,
-  handleClick,
+  onClick,
   type = 'button',
   children,
 }) => {
   return (
     <button
-      className={`button ${className}`}
+      className={`${styles.button} ${className}`}
       disabled={isDisabled}
-      onClick={handleClick}
+      onClick={onClick}
       type={type}
     >
       {children}

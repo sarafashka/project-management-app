@@ -1,0 +1,47 @@
+.page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.frame {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  width: 600px;
+  padding: 32px;
+  border-radius: 16px;
+  background: #ffffff;
+  box-shadow: 0 4.69041px 150.093px rgba(0, 0, 0, 0.16);
+  gap: 48px;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+}
+
+.forms {
+  width: 100%;
+}
+
+.button {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 150%;
+  letter-spacing: 0.5px;
+  color: #111111;
+  border: 0;
+  background: transparent;
+  transition: 0.3s;
+}
+
+.deactivated {
+  opacity: 0.25;
+
+  &:hover {
+    opacity: 0.6;
+  }
+}

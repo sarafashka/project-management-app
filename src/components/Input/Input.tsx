@@ -1,15 +1,17 @@
 import React, { InputHTMLAttributes } from 'react';
+import styles from './Input.module.scss';
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label: string;
-  reactHookFormProps?: {};
+  reactHookFormProps?: Record<string, unknown>;
+  className?: string;
 }
 
-const Input: React.FC<InputProps> = ({ label, reactHookFormProps, ...rest }) => {
+const Input: React.FC<InputProps> = ({ label, className = '', reactHookFormProps, ...rest }) => {
   return (
-    <label>
+    <label className={`${styles.label} ${className}`}>
       {label}
-      <input {...rest} {...reactHookFormProps} />
+      <input className={styles.input} {...rest} {...reactHookFormProps} />
     </label>
   );
 };

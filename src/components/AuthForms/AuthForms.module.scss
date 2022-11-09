@@ -1,0 +1,27 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.buttons {
+  margin-top: 16px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.sign,
+.back {
+  background: #0a2689;
+  color: #ffffff;
+  border: 0;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.back {
+  color: #aaaaaa;
+  background: transparent;
+}
+
+

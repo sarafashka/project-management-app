@@ -1,0 +1,27 @@
+.auth-page {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.forms-frame {
+  width: 600px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 32px;
+  gap: 48px;
+  box-shadow: 0 4.69041px 150.093px rgba(0, 0, 0, 0.16);
+  border-radius: 16px;
+}
+
+.buttons-block {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+}
+
+.auth-forms {
+  width: 100%;
+}

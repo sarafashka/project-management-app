@@ -9,7 +9,7 @@ import ErrorBoundary from '../components/ErrorBoundary/ErrorBoundary';
 const AppRoutes = [
   {
     path: '/',
-    component: <Welcome />,
+    component: <Layout />,
   },
   {
     path: '/auth',

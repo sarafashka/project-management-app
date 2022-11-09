@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useForm } from 'react-hook-form';
+import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import Input from '../Input/Input';
 import Button from '../Button/Button';
 import styles from './AuthForms.module.scss';
@@ -12,14 +12,29 @@ const LoginForm: React.FC = () => {
     reset,
   } = useForm();
 
-  useEffect(() => {
-    reset();
-  }, [isSubmitSuccessful, reset]);
+  const loginInputParams = {
+    ...register('login', {
+      required: 'Login is required',
+    }),
+  };
+  const passwordInputParams = {
+    ...register('password', {
+      required: 'Password is required',
+    }),
+  };
+  //
+  // useEffect(() => {
+  //   reset();
+  // }, [isSubmitSuccessful, reset]);
+
+  const onSubmit: SubmitHandler<FieldValues> = (data) => {
+    console.log(data);
+  };
 
   return (
-    <form className={styles.form} /*onSubmit={handleSubmit(onSubmit)}*/>
-      <Input label="Enter login:" />
-      <Input label="Enter password:" />
+    <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+      <Input label="Enter login:" reactHookFormProps={loginInputParams} />
+      <Input label="Enter password:" type="password" reactHookFormProps={passwordInputParams} />
       <div className={styles.buttons}>
         <Button className={styles.back} type="button">
           Back

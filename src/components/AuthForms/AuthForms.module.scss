@@ -5,23 +5,28 @@
 }
 
 .buttons {
-  margin-top: 16px;
   display: flex;
   justify-content: space-between;
+  margin-top: 16px;
 }
 
 .sign,
 .back {
-  background: #0a2689;
-  color: #ffffff;
-  border: 0;
   font-weight: 600;
   text-transform: uppercase;
+  color: #ffffff;
+  border: 0;
+  background: #0a2689;
 }
 
 .back {
   color: #aaaaaa;
   background: transparent;
+}
+
+.error {
+  text-align: center;
+  color: red;
 }
 
 

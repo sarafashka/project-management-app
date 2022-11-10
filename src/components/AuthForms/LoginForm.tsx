@@ -28,16 +28,18 @@ const LoginForm: React.FC = () => {
   // }, [isSubmitSuccessful, reset]);
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    console.log(data);
+    console.log(data, errors);
   };
 
   return (
     <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
       <Input label="Enter login:" reactHookFormProps={loginInputParams} />
+      {errors.login && <p className={styles.error}>{errors.login.message as string}</p>}
       <Input label="Enter password:" type="password" reactHookFormProps={passwordInputParams} />
+      {errors.password && <p className={styles.error}>{errors.password.message as string}</p>}
       <div className={styles.buttons}>
         <Button className={styles.back} type="button">
-          Back
+          Back to main
         </Button>
         <Button className={styles.sign} type="submit">
           Sign In

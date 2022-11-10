@@ -59,8 +59,11 @@ const RegisterForm: React.FC = () => {
   return (
     <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
       <Input label="Enter your name:" reactHookFormProps={nameInputParams} />
+      {errors.name && <p className={styles.error}>{errors.name.message as string}</p>}
       <Input label="Enter your login:" reactHookFormProps={loginInputParams} />
+      {errors.login && <p className={styles.error}>{errors.login.message as string}</p>}
       <Input label="Choose password:" type="password" reactHookFormProps={passwordInputParams} />
+      {errors.password && <p className={styles.error}>{errors.password.message as string}</p>}
       <div className={styles.buttons}>
         <Button className={styles.back} type="button">
           Back

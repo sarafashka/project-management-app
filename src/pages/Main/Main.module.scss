@@ -1,0 +1,31 @@
+@import '../../styles/mixins';
+@import '../../styles/mixins';
+
+.container {
+  @include common-container;
+}
+
+.list {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin: 0 auto;
+
+  list-style: none;
+
+  @include middle-desktop {
+    gap: 15px;
+    max-width: 920px;
+  }
+
+  @include big-tablet {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+.item {
+  @include middle-mobile {
+    width: 100%;
+  }
+}

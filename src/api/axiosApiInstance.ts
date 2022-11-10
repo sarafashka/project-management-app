@@ -1,6 +1,6 @@
 import axios from 'axios';
 import Endpoint from '../constants/endpoints';
-import AuthService from './authService';
+import { tokenService } from './tokenService';
 
 const axiosApiInstance = axios.create({
   baseURL: Endpoint.BASE_URL,
@@ -9,7 +9,7 @@ const axiosApiInstance = axios.create({
 axiosApiInstance.interceptors.request.use(
   async (config) => {
     config.headers = {
-      Authorization: AuthService.authUser(),
+      Authorization: tokenService.authToken(),
       'Content-Type': 'application/json',
     };
     return config;

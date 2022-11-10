@@ -1,24 +1,16 @@
-class AuthService {
-  static setToken = (token: string) => {
-    if (token) localStorage.setItem('token', token);
-  };
+import { NewUser, User } from '../types/types';
+import axiosApiInstance from './axiosApiInstance';
+import endpoints from '../constants/endpoints';
 
-  static getToken = () => {
-    return localStorage.getItem('token');
-  };
-
-  static removeToken = () => {
-    return localStorage.removeItem('token');
-  };
-
-  static authUser = () => {
-    const token = this.getToken();
-    if (token) {
-      return 'Bearer ' + token;
-    } else {
-      return '';
-    }
-  };
-}
-
-export default AuthService;
+export const authService = {
+  registerUser(userData: NewUser) {
+    return axiosApiInstance
+      .post(endpoints.BASE_URL + endpoints.SIGN_UP, { ...userData })
+      .then((response) => response.data);
+  },
+  loginUser(userData: User) {
+    return axiosApiInstance
+      .post(endpoints.BASE_URL + endpoints.SIGN_IN, { ...userData })
+      .then((response) => response.data);
+  },
+};

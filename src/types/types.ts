@@ -11,6 +11,16 @@ export interface About {
   };
 }
 
+export interface SignUpResponse {
+  name: string;
+  login: string;
+  password: string;
+}
+
+export interface SignInResponse {
+  token: string;
+}
+
 export type LoadingStatus = 'idle' | 'loading' | 'succeeded' | 'failed';
 
 export interface AuthUser {

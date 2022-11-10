@@ -3,6 +3,9 @@ import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import Input from '../Input/Input';
 import Button from '../Button/Button';
 import styles from './AuthForms.module.scss';
+import { useAppDispatch } from '../../hooks/reduxTypedHooks';
+import { registeration } from '../../store/authSlice';
+import { NewUser } from '../../types/types';
 
 const RegisterForm: React.FC = () => {
   const {
@@ -11,6 +14,8 @@ const RegisterForm: React.FC = () => {
     formState: { errors, isSubmitSuccessful },
     reset,
   } = useForm();
+
+  const dispatch = useAppDispatch();
 
   const nameInputParams = {
     ...register('name', {
@@ -49,7 +54,7 @@ const RegisterForm: React.FC = () => {
   };
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    console.log(data);
+    dispatch(registeration(data as NewUser));
   };
 
   useEffect(() => {

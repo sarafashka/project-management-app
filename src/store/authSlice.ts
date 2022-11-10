@@ -3,6 +3,7 @@ import { AuthInitialState, NewUser, User } from '../types/types';
 import { authService } from '../api/authService';
 import { AxiosError } from 'axios';
 import { RootState } from './store';
+import { tokenService } from '../api/tokenService';
 
 const initialState: AuthInitialState = {
   loginStatus: 'idle',
@@ -13,7 +14,8 @@ export const registeration = createAsyncThunk(
   'auth/registeration',
   async (userData: NewUser, { rejectWithValue }) => {
     try {
-      return await authService.registerUser(userData);
+      const response = await authService.registerUser(userData);
+      return response.data;
     } catch (e) {
       const error = e as AxiosError;
       return rejectWithValue(error.message);
@@ -25,7 +27,8 @@ export const logining = createAsyncThunk(
   'auth/logining',
   async (userData: User, { rejectWithValue }) => {
     try {
-      return await authService.loginUser(userData);
+      const response = await authService.loginUser(userData);
+      return response.data;
     } catch (e) {
       const error = e as AxiosError;
       return rejectWithValue(error.message);
@@ -41,6 +44,7 @@ export const authSlice = createSlice({
       state.loginStatus = 'idle';
       state.registerStatus = 'idle';
       delete state.user;
+      tokenService.removeToken();
     },
   },
   extraReducers: (builder) => {
@@ -53,6 +57,16 @@ export const authSlice = createSlice({
       })
       .addCase(registeration.rejected, (state) => {
         state.registerStatus = 'failed';
+      })
+      .addCase(logining.pending, (state) => {
+        state.loginStatus = 'loading';
+      })
+      .addCase(logining.fulfilled, (state, action) => {
+        state.loginStatus = 'succeeded';
+        tokenService.setToken(action.payload.token);
+      })
+      .addCase(logining.rejected, (state) => {
+        state.loginStatus = 'failed';
       });
   },
 });

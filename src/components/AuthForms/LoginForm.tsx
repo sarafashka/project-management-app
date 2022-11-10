@@ -3,6 +3,9 @@ import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import Input from '../Input/Input';
 import Button from '../Button/Button';
 import styles from './AuthForms.module.scss';
+import { useAppDispatch } from '../../hooks/reduxTypedHooks';
+import { logining, logout } from '../../store/authSlice';
+import { User } from '../../types/types';
 
 const LoginForm: React.FC = () => {
   const {
@@ -11,6 +14,8 @@ const LoginForm: React.FC = () => {
     formState: { errors, isSubmitSuccessful },
     reset,
   } = useForm();
+
+  const dispatch = useAppDispatch();
 
   const loginInputParams = {
     ...register('login', {
@@ -22,13 +27,13 @@ const LoginForm: React.FC = () => {
       required: 'Password is required',
     }),
   };
-  //
-  // useEffect(() => {
-  //   reset();
-  // }, [isSubmitSuccessful, reset]);
+
+  useEffect(() => {
+    reset();
+  }, [isSubmitSuccessful, reset]);
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    console.log(data, errors);
+    dispatch(logining(data as User));
   };
 
   return (
@@ -38,8 +43,15 @@ const LoginForm: React.FC = () => {
       <Input label="Enter password:" type="password" reactHookFormProps={passwordInputParams} />
       {errors.password && <p className={styles.error}>{errors.password.message as string}</p>}
       <div className={styles.buttons}>
-        <Button className={styles.back} type="button">
-          Back to main
+        <Button
+          className={styles.back}
+          type="button"
+          onClick={() => {
+            console.log('asdasdasd');
+            dispatch(logout());
+          }}
+        >
+          Logout
         </Button>
         <Button className={styles.sign} type="submit">
           Sign In

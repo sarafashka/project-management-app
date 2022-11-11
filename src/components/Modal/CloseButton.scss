@@ -1,0 +1,44 @@
+@import '../../styles/constants';
+
+.close-btn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+
+  background-color: transparent;
+  border: none;
+
+  outline: none;
+
+  cursor: pointer;
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    display: block;
+    width: 116%;
+    height: 14.8%;
+  
+    background: $close-btn;
+    border-radius: 3.44rem;
+
+    transition: 0.5s;
+  }
+  
+  &::before {
+    transform: rotate(45deg);
+  }
+  
+  &::after {
+    transform: rotate(-45deg);
+  }
+
+  &:hover::before,
+  &:hover::after {
+    background: $hover-close-btn;
+  }
+}

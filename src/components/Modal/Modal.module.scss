@@ -1,0 +1,70 @@
+#modal-root {
+  position: relative;
+  z-index: 2;
+}
+
+.open-modal ~ #root {
+  overflow: hidden;
+  padding-right: 10px;
+}
+
+.overlay {
+  background-color: $overlay;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+}
+
+.popup {
+  position: fixed;
+  display: flex;
+  top: 50%;
+  left: 50%;
+  padding: 10px;
+
+  //background-color: $card-characteristics-background;
+  border-radius: 20px;
+
+  transform: translate(-50%, -50%);
+  z-index: 3;
+
+  @include desktop-middle {
+    padding: 0.71vw;
+
+    border-radius: 1.42vw;
+  }
+
+  @include tablet-middle {
+    padding: 5px;
+
+    border-radius: 12.2px;
+  }
+
+  @include mobile-highest {
+    flex-direction: column;
+    max-width: 80vw;
+  }
+}
+
+/*close-btn {
+  position: absolute;
+  top: -30px;
+  right: -30px;
+
+  @include desktop-middle {
+    width: 2.14vw;
+    height: 2.14vw;
+    top: -2.14vw;
+    right: -2.14vw;
+  }
+
+  @include tablet-middle {
+    width: 18.4px;
+    height: 18.4px;
+    top: -18.4px;
+    right: -18.4px;
+  }
+}*/

@@ -93,3 +93,9 @@ export interface UserInitialState {
   userUpdatingStatus: LoadingStatus;
   user: User;
 }
+
+export interface Error {
+  statusCode?: number;
+  title?: string;
+  message?: string;
+}

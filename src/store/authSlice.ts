@@ -1,9 +1,10 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { AuthInitialState, NewUser, User } from '../types/types';
+import { AuthInitialState, JwtUserData, NewUser, User } from '../types/types';
 import { authService } from '../api/authService';
 import { AxiosError } from 'axios';
 import { RootState } from './store';
 import { tokenService } from '../api/tokenService';
+import jwt_decode from 'jwt-decode';
 
 const initialState: AuthInitialState = {
   loginStatus: 'idle',
@@ -52,6 +53,7 @@ export const authSlice = createSlice({
       state.registerStatus = 'idle';
       delete state.user;
       tokenService.removeToken();
+      authService.removeUserData();
     },
   },
   extraReducers: (builder) => {
@@ -71,6 +73,9 @@ export const authSlice = createSlice({
       .addCase(logging.fulfilled, (state, action) => {
         state.loginStatus = 'succeeded';
         tokenService.setToken(action.payload.token);
+        authService.setUserData(action.payload.token);
+        const user = jwt_decode<JwtUserData>(action.payload.token);
+        state.user = { userId: user.userId, login: user.login };
       })
       .addCase(logging.rejected, (state) => {
         state.loginStatus = 'failed';

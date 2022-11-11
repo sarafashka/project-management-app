@@ -45,3 +45,9 @@ export interface NewUser {
   login: string;
   password: string;
 }
+
+export interface JwtUserData {
+  userId: string;
+  login: string;
+  iat: number;
+}

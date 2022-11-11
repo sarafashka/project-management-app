@@ -1,0 +1,54 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: $font;
+  font-size: $font-size;
+  font-weight: 400;
+}
+html {
+  scroll-behavior: smooth;
+  height: 100%;
+}
+
+body {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: $main-background;
+  color: $main-text;
+}
+
+h2 {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 1.4rem;
+  line-height: 1.6rem;
+  margin-bottom: 1rem;
+  color: $main-text;
+}
+
+h3 {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 0.9rem;
+  line-height: 1.1rem;
+  color: $text;
+}
+
+main {
+  flex-grow: 1;
+  position: relative;
+}
+.btn {
+  cursor: pointer;
+  border-style: solid;
+  border-width: 0.1rem;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 1rem;
+  line-height: 1.1rem;
+  text-align: center;
+  transition: 0.25s;
+  @include button($primary, $main-background);
+}

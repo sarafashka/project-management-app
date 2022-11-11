@@ -10,8 +10,8 @@ const initialState: AuthInitialState = {
   registerStatus: 'idle',
 };
 
-export const registeration = createAsyncThunk(
-  'auth/registeration',
+export const registration = createAsyncThunk(
+  'auth/registration',
   async (userData: NewUser, { rejectWithValue }) => {
     try {
       const response = await authService.registerUser(userData);
@@ -28,8 +28,8 @@ interface Error {
   message: string;
 }
 
-export const logining = createAsyncThunk(
-  'auth/logining',
+export const logging = createAsyncThunk(
+  'auth/logging',
   async (userData: User, { rejectWithValue }) => {
     try {
       const response = await authService.loginUser(userData);
@@ -55,23 +55,23 @@ export const authSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(registeration.pending, (state) => {
+      .addCase(registration.pending, (state) => {
         state.registerStatus = 'loading';
       })
-      .addCase(registeration.fulfilled, (state) => {
+      .addCase(registration.fulfilled, (state) => {
         state.registerStatus = 'succeeded';
       })
-      .addCase(registeration.rejected, (state) => {
+      .addCase(registration.rejected, (state) => {
         state.registerStatus = 'failed';
       })
-      .addCase(logining.pending, (state) => {
+      .addCase(logging.pending, (state) => {
         state.loginStatus = 'loading';
       })
-      .addCase(logining.fulfilled, (state, action) => {
+      .addCase(logging.fulfilled, (state, action) => {
         state.loginStatus = 'succeeded';
         tokenService.setToken(action.payload.token);
       })
-      .addCase(logining.rejected, (state) => {
+      .addCase(logging.rejected, (state) => {
         state.loginStatus = 'failed';
       });
   },

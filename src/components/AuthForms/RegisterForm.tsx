@@ -4,7 +4,7 @@ import Input from '../Input/Input';
 import Button from '../Button/Button';
 import styles from './AuthForms.module.scss';
 import { useAppDispatch } from '../../hooks/reduxTypedHooks';
-import { registeration } from '../../store/authSlice';
+import { registration } from '../../store/authSlice';
 import { NewUser } from '../../types/types';
 
 const RegisterForm: React.FC = () => {
@@ -54,7 +54,7 @@ const RegisterForm: React.FC = () => {
   };
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    dispatch(registeration(data as NewUser));
+    dispatch(registration(data as NewUser));
   };
 
   useEffect(() => {

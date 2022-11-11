@@ -4,8 +4,9 @@ import Input from '../Input/Input';
 import Button from '../Button/Button';
 import styles from './AuthForms.module.scss';
 import { useAppDispatch, useAppSelector } from '../../hooks/reduxTypedHooks';
-import { logining, logout, selectLoginStatus } from '../../store/authSlice';
+import { logging, logout, selectLoginStatus } from '../../store/authSlice';
 import { User } from '../../types/types';
+import { useNavigate } from 'react-router-dom';
 
 const LoginForm: React.FC = () => {
   const {
@@ -16,6 +17,7 @@ const LoginForm: React.FC = () => {
   } = useForm();
 
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const loginStatus = useAppSelector(selectLoginStatus);
   const [errorMessage, setErrorMessage] = useState<string>();
 
@@ -31,11 +33,17 @@ const LoginForm: React.FC = () => {
   };
 
   useEffect(() => {
+    if (loginStatus === 'succeeded') {
+      navigate('/');
+    }
+  }, [loginStatus, navigate]);
+
+  useEffect(() => {
     reset();
   }, [isSubmitSuccessful, reset]);
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    dispatch(logining(data as User)).then((response) => {
+    dispatch(logging(data as User)).then((response) => {
       setErrorMessage(response.payload as string);
     });
   };
@@ -51,7 +59,6 @@ const LoginForm: React.FC = () => {
           className={styles.back}
           type="button"
           onClick={() => {
-            console.log('asdasdasd');
             dispatch(logout());
           }}
         >

@@ -1,21 +1,30 @@
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import Input from '../Input/Input';
 import Button from '../Button/Button';
 import styles from './AuthForms.module.scss';
-import { useAppDispatch } from '../../hooks/reduxTypedHooks';
-import { registration } from '../../store/authSlice';
-import { NewUser } from '../../types/types';
+import { useAppDispatch, useAppSelector } from '../../hooks/reduxTypedHooks';
+import {
+  logging,
+  registration,
+  selectLoginStatus,
+  selectRegisterStatus,
+} from '../../store/authSlice';
+import { NewUser, User } from '../../types/types';
+import { useNavigate } from 'react-router-dom';
 
 const RegisterForm: React.FC = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitSuccessful },
-    reset,
+    formState: { errors },
   } = useForm();
 
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const registerStatus = useAppSelector(selectRegisterStatus);
+  const loginStatus = useAppSelector(selectLoginStatus);
+  const [errorMessage, setErrorMessage] = useState<string>();
 
   const nameInputParams = {
     ...register('name', {
@@ -54,12 +63,16 @@ const RegisterForm: React.FC = () => {
   };
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    dispatch(registration(data as NewUser));
+    dispatch(registration(data as NewUser)).then((response) => {
+      if (response.type === 'auth/registration/rejected') {
+        setErrorMessage(response.payload as string);
+      } else {
+        const userData = { ...data };
+        delete userData.name;
+        dispatch(logging(userData as User)).then(() => navigate('/'));
+      }
+    });
   };
-
-  useEffect(() => {
-    reset();
-  }, [isSubmitSuccessful, reset]);
 
   return (
     <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
@@ -77,6 +90,9 @@ const RegisterForm: React.FC = () => {
           Sign Up
         </Button>
       </div>
+      {registerStatus === 'loading' && <p>Loading</p>}
+      {registerStatus === 'failed' && <p>{errorMessage}</p>}
+      {loginStatus === 'loading' && <p>Loading</p>}
     </form>
   );
 };

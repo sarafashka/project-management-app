@@ -18,7 +18,8 @@ export const registration = createAsyncThunk(
       return response.data;
     } catch (e) {
       const error = e as AxiosError;
-      return rejectWithValue(error.message);
+      const errorData = error.response?.data as Error;
+      return rejectWithValue(errorData?.message || 'Connection error. Try again later!');
     }
   }
 );

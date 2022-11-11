@@ -23,6 +23,11 @@ export const registeration = createAsyncThunk(
   }
 );
 
+interface Error {
+  statusCode: number;
+  message: string;
+}
+
 export const logining = createAsyncThunk(
   'auth/logining',
   async (userData: User, { rejectWithValue }) => {
@@ -31,7 +36,8 @@ export const logining = createAsyncThunk(
       return response.data;
     } catch (e) {
       const error = e as AxiosError;
-      return rejectWithValue(error.message);
+      const errorData = error.response?.data as Error;
+      return rejectWithValue(errorData?.message || 'Connection error. Try again later!');
     }
   }
 );

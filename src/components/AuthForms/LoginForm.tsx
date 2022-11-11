@@ -1,10 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import Input from '../Input/Input';
 import Button from '../Button/Button';
 import styles from './AuthForms.module.scss';
-import { useAppDispatch } from '../../hooks/reduxTypedHooks';
-import { logining, logout } from '../../store/authSlice';
+import { useAppDispatch, useAppSelector } from '../../hooks/reduxTypedHooks';
+import { logining, logout, selectLoginStatus } from '../../store/authSlice';
 import { User } from '../../types/types';
 
 const LoginForm: React.FC = () => {
@@ -16,6 +16,8 @@ const LoginForm: React.FC = () => {
   } = useForm();
 
   const dispatch = useAppDispatch();
+  const loginStatus = useAppSelector(selectLoginStatus);
+  const [errorMessage, setErrorMessage] = useState<string>();
 
   const loginInputParams = {
     ...register('login', {
@@ -33,7 +35,9 @@ const LoginForm: React.FC = () => {
   }, [isSubmitSuccessful, reset]);
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    dispatch(logining(data as User));
+    dispatch(logining(data as User)).then((response) => {
+      setErrorMessage(response.payload as string);
+    });
   };
 
   return (
@@ -57,6 +61,8 @@ const LoginForm: React.FC = () => {
           Sign In
         </Button>
       </div>
+      {loginStatus === 'loading' && <p>Loading</p>}
+      {loginStatus === 'failed' && <p>{errorMessage}</p>}
     </form>
   );
 };

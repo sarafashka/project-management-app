@@ -47,7 +47,6 @@ const LoginForm: React.FC = () => {
           className={styles.back}
           type="button"
           onClick={() => {
-            console.log('asdasdasd');
             dispatch(logout());
           }}
         >

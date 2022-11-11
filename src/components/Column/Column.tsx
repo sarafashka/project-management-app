@@ -5,23 +5,11 @@ import styles from './Column.module.scss';
 type Props = {
   id: string;
   title: string;
-  order: number;
-  tasks: {
-    id: string;
-    title: string;
-    order: number;
-    description: string;
-    userId: string;
-    files: {
-      filename: string;
-      fileSize: number;
-    }[];
-  };
 };
 
 const Column: React.FC<Props> = (column) => {
-  const { id, title, order, tasks } = column;
-  console.log('column', column);
+  const { id, title } = column;
+
   return (
     <div className={styles.item}>
       <div className={styles.header}>

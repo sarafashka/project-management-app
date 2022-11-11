@@ -38,7 +38,13 @@
 .task {
   display: flex;
   flex-direction: column;
+  padding: 1rem;
   background-color: $background;
   border-radius: 1rem;
   color: $text;
+  cursor: pointer;
+  transition: 0.25s;
+  &:hover {
+    filter: drop-shadow(5px 5px 5px rgba(0, 0, 0, 0.2));
+  }
 }

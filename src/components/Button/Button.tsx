@@ -1,30 +1,20 @@
-import React from 'react';
+import React, { ButtonHTMLAttributes } from 'react';
 import styles from './Button.module.scss';
 
-type ButtonType = 'button' | 'submit' | 'reset';
-
-interface ButtonProps {
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   className?: string;
   isDisabled?: boolean;
-  onClick?: React.MouseEventHandler<HTMLButtonElement>;
-  type?: ButtonType;
   children: React.ReactNode;
 }
 
 const Button: React.FC<ButtonProps> = ({
   className = '',
   isDisabled = false,
-  onClick,
-  type = 'button',
   children,
+  ...rest
 }) => {
   return (
-    <button
-      className={`${styles.button} ${className}`}
-      disabled={isDisabled}
-      onClick={onClick}
-      type={type}
-    >
+    <button className={`${styles.button} ${className}`} disabled={isDisabled} {...rest}>
       {children}
     </button>
   );

@@ -7,14 +7,13 @@
 
 .list {
   display: flex;
-  justify-content: space-between;
   flex-wrap: wrap;
+  gap: 15px;
   margin: 0 auto;
 
   list-style: none;
 
   @include middle-desktop {
-    gap: 15px;
     max-width: 920px;
   }
 
@@ -25,6 +24,12 @@
 }
 
 .item {
+  width: calc((100% - 30px) / 3);
+
+  @include middle-desktop {
+    width: 452px;
+  }
+
   @include middle-mobile {
     width: 100%;
   }

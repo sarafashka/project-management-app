@@ -3,9 +3,22 @@ import Endpoint from '../constants/endpoints';
 import { tokenService } from './tokenService';
 import { userService } from './userService';
 
+import { Error } from 'types/types';
+
 const axiosApiInstance = axios.create({
   baseURL: Endpoint.BASE_URL,
 });
+
+axiosApiInstance.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+
+  (error) => {
+    const err: Error = { ...error.response.data };
+    return Promise.reject(err);
+  }
+);
 
 axiosApiInstance.interceptors.request.use(
   async (config) => {
@@ -15,8 +28,14 @@ axiosApiInstance.interceptors.request.use(
     };
     return config;
   },
+
   (error) => {
-    Promise.reject(error);
+    const err: Error = {
+      statusCode: error.request.data.statusCode,
+      title: 'Oops!',
+      message: "Server isn't responding. Please, try later",
+    };
+    return Promise.reject(err);
   }
 );
 

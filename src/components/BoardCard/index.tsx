@@ -2,7 +2,10 @@ import React from 'react';
 import classNames from 'classnames';
 import { Link } from 'react-router-dom';
 
+import { useAppDispatch } from '../../hooks/reduxTypedHooks';
 import { BoardData } from 'types/boardTypes';
+
+import { deleteBoardAction } from 'store/boardsSlice';
 
 import styles from './BoardCard.module.scss';
 
@@ -11,15 +14,16 @@ const { card, cardTitle, link, cardDescription, icon, content, deleteBtn } = sty
 type BoardCardProps = {
   className?: string;
   boardData: BoardData;
-  onDelete: (id: string) => void;
 };
 
-const BoardCard: React.FC<BoardCardProps> = ({ className, boardData, onDelete }) => {
+const BoardCard: React.FC<BoardCardProps> = ({ className, boardData }) => {
+  const dispatch = useAppDispatch();
+
   const { id, title, description } = boardData;
 
   const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
     event.preventDefault();
-    onDelete(id);
+    dispatch(deleteBoardAction(id));
   };
 
   return (

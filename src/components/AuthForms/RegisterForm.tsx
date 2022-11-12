@@ -10,9 +10,11 @@ import {
   selectLoginStatus,
   selectRegisterStatus,
 } from '../../store/authSlice';
-import { NewUser, User } from '../../types/types';
+import { NewUser, SignInResponse, User, UserLogin } from '../../types/types';
 import { useNavigate } from 'react-router-dom';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
+import { authService } from '../../api/authService';
+import { getUserById, setUser } from '../../store/userSlice';
 
 const RegisterForm: React.FC = () => {
   const {
@@ -70,7 +72,13 @@ const RegisterForm: React.FC = () => {
       } else {
         const userData = { ...data };
         delete userData.name;
-        dispatch(logging(userData as User)).then(() => navigate('/'));
+        dispatch(logging(userData as UserLogin)).then((res) => {
+          const id = authService.getUserId((res.payload as SignInResponse).token);
+          dispatch(getUserById(id)).then((res) => {
+            dispatch(setUser(res.payload as User));
+            navigate('/');
+          });
+        });
       }
     });
   };

@@ -1,10 +1,12 @@
-import { AxiosErrorData, SignUpResponse, UserInitialState } from '../types/types';
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { AxiosErrorData, SignUpResponse, User, UserInitialState } from '../types/types';
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { userService } from '../api/userService';
 import { AxiosError } from 'axios';
+import { RootState } from './store';
+import { tokenService } from '../api/tokenService';
 
 const initialState: UserInitialState = {
-  loginStatus: 'idle',
+  userLoadingStatus: 'idle',
   user: {
     userId: '',
     userName: '',
@@ -73,8 +75,38 @@ export const updateUser = createAsyncThunk(
 export const userSlice = createSlice({
   name: 'user',
   initialState,
-  reducers: {},
-  extraReducers: (builder) => {},
+  reducers: {
+    logout: (state) => {
+      state.userLoadingStatus = 'idle';
+      state.user = {
+        userId: '',
+        userName: '',
+        login: '',
+      };
+      tokenService.removeToken();
+      userService.removeUserData();
+    },
+    setUser: (state, action: PayloadAction<User>) => {
+      state.user = { ...action.payload };
+      userService.setUserData(action.payload);
+    },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(getUserById.pending, (state) => {
+        state.userLoadingStatus = 'loading';
+      })
+      .addCase(getUserById.fulfilled, (state) => {
+        state.userLoadingStatus = 'succeeded';
+        // state.user = { ...action.payload };
+        // userService.setUserData(action.payload);
+      });
+  },
 });
+
+export const selectUser = (state: RootState) => state.user.user;
+export const selectUserLoadingStatus = (state: RootState) => state.user.userLoadingStatus;
+
+export const { logout, setUser } = userSlice.actions;
 
 export const userReducer = userSlice.reducer;

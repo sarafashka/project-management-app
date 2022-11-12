@@ -16,4 +16,13 @@ export const userService = {
   updateUser(id: string, userData: SignUpResponse): Promise<AxiosResponse<User>> {
     return axiosApiInstance.put(`${endpoints.USERS}/${id}`, userData);
   },
+  setUserData(userData: User) {
+    localStorage.setItem('user', JSON.stringify(userData));
+  },
+  getUserData() {
+    return JSON.parse(localStorage.getItem('user') || '{}');
+  },
+  removeUserData() {
+    localStorage.removeItem('user');
+  },
 };

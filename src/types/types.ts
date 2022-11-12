@@ -41,12 +41,11 @@ export interface User {
 }
 
 export interface AuthInitialState {
-  user?: AuthUser;
   loginStatus: LoadingStatus;
   registerStatus: LoadingStatus;
 }
 
-export interface User {
+export interface UserLogin {
   login: string;
   password: string;
 }
@@ -64,7 +63,6 @@ export interface JwtUserData {
 }
 
 export interface UserInitialState {
-  loginStatus: LoadingStatus;
+  userLoadingStatus: LoadingStatus;
   user: AuthUser;
 }
-

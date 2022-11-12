@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { AuthInitialState, JwtUserData, NewUser, User } from '../types/types';
+import { AuthInitialState, AxiosErrorData, JwtUserData, NewUser, User } from '../types/types';
 import { authService } from '../api/authService';
 import { AxiosError } from 'axios';
 import { RootState } from './store';
@@ -19,16 +19,11 @@ export const registration = createAsyncThunk(
       return response.data;
     } catch (e) {
       const error = e as AxiosError;
-      const errorData = error.response?.data as Error;
+      const errorData = error.response?.data as AxiosErrorData;
       return rejectWithValue(errorData?.message || 'Connection error. Try again later!');
     }
   }
 );
-
-interface Error {
-  statusCode: number;
-  message: string;
-}
 
 export const logging = createAsyncThunk(
   'auth/logging',
@@ -38,7 +33,7 @@ export const logging = createAsyncThunk(
       return response.data;
     } catch (e) {
       const error = e as AxiosError;
-      const errorData = error.response?.data as Error;
+      const errorData = error.response?.data as AxiosErrorData;
       return rejectWithValue(errorData?.message || 'Connection error. Try again later!');
     }
   }

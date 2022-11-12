@@ -98,8 +98,6 @@ export const userSlice = createSlice({
       })
       .addCase(getUserById.fulfilled, (state) => {
         state.userLoadingStatus = 'succeeded';
-        // state.user = { ...action.payload };
-        // userService.setUserData(action.payload);
       });
   },
 });

@@ -7,6 +7,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks/reduxTypedHooks';
 import { logging, logout, selectLoginStatus } from '../../store/authSlice';
 import { User } from '../../types/types';
 import { useNavigate } from 'react-router-dom';
+import ErrorMessage from '../ErrorMessage/ErrorMessage';
 
 const LoginForm: React.FC = () => {
   const {
@@ -51,9 +52,9 @@ const LoginForm: React.FC = () => {
   return (
     <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
       <Input label="Enter login:" reactHookFormProps={loginInputParams} />
-      {errors.login && <p className={styles.error}>{errors.login.message as string}</p>}
+      {errors.login && <ErrorMessage>{errors.login.message as string}</ErrorMessage>}
       <Input label="Enter password:" type="password" reactHookFormProps={passwordInputParams} />
-      {errors.password && <p className={styles.error}>{errors.password.message as string}</p>}
+      {errors.password && <ErrorMessage>{errors.password.message as string}</ErrorMessage>}
       <div className={styles.buttons}>
         <Button
           className={styles.back}
@@ -68,8 +69,8 @@ const LoginForm: React.FC = () => {
           Sign In
         </Button>
       </div>
-      {loginStatus === 'loading' && <p>Loading</p>}
-      {loginStatus === 'failed' && <p>{errorMessage}</p>}
+      {loginStatus === 'loading' && <p className={styles.loading}>Loading...</p>}
+      {loginStatus === 'failed' && <ErrorMessage>{errorMessage}</ErrorMessage>}
     </form>
   );
 };

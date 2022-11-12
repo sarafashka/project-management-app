@@ -12,6 +12,7 @@ import {
 } from '../../store/authSlice';
 import { NewUser, User } from '../../types/types';
 import { useNavigate } from 'react-router-dom';
+import ErrorMessage from '../ErrorMessage/ErrorMessage';
 
 const RegisterForm: React.FC = () => {
   const {
@@ -77,11 +78,11 @@ const RegisterForm: React.FC = () => {
   return (
     <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
       <Input label="Enter your name:" reactHookFormProps={nameInputParams} />
-      {errors.name && <p className={styles.error}>{errors.name.message as string}</p>}
+      {errors.name && <ErrorMessage>{errors.name.message as string}</ErrorMessage>}
       <Input label="Enter your login:" reactHookFormProps={loginInputParams} />
-      {errors.login && <p className={styles.error}>{errors.login.message as string}</p>}
+      {errors.login && <ErrorMessage>{errors.login.message as string}</ErrorMessage>}
       <Input label="Choose password:" type="password" reactHookFormProps={passwordInputParams} />
-      {errors.password && <p className={styles.error}>{errors.password.message as string}</p>}
+      {errors.password && <ErrorMessage>{errors.password.message as string}</ErrorMessage>}
       <div className={styles.buttons}>
         <Button className={styles.back} type="button">
           Back
@@ -90,9 +91,9 @@ const RegisterForm: React.FC = () => {
           Sign Up
         </Button>
       </div>
-      {registerStatus === 'loading' && <p>Loading</p>}
-      {registerStatus === 'failed' && <p>{errorMessage}</p>}
-      {loginStatus === 'loading' && <p>Loading</p>}
+      {registerStatus === 'loading' && <p className={styles.loading}>Loading...</p>}
+      {registerStatus === 'failed' && <ErrorMessage>{errorMessage}</ErrorMessage>}
+      {loginStatus === 'loading' && <p className={styles.loading}>Loading...</p>}
     </form>
   );
 };

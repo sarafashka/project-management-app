@@ -24,9 +24,9 @@ export interface SignInResponse {
 export type LoadingStatus = 'idle' | 'loading' | 'succeeded' | 'failed';
 
 export interface AuthUser {
-  userId: string;
-  userName: string;
-  login: string;
+  userId?: string;
+  userName?: string;
+  login?: string;
 }
 
 export interface AuthInitialState {
@@ -44,4 +44,10 @@ export interface NewUser {
   name: string;
   login: string;
   password: string;
+}
+
+export interface JwtUserData {
+  userId: string;
+  login: string;
+  iat: number;
 }

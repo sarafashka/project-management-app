@@ -1,37 +1,45 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { AuthInitialState, NewUser, User } from '../types/types';
+import { AuthInitialState, JwtUserData, NewUser, User } from '../types/types';
 import { authService } from '../api/authService';
 import { AxiosError } from 'axios';
 import { RootState } from './store';
 import { tokenService } from '../api/tokenService';
+import jwt_decode from 'jwt-decode';
 
 const initialState: AuthInitialState = {
   loginStatus: 'idle',
   registerStatus: 'idle',
 };
 
-export const registeration = createAsyncThunk(
-  'auth/registeration',
+export const registration = createAsyncThunk(
+  'auth/registration',
   async (userData: NewUser, { rejectWithValue }) => {
     try {
       const response = await authService.registerUser(userData);
       return response.data;
     } catch (e) {
       const error = e as AxiosError;
-      return rejectWithValue(error.message);
+      const errorData = error.response?.data as Error;
+      return rejectWithValue(errorData?.message || 'Connection error. Try again later!');
     }
   }
 );
 
-export const logining = createAsyncThunk(
-  'auth/logining',
+interface Error {
+  statusCode: number;
+  message: string;
+}
+
+export const logging = createAsyncThunk(
+  'auth/logging',
   async (userData: User, { rejectWithValue }) => {
     try {
       const response = await authService.loginUser(userData);
       return response.data;
     } catch (e) {
       const error = e as AxiosError;
-      return rejectWithValue(error.message);
+      const errorData = error.response?.data as Error;
+      return rejectWithValue(errorData?.message || 'Connection error. Try again later!');
     }
   }
 );
@@ -45,27 +53,31 @@ export const authSlice = createSlice({
       state.registerStatus = 'idle';
       delete state.user;
       tokenService.removeToken();
+      authService.removeUserData();
     },
   },
   extraReducers: (builder) => {
     builder
-      .addCase(registeration.pending, (state) => {
+      .addCase(registration.pending, (state) => {
         state.registerStatus = 'loading';
       })
-      .addCase(registeration.fulfilled, (state) => {
+      .addCase(registration.fulfilled, (state) => {
         state.registerStatus = 'succeeded';
       })
-      .addCase(registeration.rejected, (state) => {
+      .addCase(registration.rejected, (state) => {
         state.registerStatus = 'failed';
       })
-      .addCase(logining.pending, (state) => {
+      .addCase(logging.pending, (state) => {
         state.loginStatus = 'loading';
       })
-      .addCase(logining.fulfilled, (state, action) => {
+      .addCase(logging.fulfilled, (state, action) => {
         state.loginStatus = 'succeeded';
         tokenService.setToken(action.payload.token);
+        authService.setUserData(action.payload.token);
+        const user = jwt_decode<JwtUserData>(action.payload.token);
+        state.user = { userId: user.userId, login: user.login };
       })
-      .addCase(logining.rejected, (state) => {
+      .addCase(logging.rejected, (state) => {
         state.loginStatus = 'failed';
       });
   },

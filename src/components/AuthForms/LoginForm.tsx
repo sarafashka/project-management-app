@@ -1,11 +1,13 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import Input from '../Input/Input';
 import Button from '../Button/Button';
 import styles from './AuthForms.module.scss';
-import { useAppDispatch } from '../../hooks/reduxTypedHooks';
-import { logining, logout } from '../../store/authSlice';
+import { useAppDispatch, useAppSelector } from '../../hooks/reduxTypedHooks';
+import { logging, logout, selectLoginStatus } from '../../store/authSlice';
 import { User } from '../../types/types';
+import { useNavigate } from 'react-router-dom';
+import ErrorMessage from '../ErrorMessage/ErrorMessage';
 
 const LoginForm: React.FC = () => {
   const {
@@ -16,6 +18,9 @@ const LoginForm: React.FC = () => {
   } = useForm();
 
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const loginStatus = useAppSelector(selectLoginStatus);
+  const [errorMessage, setErrorMessage] = useState<string>();
 
   const loginInputParams = {
     ...register('login', {
@@ -29,25 +34,32 @@ const LoginForm: React.FC = () => {
   };
 
   useEffect(() => {
+    if (loginStatus === 'succeeded') {
+      navigate('/');
+    }
+  }, [loginStatus, navigate]);
+
+  useEffect(() => {
     reset();
   }, [isSubmitSuccessful, reset]);
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    dispatch(logining(data as User));
+    dispatch(logging(data as User)).then((response) => {
+      setErrorMessage(response.payload as string);
+    });
   };
 
   return (
     <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
       <Input label="Enter login:" reactHookFormProps={loginInputParams} />
-      {errors.login && <p className={styles.error}>{errors.login.message as string}</p>}
+      {errors.login && <ErrorMessage>{errors.login.message as string}</ErrorMessage>}
       <Input label="Enter password:" type="password" reactHookFormProps={passwordInputParams} />
-      {errors.password && <p className={styles.error}>{errors.password.message as string}</p>}
+      {errors.password && <ErrorMessage>{errors.password.message as string}</ErrorMessage>}
       <div className={styles.buttons}>
         <Button
           className={styles.back}
           type="button"
           onClick={() => {
-            console.log('asdasdasd');
             dispatch(logout());
           }}
         >
@@ -57,6 +69,8 @@ const LoginForm: React.FC = () => {
           Sign In
         </Button>
       </div>
+      {loginStatus === 'loading' && <p className={styles.loading}>Loading...</p>}
+      {loginStatus === 'failed' && <ErrorMessage>{errorMessage}</ErrorMessage>}
     </form>
   );
 };

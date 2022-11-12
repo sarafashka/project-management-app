@@ -1,4 +1,4 @@
-import { JwtUserData, NewUser, SignInResponse, SignUpResponse, User } from '../types/types';
+import { JwtUserData, NewUser, SignInResponse, SignUpResponse, UserLogin } from '../types/types';
 import axiosApiInstance from './axiosApiInstance';
 import endpoints from '../constants/endpoints';
 import { AxiosResponse } from 'axios';
@@ -9,21 +9,15 @@ export const authService = {
   registerUser(userData: NewUser): Promise<AxiosResponse<SignUpResponse>> {
     return axiosApiInstance.post(endpoints.SIGN_UP, { ...userData });
   },
-  loginUser(userData: User): Promise<AxiosResponse<SignInResponse>> {
+  loginUser(userData: UserLogin): Promise<AxiosResponse<SignInResponse>> {
     return axiosApiInstance.post(endpoints.SIGN_IN, { ...userData });
   },
   isUserLogged() {
     const token = tokenService.getToken();
     return !!token;
   },
-  setUserData(token: string) {
+  getUserId(token: string) {
     const jwtUserData = jwt_decode<JwtUserData>(token);
-    localStorage.setItem('user', JSON.stringify(jwtUserData));
-  },
-  getUserData() {
-    return JSON.parse(localStorage.getItem('user') || '{}');
-  },
-  removeUserData() {
-    localStorage.removeItem('user');
+    return jwtUserData.userId;
   },
 };

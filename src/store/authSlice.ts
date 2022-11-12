@@ -1,10 +1,9 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { AuthInitialState, JwtUserData, NewUser, User } from '../types/types';
+import { AuthInitialState, AxiosErrorData, NewUser, UserLogin } from '../types/types';
 import { authService } from '../api/authService';
 import { AxiosError } from 'axios';
 import { RootState } from './store';
 import { tokenService } from '../api/tokenService';
-import jwt_decode from 'jwt-decode';
 
 const initialState: AuthInitialState = {
   loginStatus: 'idle',
@@ -19,26 +18,21 @@ export const registration = createAsyncThunk(
       return response.data;
     } catch (e) {
       const error = e as AxiosError;
-      const errorData = error.response?.data as Error;
+      const errorData = error.response?.data as AxiosErrorData;
       return rejectWithValue(errorData?.message || 'Connection error. Try again later!');
     }
   }
 );
 
-interface Error {
-  statusCode: number;
-  message: string;
-}
-
 export const logging = createAsyncThunk(
   'auth/logging',
-  async (userData: User, { rejectWithValue }) => {
+  async (userData: UserLogin, { rejectWithValue }) => {
     try {
       const response = await authService.loginUser(userData);
       return response.data;
     } catch (e) {
       const error = e as AxiosError;
-      const errorData = error.response?.data as Error;
+      const errorData = error.response?.data as AxiosErrorData;
       return rejectWithValue(errorData?.message || 'Connection error. Try again later!');
     }
   }
@@ -47,15 +41,7 @@ export const logging = createAsyncThunk(
 export const authSlice = createSlice({
   name: 'auth',
   initialState,
-  reducers: {
-    logout: (state) => {
-      state.loginStatus = 'idle';
-      state.registerStatus = 'idle';
-      delete state.user;
-      tokenService.removeToken();
-      authService.removeUserData();
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(registration.pending, (state) => {
@@ -73,9 +59,6 @@ export const authSlice = createSlice({
       .addCase(logging.fulfilled, (state, action) => {
         state.loginStatus = 'succeeded';
         tokenService.setToken(action.payload.token);
-        authService.setUserData(action.payload.token);
-        const user = jwt_decode<JwtUserData>(action.payload.token);
-        state.user = { userId: user.userId, login: user.login };
       })
       .addCase(logging.rejected, (state) => {
         state.loginStatus = 'failed';
@@ -83,10 +66,7 @@ export const authSlice = createSlice({
   },
 });
 
-export const selectUser = (state: RootState) => state.auth.user;
 export const selectLoginStatus = (state: RootState) => state.auth.loginStatus;
 export const selectRegisterStatus = (state: RootState) => state.auth.registerStatus;
-
-export const { logout } = authSlice.actions;
 
 export const authReducer = authSlice.reducer;

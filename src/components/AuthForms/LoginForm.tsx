@@ -4,10 +4,12 @@ import Input from '../Input/Input';
 import Button from '../Button/Button';
 import styles from './AuthForms.module.scss';
 import { useAppDispatch, useAppSelector } from '../../hooks/reduxTypedHooks';
-import { logging, logout, selectLoginStatus } from '../../store/authSlice';
-import { User } from '../../types/types';
+import { logging, selectLoginStatus } from '../../store/authSlice';
+import { SignInResponse, User, UserLogin } from '../../types/types';
 import { useNavigate } from 'react-router-dom';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
+import { getUserById, logout, selectUserLoadingStatus, setUser } from '../../store/userSlice';
+import { authService } from '../../api/authService';
 
 const LoginForm: React.FC = () => {
   const {
@@ -20,6 +22,7 @@ const LoginForm: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const loginStatus = useAppSelector(selectLoginStatus);
+  const userLoadingStatus = useAppSelector(selectUserLoadingStatus);
   const [errorMessage, setErrorMessage] = useState<string>();
 
   const loginInputParams = {
@@ -34,18 +37,22 @@ const LoginForm: React.FC = () => {
   };
 
   useEffect(() => {
-    if (loginStatus === 'succeeded') {
-      navigate('/');
+    if (loginStatus === 'failed') {
+      reset();
     }
-  }, [loginStatus, navigate]);
-
-  useEffect(() => {
-    reset();
-  }, [isSubmitSuccessful, reset]);
+  }, [isSubmitSuccessful, loginStatus, reset]);
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    dispatch(logging(data as User)).then((response) => {
-      setErrorMessage(response.payload as string);
+    dispatch(logging(data as UserLogin)).then((response) => {
+      if (response.type === 'auth/logging/rejected') {
+        setErrorMessage(response.payload as string);
+      } else {
+        const id = authService.getUserId((response.payload as SignInResponse).token);
+        dispatch(getUserById(id)).then((res) => {
+          dispatch(setUser(res.payload as User));
+          navigate('/');
+        });
+      }
     });
   };
 
@@ -69,8 +76,12 @@ const LoginForm: React.FC = () => {
           Sign In
         </Button>
       </div>
-      {loginStatus === 'loading' && <p className={styles.loading}>Loading...</p>}
-      {loginStatus === 'failed' && <ErrorMessage>{errorMessage}</ErrorMessage>}
+      {(loginStatus === 'loading' || userLoadingStatus === 'loading') && (
+        <p className={styles.loading}>Loading...</p>
+      )}
+      {(loginStatus === 'failed' || userLoadingStatus === 'failed') && (
+        <ErrorMessage>{errorMessage}</ErrorMessage>
+      )}
     </form>
   );
 };

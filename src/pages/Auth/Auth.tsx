@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import Button from '../components/Button/Button';
+import Button from '../../components/Button/Button';
 import styles from './Auth.module.scss';
-import LoginForm from '../components/AuthForms/LoginForm';
-import RegisterForm from '../components/AuthForms/RegisterForm';
-import { authService } from '../api/authService';
+import LoginForm from '../../components/AuthForms/LoginForm';
+import RegisterForm from '../../components/AuthForms/RegisterForm';
+import { authService } from '../../api/authService';
 import { Navigate } from 'react-router-dom';
 
 const Auth: React.FC = () => {

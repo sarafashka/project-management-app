@@ -11,6 +11,11 @@ export interface About {
   };
 }
 
+export interface AxiosErrorData {
+  statusCode: number;
+  message: string;
+}
+
 export interface SignUpResponse {
   name: string;
   login: string;
@@ -29,13 +34,18 @@ export interface AuthUser {
   login?: string;
 }
 
+export interface User {
+  userId: string;
+  userName: string;
+  login: string;
+}
+
 export interface AuthInitialState {
-  user?: AuthUser;
   loginStatus: LoadingStatus;
   registerStatus: LoadingStatus;
 }
 
-export interface User {
+export interface UserLogin {
   login: string;
   password: string;
 }
@@ -50,4 +60,9 @@ export interface JwtUserData {
   userId: string;
   login: string;
   iat: number;
+}
+
+export interface UserInitialState {
+  userLoadingStatus: LoadingStatus;
+  user: AuthUser;
 }

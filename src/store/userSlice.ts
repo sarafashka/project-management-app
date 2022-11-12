@@ -8,8 +8,8 @@ import { tokenService } from '../api/tokenService';
 const initialState: UserInitialState = {
   userLoadingStatus: 'idle',
   user: {
-    userId: '',
-    userName: '',
+    id: '',
+    name: '',
     login: '',
   },
 };
@@ -79,8 +79,8 @@ export const userSlice = createSlice({
     logout: (state) => {
       state.userLoadingStatus = 'idle';
       state.user = {
-        userId: '',
-        userName: '',
+        id: '',
+        name: '',
         login: '',
       };
       tokenService.removeToken();

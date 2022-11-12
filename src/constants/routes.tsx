@@ -1,7 +1,7 @@
 import React from 'react';
 import Welcome from '../pages/Welcome';
 import Error404 from '../pages/Error404';
-import Auth from '../pages/Auth';
+import Auth from '../pages/Auth/Auth';
 
 const AppRoutes = [
   {

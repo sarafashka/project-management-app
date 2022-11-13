@@ -58,5 +58,6 @@ export interface JwtUserData {
 
 export interface UserInitialState {
   userLoadingStatus: LoadingStatus;
+  userUpdatingStatus: LoadingStatus;
   user: User;
 }

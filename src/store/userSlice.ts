@@ -7,6 +7,7 @@ import { tokenService } from '../api/tokenService';
 
 const initialState: UserInitialState = {
   userLoadingStatus: 'idle',
+  userUpdatingStatus: 'idle',
   user: {
     id: '',
     name: '',
@@ -46,7 +47,6 @@ export const deleteUser = createAsyncThunk(
       await userService.deleteUser(id);
       userService.removeUserData();
       tokenService.removeToken();
-      console.log('asdasd');
     } catch (e) {
       const error = e as AxiosError;
       const errorData = error.response?.data as AxiosErrorData;
@@ -107,19 +107,20 @@ export const userSlice = createSlice({
         state.userLoadingStatus = 'succeeded';
       })
       .addCase(updateUser.pending, (state) => {
-        state.userLoadingStatus = 'loading';
+        state.userUpdatingStatus = 'loading';
       })
       .addCase(updateUser.rejected, (state) => {
-        state.userLoadingStatus = 'failed';
+        state.userUpdatingStatus = 'failed';
       })
       .addCase(updateUser.fulfilled, (state) => {
-        state.userLoadingStatus = 'succeeded';
+        state.userUpdatingStatus = 'succeeded';
       });
   },
 });
 
 export const selectUser = (state: RootState) => state.user.user;
 export const selectUserLoadingStatus = (state: RootState) => state.user.userLoadingStatus;
+export const selectUserUpdatingStatus = (state: RootState) => state.user.userUpdatingStatus;
 
 export const { logout, setUser } = userSlice.actions;
 

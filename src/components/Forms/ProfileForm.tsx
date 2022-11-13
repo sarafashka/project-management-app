@@ -6,7 +6,13 @@ import Button from '../Button/Button';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import { loginOptions, nameOptions, passwordOptions } from './formInputOptions';
 import { useAppDispatch, useAppSelector } from '../../hooks/reduxTypedHooks';
-import { deleteUser, selectUser, selectUserLoadingStatus, updateUser } from '../../store/userSlice';
+import {
+  deleteUser,
+  selectUser,
+  selectUserLoadingStatus,
+  selectUserUpdatingStatus,
+  updateUser,
+} from '../../store/userSlice';
 import { SignUpResponse } from '../../types/types';
 import { useNavigate } from 'react-router-dom';
 
@@ -21,6 +27,7 @@ const ProfileForm = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const userLoadingStatus = useAppSelector(selectUserLoadingStatus);
+  const userUpdatingStatus = useAppSelector(selectUserUpdatingStatus);
   const [errorMessage, setErrorMessage] = useState<string>();
 
   const nameInputParams = {
@@ -38,19 +45,16 @@ const ProfileForm = () => {
       id: user.id,
       userData: data as SignUpResponse,
     };
-    console.log(userLoadingStatus);
     dispatch(updateUser(args)).then((response) => {
-      console.log(response, userLoadingStatus);
       if (response.type === 'user/updateUser/rejected') {
         setErrorMessage(response.payload as string);
       }
-      console.log(data);
     });
   };
 
   const handleDeleteUserClick = async () => {
     await dispatch(deleteUser(user.id));
-    navigate('/');
+    navigate('/auth');
   };
 
   return (
@@ -77,9 +81,13 @@ const ProfileForm = () => {
           Delete user
         </Button>
       </div>
-      {userLoadingStatus === 'loading' && <p className={styles.loading}>Please wait...</p>}
-      {userLoadingStatus === 'failed' && <ErrorMessage>{errorMessage}</ErrorMessage>}
-      {userLoadingStatus === 'succeeded' && <ErrorMessage>User data updated</ErrorMessage>}
+      {(userLoadingStatus === 'loading' || userUpdatingStatus === 'loading') && (
+        <p className={styles.loading}>Please wait...</p>
+      )}
+      {(userLoadingStatus === 'failed' || userUpdatingStatus === 'failed') && (
+        <ErrorMessage>{errorMessage}</ErrorMessage>
+      )}
+      {userUpdatingStatus === 'succeeded' && <ErrorMessage>User data updated</ErrorMessage>}
     </form>
   );
 };

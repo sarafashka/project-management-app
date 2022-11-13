@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import Input from '../Input/Input';
 import Button from '../Button/Button';
-import styles from './AuthForms.module.scss';
+import styles from './Forms.module.scss';
 import { useAppDispatch, useAppSelector } from '../../hooks/reduxTypedHooks';
 import { logging, selectLoginStatus } from '../../store/authSlice';
 import { SignInResponse, User, UserLogin } from '../../types/types';
@@ -50,7 +50,7 @@ const LoginForm: React.FC = () => {
         const id = authService.getUserId((response.payload as SignInResponse).token);
         dispatch(getUserById(id)).then((res) => {
           dispatch(setUser(res.payload as User));
-          navigate('/');
+          navigate('/profile');
         });
       }
     });

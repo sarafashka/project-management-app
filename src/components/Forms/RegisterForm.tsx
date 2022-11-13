@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import Input from '../Input/Input';
 import Button from '../Button/Button';
-import styles from './AuthForms.module.scss';
+import styles from './Forms.module.scss';
 import { useAppDispatch, useAppSelector } from '../../hooks/reduxTypedHooks';
 import {
   logging,
@@ -15,6 +15,7 @@ import { useNavigate } from 'react-router-dom';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
 import { authService } from '../../api/authService';
 import { getUserById, setUser } from '../../store/userSlice';
+import { loginOptions, nameOptions, passwordOptions } from './formInputOptions';
 
 const RegisterForm: React.FC = () => {
   const {
@@ -30,39 +31,13 @@ const RegisterForm: React.FC = () => {
   const [errorMessage, setErrorMessage] = useState<string>();
 
   const nameInputParams = {
-    ...register('name', {
-      required: 'Please enter your name',
-      pattern: {
-        value: /^[A-Za-z0-9 _]*[A-Za-z0-9][A-Za-z0-9 _]*$/,
-        message: 'The name can only contain letters (eng) and numbers',
-      },
-    }),
+    ...register('name', nameOptions),
   };
   const loginInputParams = {
-    ...register('login', {
-      required: 'Login is required',
-      minLength: {
-        value: 3,
-        message: 'Login must be at least 3 characters',
-      },
-      pattern: {
-        value: /^[A-Za-z0-9_]*[A-Za-z0-9][A-Za-z0-9_]*$/,
-        message: 'Login can only contain letters (eng) and numbers',
-      },
-    }),
+    ...register('login', loginOptions),
   };
   const passwordInputParams = {
-    ...register('password', {
-      required: 'Password is required',
-      minLength: {
-        value: 8,
-        message: 'Password must be at least 8 characters',
-      },
-      pattern: {
-        value: /^[A-Za-z0-9~\\!@#$%^&*()_+|}{:"?><=-]*$/,
-        message: 'Login can only contain letters (eng) and numbers',
-      },
-    }),
+    ...register('password', passwordOptions),
   };
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {

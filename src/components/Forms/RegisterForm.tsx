@@ -51,7 +51,7 @@ const RegisterForm: React.FC = () => {
           const id = authService.getUserId((res.payload as SignInResponse).token);
           dispatch(getUserById(id)).then((res) => {
             dispatch(setUser(res.payload as User));
-            navigate('/');
+            navigate('/profile');
           });
         });
       }

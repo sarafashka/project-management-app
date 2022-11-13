@@ -43,8 +43,10 @@ export const deleteUser = createAsyncThunk(
   'user/deleteUser',
   async (id: string, { rejectWithValue }) => {
     try {
-      const response = await userService.deleteUser(id);
-      return response.data;
+      await userService.deleteUser(id);
+      userService.removeUserData();
+      tokenService.removeToken();
+      console.log('asdasd');
     } catch (e) {
       const error = e as AxiosError;
       const errorData = error.response?.data as AxiosErrorData;

@@ -6,8 +6,9 @@ import Button from '../Button/Button';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import { loginOptions, nameOptions, passwordOptions } from './formInputOptions';
 import { useAppDispatch, useAppSelector } from '../../hooks/reduxTypedHooks';
-import { selectUser, selectUserLoadingStatus, updateUser } from '../../store/userSlice';
+import { deleteUser, selectUser, selectUserLoadingStatus, updateUser } from '../../store/userSlice';
 import { SignUpResponse } from '../../types/types';
+import { useNavigate } from 'react-router-dom';
 
 const ProfileForm = () => {
   const {
@@ -18,6 +19,7 @@ const ProfileForm = () => {
 
   const user = useAppSelector(selectUser);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const userLoadingStatus = useAppSelector(selectUserLoadingStatus);
   const [errorMessage, setErrorMessage] = useState<string>();
 
@@ -46,6 +48,11 @@ const ProfileForm = () => {
     });
   };
 
+  const handleDeleteUserClick = async () => {
+    await dispatch(deleteUser(user.id));
+    navigate('/');
+  };
+
   return (
     <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
       <Input
@@ -66,14 +73,13 @@ const ProfileForm = () => {
         <Button className={styles.sign} type="submit">
           Update profile
         </Button>
-        <Button className={styles.back} type="button">
-          Back
+        <Button className={styles.delete} type="button" onClick={handleDeleteUserClick}>
+          Delete user
         </Button>
       </div>
       {userLoadingStatus === 'loading' && <p className={styles.loading}>Please wait...</p>}
       {userLoadingStatus === 'failed' && <ErrorMessage>{errorMessage}</ErrorMessage>}
       {userLoadingStatus === 'succeeded' && <ErrorMessage>User data updated</ErrorMessage>}
-      {/*{loginStatus === 'loading' && <p className={styles.loading}>Loading...</p>}*/}
     </form>
   );
 };

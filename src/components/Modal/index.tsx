@@ -6,12 +6,14 @@ import Button from 'components/Button/Button';
 
 import styles from './Modal.module.scss';
 
-const { overlay } = styles;
+const { overlay, popup, closeBtn } = styles;
+const modalClassName = 'open-modal';
+
 const modalRoot = document.getElementById('modal-root');
 
 type ModalProps = {
   className?: string;
-  children: React.ReactNode;
+  children?: React.ReactNode;
   onClose: () => void;
 };
 
@@ -20,17 +22,23 @@ const Modal: React.FC<ModalProps> = ({ children, className, onClose }) => {
 
   useEffect(() => {
     modalRoot?.appendChild(current);
+    modalRoot?.classList.add(modalClassName);
 
     return () => {
       modalRoot?.removeChild(current);
+      modalRoot?.classList.remove(modalClassName);
     };
   }, [current]);
 
+  const handleClose = () => {
+    onClose();
+  };
+
   const wrapper = (
     <div>
-      <div className={overlay} onClick={onClose} />
-      <div className={classNames('popup', className)}>
-        <Button className="closeBtn" onClick={onClose} />
+      <div className={overlay} onClick={handleClose} />
+      <div className={classNames(popup, className)}>
+        <Button className={closeBtn} onClick={handleClose} kind="close" />
         {children}
       </div>
     </div>

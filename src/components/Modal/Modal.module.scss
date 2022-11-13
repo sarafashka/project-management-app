@@ -1,3 +1,6 @@
+@import '../../styles/constants';
+@import '../../styles/mixins';
+
 #modal-root {
   position: relative;
   z-index: 2;
@@ -5,7 +8,7 @@
 
 .open-modal ~ #root {
   overflow: hidden;
-  padding-right: 10px;
+  padding-right: 5px;
 }
 
 .overlay {
@@ -23,48 +26,45 @@
   display: flex;
   top: 50%;
   left: 50%;
-  padding: 10px;
+  padding: 20px;
+  max-height: 800px;
+  max-width: 1490px;
+  width: 78%;
+  height: 78vh;
 
-  //background-color: $card-characteristics-background;
+  background-color: $background;
   border-radius: 20px;
+  box-shadow: 0 0 30px $primary;
 
   transform: translate(-50%, -50%);
   z-index: 3;
 
-  @include desktop-middle {
-    padding: 0.71vw;
 
-    border-radius: 1.42vw;
+  @include big-tablet {
+    padding: 2.29vw;
+
+    border-radius: 2.29vw;
   }
 
-  @include tablet-middle {
-    padding: 5px;
+  @include middle-mobile {
+    padding: 10px;
 
-    border-radius: 12.2px;
-  }
-
-  @include mobile-highest {
-    flex-direction: column;
-    max-width: 80vw;
+    border-radius: 10px;
   }
 }
 
-/*close-btn {
+.closeBtn {
   position: absolute;
   top: -30px;
   right: -30px;
 
-  @include desktop-middle {
-    width: 2.14vw;
-    height: 2.14vw;
-    top: -2.14vw;
-    right: -2.14vw;
+  @include big-tablet {
+    top: -3.12vw;
+    right: -3.12vw;
   }
 
-  @include tablet-middle {
-    width: 18.4px;
-    height: 18.4px;
-    top: -18.4px;
-    right: -18.4px;
+  @media (max-width: 706px) {
+    top: -22px;
+    right: -22px;
   }
-}*/
+}

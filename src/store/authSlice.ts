@@ -4,18 +4,25 @@ import { authService } from '../api/authService';
 import { AxiosError } from 'axios';
 import { RootState } from './store';
 import { tokenService } from '../api/tokenService';
+import { userService } from '../api/userService';
+import { setUser } from './userSlice';
 
 const initialState: AuthInitialState = {
   loginStatus: 'idle',
   registerStatus: 'idle',
 };
 
-export const registration = createAsyncThunk(
-  'auth/registration',
-  async (userData: NewUser, { rejectWithValue }) => {
+export const registerUser = createAsyncThunk(
+  'auth/register',
+  async (data: NewUser, { dispatch, rejectWithValue }) => {
     try {
-      const response = await authService.registerUser(userData);
-      return response.data;
+      await authService.registerUser(data);
+      const userData = { login: data.login, password: data.password };
+      const signInResponse = await authService.loginUser(userData);
+      tokenService.setToken(signInResponse.data.token);
+      const id = authService.getUserId(signInResponse.data.token);
+      const user = await userService.getUserById(id);
+      dispatch(setUser(user.data));
     } catch (e) {
       const error = e as AxiosError;
       const errorData = error.response?.data as AxiosErrorData;
@@ -24,12 +31,15 @@ export const registration = createAsyncThunk(
   }
 );
 
-export const logging = createAsyncThunk(
-  'auth/logging',
-  async (userData: UserLogin, { rejectWithValue }) => {
+export const login = createAsyncThunk(
+  'auth/login',
+  async (userData: UserLogin, { dispatch, rejectWithValue }) => {
     try {
-      const response = await authService.loginUser(userData);
-      return response.data;
+      const signInResponse = await authService.loginUser(userData);
+      tokenService.setToken(signInResponse.data.token);
+      const id = authService.getUserId(signInResponse.data.token);
+      const user = await userService.getUserById(id);
+      dispatch(setUser(user.data));
     } catch (e) {
       const error = e as AxiosError;
       const errorData = error.response?.data as AxiosErrorData;
@@ -44,23 +54,22 @@ export const authSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(registration.pending, (state) => {
+      .addCase(registerUser.pending, (state) => {
         state.registerStatus = 'loading';
       })
-      .addCase(registration.fulfilled, (state) => {
+      .addCase(registerUser.fulfilled, (state) => {
         state.registerStatus = 'succeeded';
       })
-      .addCase(registration.rejected, (state) => {
+      .addCase(registerUser.rejected, (state) => {
         state.registerStatus = 'failed';
       })
-      .addCase(logging.pending, (state) => {
+      .addCase(login.pending, (state) => {
         state.loginStatus = 'loading';
       })
-      .addCase(logging.fulfilled, (state, action) => {
+      .addCase(login.fulfilled, (state) => {
         state.loginStatus = 'succeeded';
-        tokenService.setToken(action.payload.token);
       })
-      .addCase(logging.rejected, (state) => {
+      .addCase(login.rejected, (state) => {
         state.loginStatus = 'failed';
       });
   },

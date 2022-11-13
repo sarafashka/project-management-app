@@ -1,8 +1,10 @@
 .page {
   display: flex;
   align-items: center;
+  flex-direction: column;
   justify-content: center;
   min-height: 100vh;
+  gap: 20px;
 }
 
 .frame {
@@ -14,9 +16,14 @@
   border-radius: 16px;
   background: #ffffff;
   box-shadow: 0 4.69041px 150.093px rgba(0, 0, 0, 0.16);
-  gap: 48px;
+  gap: 25px;
 }
 
 .form {
   width: 100%;
+}
+
+.formTitle {
+  width: 100%;
+  text-align: center;
 }

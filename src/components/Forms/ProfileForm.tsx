@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './Forms.module.scss';
 import Input from '../Input/Input';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
 import Button from '../Button/Button';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import { loginOptions, nameOptions, passwordOptions } from './formInputOptions';
+import { useAppDispatch, useAppSelector } from '../../hooks/reduxTypedHooks';
+import { selectUser, selectUserLoadingStatus, updateUser } from '../../store/userSlice';
+import { SignUpResponse } from '../../types/types';
 
 const ProfileForm = () => {
   const {
@@ -12,6 +15,11 @@ const ProfileForm = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
+
+  const user = useAppSelector(selectUser);
+  const dispatch = useAppDispatch();
+  const userLoadingStatus = useAppSelector(selectUserLoadingStatus);
+  const [errorMessage, setErrorMessage] = useState<string>();
 
   const nameInputParams = {
     ...register('name', nameOptions),
@@ -24,14 +32,33 @@ const ProfileForm = () => {
   };
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    console.log(data);
+    const args = {
+      id: user.id,
+      userData: data as SignUpResponse,
+    };
+    console.log(userLoadingStatus);
+    dispatch(updateUser(args)).then((response) => {
+      console.log(response, userLoadingStatus);
+      if (response.type === 'user/updateUser/rejected') {
+        setErrorMessage(response.payload as string);
+      }
+      console.log(data);
+    });
   };
 
   return (
     <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
-      <Input label="Enter your name:" reactHookFormProps={nameInputParams} />
+      <Input
+        label="Enter your name:"
+        defaultValue={user.name}
+        reactHookFormProps={nameInputParams}
+      />
       {errors.name && <ErrorMessage>{errors.name.message as string}</ErrorMessage>}
-      <Input label="Enter your login:" reactHookFormProps={loginInputParams} />
+      <Input
+        label="Enter your login:"
+        defaultValue={user.login}
+        reactHookFormProps={loginInputParams}
+      />
       {errors.login && <ErrorMessage>{errors.login.message as string}</ErrorMessage>}
       <Input label="Choose password:" type="password" reactHookFormProps={passwordInputParams} />
       {errors.password && <ErrorMessage>{errors.password.message as string}</ErrorMessage>}
@@ -43,8 +70,9 @@ const ProfileForm = () => {
           Back
         </Button>
       </div>
-      {/*{registerStatus === 'loading' && <p className={styles.loading}>Loading...</p>}*/}
-      {/*{registerStatus === 'failed' && <ErrorMessage>{errorMessage}</ErrorMessage>}*/}
+      {userLoadingStatus === 'loading' && <p className={styles.loading}>Please wait...</p>}
+      {userLoadingStatus === 'failed' && <ErrorMessage>{errorMessage}</ErrorMessage>}
+      {userLoadingStatus === 'succeeded' && <ErrorMessage>User data updated</ErrorMessage>}
       {/*{loginStatus === 'loading' && <p className={styles.loading}>Loading...</p>}*/}
     </form>
   );

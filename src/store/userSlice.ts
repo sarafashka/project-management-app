@@ -60,10 +60,12 @@ interface updateUserArg {
 
 export const updateUser = createAsyncThunk(
   'user/updateUser',
-  async ({ id, userData }: updateUserArg, { rejectWithValue }) => {
+  async ({ id, userData }: updateUserArg, { dispatch, rejectWithValue }) => {
     try {
       const response = await userService.updateUser(id, userData);
-      return response.data;
+      const user = response.data;
+      dispatch(setUser(user));
+      return user;
     } catch (e) {
       const error = e as AxiosError;
       const errorData = error.response?.data as AxiosErrorData;
@@ -96,7 +98,19 @@ export const userSlice = createSlice({
       .addCase(getUserById.pending, (state) => {
         state.userLoadingStatus = 'loading';
       })
+      .addCase(getUserById.rejected, (state) => {
+        state.userLoadingStatus = 'failed';
+      })
       .addCase(getUserById.fulfilled, (state) => {
+        state.userLoadingStatus = 'succeeded';
+      })
+      .addCase(updateUser.pending, (state) => {
+        state.userLoadingStatus = 'loading';
+      })
+      .addCase(updateUser.rejected, (state) => {
+        state.userLoadingStatus = 'failed';
+      })
+      .addCase(updateUser.fulfilled, (state) => {
         state.userLoadingStatus = 'succeeded';
       });
   },

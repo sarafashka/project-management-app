@@ -11,7 +11,7 @@ const Profile: React.FC = () => {
     <div className={styles.page}>
       <h1>Hello, {user.name}!</h1>
       <div className={styles.frame}>
-        <h2>Edit your prifile</h2>
+        <h2 className={styles.formTitle}>Edit your profile</h2>
         <div className={styles.form}>
           <ProfileForm />
         </div>

@@ -1,0 +1,61 @@
+@import '../../../styles/constants';
+@import '../../../styles/mixins';
+
+.confirmation {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 30px;
+  width: 100%;
+  margin: 0 auto;
+
+  font-size: 20px;
+
+  @include big-tablet {
+    gap: 3.12vw;
+
+    font-size: 2.08vw;
+  }
+
+  @include small-tablet {
+    gap: 23.9px;
+
+    font-size: 15.9px;
+  }
+}
+
+.content {
+  text-align: center;
+}
+
+.attributeValue {
+  color: $primary;
+  font-weight: 500;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+
+  @include big-tablet {
+    gap: 1.56vw;
+  }
+
+  @include small-tablet {
+    gap: 11.9px;
+  }
+}
+
+.btn {
+  width: 40%;
+  padding: 3.5% 0;
+
+  @include small-tablet {
+    width: 127.88px;
+  }
+
+  @include middle-mobile {
+    width: 38.55%;
+  }
+}

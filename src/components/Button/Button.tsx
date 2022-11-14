@@ -2,17 +2,14 @@ import classNames from 'classnames';
 import React, { ButtonHTMLAttributes } from 'react';
 import styles from './Button.module.scss';
 
-const { button, closeBtn } = styles;
+const { button } = styles;
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  kind?: 'close';
+  kind: 'close' | 'confirm' | 'cancel';
 }
 
 const Button: React.FC<ButtonProps> = ({ children, className, kind, ...rest }) => {
   return (
-    <button
-      className={classNames(button, { [`${closeBtn}`]: kind === 'close' }, className)}
-      {...rest}
-    >
+    <button className={classNames(button, { [`${styles[kind]}`]: kind }, className)} {...rest}>
       {children}
     </button>
   );

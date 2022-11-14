@@ -11,7 +11,7 @@
   transition: 0.5s;
 }
 
-.closeBtn {
+.close {
   position: relative;
   display: flex;
   align-items: center;
@@ -51,5 +51,50 @@
   &:hover::before,
   &:hover::after {
     background: $hover-primary;
+  }
+}
+
+.confirm,
+.cancel {
+  width: 160px;
+  padding: 3.5% 0;
+
+  font-size: 18px;
+  font-weight: 500;
+
+  border-radius: 10px;
+
+  @include big-tablet {
+    font-size: 1.87vw;
+  }
+
+  @include small-tablet {
+    font-size: 14.3px;
+  }
+}
+
+.cancel {
+  color: $primary;
+
+  background-color: $cancel-background;
+  border: 2px solid $cancel-background;
+
+  &:hover {
+    color: $hover-primary;
+
+    background-color: transparent;
+    border-color: $hover-primary;
+  }
+}
+
+.confirm {
+  color: $btn-text;
+
+  background-color: $primary; 
+  border: 2px solid $primary;
+
+  &:hover {
+    background-color: $hover-primary;
+    border: 2px solid $hover-primary;
   }
 }

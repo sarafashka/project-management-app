@@ -6,40 +6,36 @@ import Button from 'components/Button/Button';
 
 import styles from './Modal.module.scss';
 
-const { overlay, popup, closeBtn } = styles;
-const modalClassName = 'open-modal';
+const { overlay, popup, closeBtn, container, openModal } = styles;
 
 const modalRoot = document.getElementById('modal-root');
 
 type ModalProps = {
   className?: string;
   children?: React.ReactNode;
+  kind: 'form' | 'confirmation';
   onClose: () => void;
 };
 
-const Modal: React.FC<ModalProps> = ({ children, className, onClose }) => {
+const Modal: React.FC<ModalProps> = ({ children, className, kind, onClose }) => {
   const { current } = useRef(document.createElement('div'));
 
   useEffect(() => {
     modalRoot?.appendChild(current);
-    modalRoot?.classList.add(modalClassName);
+    modalRoot?.classList.add(openModal);
 
     return () => {
+      modalRoot?.classList.remove(openModal);
       modalRoot?.removeChild(current);
-      modalRoot?.classList.remove(modalClassName);
     };
   }, [current]);
 
-  const handleClose = () => {
-    onClose();
-  };
-
   const wrapper = (
     <div>
-      <div className={overlay} onClick={handleClose} />
-      <div className={classNames(popup, className)}>
-        <Button className={closeBtn} onClick={handleClose} kind="close" />
-        {children}
+      <div className={overlay} onClick={onClose} />
+      <div className={classNames(popup, { [`${styles[kind]}`]: kind }, className)}>
+        <Button className={closeBtn} onClick={onClose} kind="close" />
+        <div className={container}>{children}</div>
       </div>
     </div>
   );

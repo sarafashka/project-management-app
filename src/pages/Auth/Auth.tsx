@@ -22,12 +22,14 @@ const Auth: React.FC = () => {
           <Button
             className={`${styles.button} ${loginButtonStyle}`}
             onClick={() => setIsLoginFormActive(true)}
+            kind="close"
           >
             Login
           </Button>
           <Button
             className={`${styles.button} ${registerButtonStyle}`}
             onClick={() => setIsLoginFormActive(false)}
+            kind="close"
           >
             Register
           </Button>

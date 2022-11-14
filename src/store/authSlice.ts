@@ -1,37 +1,49 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { AuthInitialState, NewUser, User } from '../types/types';
+import { AuthInitialState, AxiosErrorData, NewUser, UserLogin } from '../types/types';
 import { authService } from '../api/authService';
 import { AxiosError } from 'axios';
 import { RootState } from './store';
 import { tokenService } from '../api/tokenService';
+import { userService } from '../api/userService';
+import { setUser } from './userSlice';
 
 const initialState: AuthInitialState = {
   loginStatus: 'idle',
   registerStatus: 'idle',
 };
 
-export const registeration = createAsyncThunk(
-  'auth/registeration',
-  async (userData: NewUser, { rejectWithValue }) => {
+export const registerUser = createAsyncThunk(
+  'auth/register',
+  async (data: NewUser, { dispatch, rejectWithValue }) => {
     try {
-      const response = await authService.registerUser(userData);
-      return response.data;
+      await authService.registerUser(data);
+      const userData = { login: data.login, password: data.password };
+      const signInResponse = await authService.loginUser(userData);
+      tokenService.setToken(signInResponse.data.token);
+      const id = authService.getUserId(signInResponse.data.token);
+      const user = await userService.getUserById(id);
+      dispatch(setUser(user.data));
     } catch (e) {
       const error = e as AxiosError;
-      return rejectWithValue(error.message);
+      const errorData = error.response?.data as AxiosErrorData;
+      return rejectWithValue(errorData?.message || 'Connection error. Try again later!');
     }
   }
 );
 
-export const logining = createAsyncThunk(
-  'auth/logining',
-  async (userData: User, { rejectWithValue }) => {
+export const login = createAsyncThunk(
+  'auth/login',
+  async (userData: UserLogin, { dispatch, rejectWithValue }) => {
     try {
-      const response = await authService.loginUser(userData);
-      return response.data;
+      const signInResponse = await authService.loginUser(userData);
+      tokenService.setToken(signInResponse.data.token);
+      const id = authService.getUserId(signInResponse.data.token);
+      const user = await userService.getUserById(id);
+      dispatch(setUser(user.data));
     } catch (e) {
       const error = e as AxiosError;
-      return rejectWithValue(error.message);
+      const errorData = error.response?.data as AxiosErrorData;
+      return rejectWithValue(errorData?.message || 'Connection error. Try again later!');
     }
   }
 );
@@ -39,42 +51,31 @@ export const logining = createAsyncThunk(
 export const authSlice = createSlice({
   name: 'auth',
   initialState,
-  reducers: {
-    logout: (state) => {
-      state.loginStatus = 'idle';
-      state.registerStatus = 'idle';
-      delete state.user;
-      tokenService.removeToken();
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(registeration.pending, (state) => {
+      .addCase(registerUser.pending, (state) => {
         state.registerStatus = 'loading';
       })
-      .addCase(registeration.fulfilled, (state) => {
+      .addCase(registerUser.fulfilled, (state) => {
         state.registerStatus = 'succeeded';
       })
-      .addCase(registeration.rejected, (state) => {
+      .addCase(registerUser.rejected, (state) => {
         state.registerStatus = 'failed';
       })
-      .addCase(logining.pending, (state) => {
+      .addCase(login.pending, (state) => {
         state.loginStatus = 'loading';
       })
-      .addCase(logining.fulfilled, (state, action) => {
+      .addCase(login.fulfilled, (state) => {
         state.loginStatus = 'succeeded';
-        tokenService.setToken(action.payload.token);
       })
-      .addCase(logining.rejected, (state) => {
+      .addCase(login.rejected, (state) => {
         state.loginStatus = 'failed';
       });
   },
 });
 
-export const selectUser = (state: RootState) => state.auth.user;
 export const selectLoginStatus = (state: RootState) => state.auth.loginStatus;
 export const selectRegisterStatus = (state: RootState) => state.auth.registerStatus;
-
-export const { logout } = authSlice.actions;
 
 export const authReducer = authSlice.reducer;

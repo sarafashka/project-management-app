@@ -11,6 +11,11 @@ export interface About {
   };
 }
 
+export interface AxiosErrorData {
+  statusCode: number;
+  message: string;
+}
+
 export interface SignUpResponse {
   name: string;
   login: string;
@@ -23,19 +28,18 @@ export interface SignInResponse {
 
 export type LoadingStatus = 'idle' | 'loading' | 'succeeded' | 'failed';
 
-export interface AuthUser {
-  userId: string;
-  userName: string;
+export interface User {
+  id: string;
+  name: string;
   login: string;
 }
 
 export interface AuthInitialState {
-  user?: AuthUser;
   loginStatus: LoadingStatus;
   registerStatus: LoadingStatus;
 }
 
-export interface User {
+export interface UserLogin {
   login: string;
   password: string;
 }
@@ -77,3 +81,15 @@ export type RequestUpdateColumn = {
     order: number | null;
   };
 };
+
+export interface JwtUserData {
+  userId: string;
+  login: string;
+  iat: number;
+}
+
+export interface UserInitialState {
+  userLoadingStatus: LoadingStatus;
+  userUpdatingStatus: LoadingStatus;
+  user: User;
+}

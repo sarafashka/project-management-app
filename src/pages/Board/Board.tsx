@@ -1,13 +1,13 @@
-import Column from 'components/Column';
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { createColumn, getAllColumns } from 'store/columnSlice/columnThunk';
 import { useAppDispatch, useAppSelector } from 'hooks/reduxTypedHooks';
-import cn from 'classnames';
-import styles from './Board.module.scss';
+import Column from 'components/Column';
+import { createColumn, getAllColumns } from 'store/columnSlice/columnThunk';
 import { selectColumnList } from 'store/columnSlice/columnSlice';
 import Button from 'components/Button/Button';
 import { RequestCreateColumn } from 'types/types';
+import cn from 'classnames';
+import styles from './Board.module.scss';
 
 const Board: React.FC = () => {
   // const [error, setError] = useState('');

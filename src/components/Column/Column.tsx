@@ -2,7 +2,7 @@ import React from 'react';
 import cn from 'classnames';
 import styles from './Column.module.scss';
 import Button from 'components/Button/Button';
-import { deleteColumn } from 'store/columnSlice/columnThunk';
+import { deleteColumn, updateColumn } from 'store/columnSlice/columnThunk';
 import { useAppDispatch } from 'hooks/reduxTypedHooks';
 import { RequestDeleteColumn } from 'types/types';
 import ColumnTitle from './ColumnTitle';
@@ -16,20 +16,33 @@ type Props = {
 const Column: React.FC<Props> = (column) => {
   const { id, title, boardId } = column;
   const dispatch = useAppDispatch();
-  const requestDeleteColumn: RequestDeleteColumn = {
+  const dataForDeleteColumn: RequestDeleteColumn = {
     columnId: id,
     boardId: boardId,
+  };
+
+  const handleSubmit = (title: string) => {
+    const newTitle = title;
+    const dataForUpdateColumn = {
+      boardId: boardId,
+      columnId: id,
+      body: {
+        title: newTitle,
+        order: null,
+      },
+    };
+    dispatch(updateColumn(dataForUpdateColumn));
   };
 
   return (
     <div className={styles.item}>
       <div className={styles.header}>
-        <ColumnTitle title={title} id={id} />
+        <ColumnTitle title={title} submit={handleSubmit} />
         <Button
           className={cn(styles.button, 'btn')}
           type="button"
           onClick={() => {
-            dispatch(deleteColumn(requestDeleteColumn));
+            dispatch(deleteColumn(dataForDeleteColumn));
           }}
         >
           x

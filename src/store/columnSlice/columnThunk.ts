@@ -4,7 +4,6 @@ import { AxiosError } from 'axios';
 import { RootState } from 'store/store';
 import {
   ColumnItem,
-  ColumnState,
   RequestCreateColumn,
   RequestDeleteColumn,
   RequestUpdateColumn,
@@ -27,9 +26,9 @@ export const createColumn = createAsyncThunk<
   ColumnItem,
   RequestCreateColumn,
   { rejectValue: string }
->('column/createColumn', async function (request, { rejectWithValue }) {
+>('column/createColumn', async function (data, { rejectWithValue }) {
   try {
-    const response = await columnService.createColumn(request);
+    const response = await columnService.createColumn(data);
     return response.data;
   } catch (error) {
     const axiosError = <AxiosError>error;
@@ -39,10 +38,10 @@ export const createColumn = createAsyncThunk<
 
 export const deleteColumn = createAsyncThunk<string, RequestDeleteColumn, { rejectValue: string }>(
   'column/deleteColumn',
-  async function (request, { rejectWithValue }) {
+  async function (data, { rejectWithValue }) {
     try {
-      await columnService.deleteColumn(request);
-      return request.columnId;
+      await columnService.deleteColumn(data);
+      return data.columnId;
     } catch (error) {
       const axiosError = <AxiosError>error;
       return rejectWithValue(axiosError.message);

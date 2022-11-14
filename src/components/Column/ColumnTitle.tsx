@@ -1,68 +1,56 @@
-import { useAppDispatch } from 'hooks/reduxTypedHooks';
+import Button from 'components/Button/Button';
 import React from 'react';
 import { useState } from 'react';
-import { updateColumn } from 'store/columnSlice/columnThunk';
 import styles from './ColumnTitle.module.scss';
 
 type Props = {
   title: string;
-  id: string;
-  //handleClickTitle:
+  submit: (title: string) => void;
 };
 
 const ColumnTitle: React.FC<Props> = (columnTitle) => {
-  const { id } = columnTitle;
   const [title, setTitle] = useState(columnTitle.title);
   const [isEdited, setIsEdited] = useState(false);
 
-  const boardId = '8003a52c-82e1-443c-b002-cd1492e00685';
-  const dispatch = useAppDispatch(); //move functionality to column tsx
-  const dataForUpdateColumn = {
-    boardId: boardId,
-    columnId: id,
-    body: {
-      title: title,
-      order: null,
-    },
+  const handleSubmit = () => {
+    columnTitle.submit(title);
+    setIsEdited(false);
   };
 
-  console.log('state', title);
-  console.log('props', columnTitle);
+  const clickCancel = () => {
+    setTitle(columnTitle.title);
+    setIsEdited(false);
+  };
+
+  const updateInputValue = (event: React.FocusEvent<HTMLInputElement, Element>) => {
+    const elementClicked = event.relatedTarget;
+    if (elementClicked?.hasAttribute('type')) {
+      if ((elementClicked as HTMLInputElement).type === 'submit') {
+        handleSubmit();
+      }
+    } else clickCancel();
+  };
+
   return (
-    <>
+    <form onSubmit={handleSubmit}>
       <input
         className={styles.input}
         value={title}
         onFocus={() => setIsEdited(true)}
-        onBlur={() => setIsEdited(false)}
         onChange={(event) => setTitle(event.target.value)}
+        onBlur={(event) => updateInputValue(event)}
       />
       {isEdited && (
         <>
-          <button
-            className={styles.submit}
-            onClick={() => {
-              dispatch(updateColumn(dataForUpdateColumn));
-              console.log('change');
-              setIsEdited(false);
-            }}
-          >
+          <Button type="submit" className={styles.submit} onClick={() => handleSubmit()}>
             ok
-          </button>
-          <button
-            type="button"
-            className={styles.cancel}
-            onClick={() => {
-              setTitle(columnTitle.title);
-              console.log('title props', columnTitle.title);
-              setIsEdited(false);
-            }}
-          >
+          </Button>
+          <Button type="button" className={styles.cancel} onClick={() => clickCancel()}>
             cancel
-          </button>
+          </Button>
         </>
       )}
-    </>
+    </form>
   );
 };
 export default ColumnTitle;

@@ -24,3 +24,5 @@ const AppRoutes = [
 ];
 
 export default AppRoutes;
+
+export const publicRoutes = ['/', '/auth'];

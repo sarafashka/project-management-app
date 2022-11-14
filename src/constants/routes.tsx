@@ -18,7 +18,7 @@ const AppRoutes = [
     component: <Error404 />,
   },
   {
-    path: 'board/:title',
+    path: 'board/:id',
     component: <Board />,
   },
 ];

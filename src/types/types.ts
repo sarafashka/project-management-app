@@ -45,9 +45,35 @@ export interface NewUser {
   login: string;
   password: string;
 }
+export type ColumnState = {
+  columns: ColumnItem[];
+  isLoading: boolean;
+  error: string | null;
+};
 
 export interface ColumnItem {
   id: string;
   title: string;
   order: number;
 }
+
+export type RequestCreateColumn = {
+  boardId: string;
+  body: {
+    title: string;
+  };
+};
+
+export type RequestDeleteColumn = {
+  boardId: string;
+  columnId: string;
+};
+
+export type RequestUpdateColumn = {
+  boardId: string;
+  columnId: string;
+  body: {
+    title: string;
+    order: number | null;
+  };
+};

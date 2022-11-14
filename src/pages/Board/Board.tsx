@@ -1,46 +1,56 @@
 import Column from 'components/Column';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { createColumn, getAllColumns } from 'store/columnSlice/columnThunk';
+import { useAppDispatch, useAppSelector } from 'hooks/reduxTypedHooks';
 import cn from 'classnames';
 import styles from './Board.module.scss';
-import { columnService } from 'api/columnService';
-import { ColumnItem } from 'types/types';
+import { selectColumnList } from 'store/columnSlice/columnSlice';
+import Button from 'components/Button/Button';
+import { RequestCreateColumn } from 'types/types';
 
 const Board: React.FC = () => {
-  const [columnsList, setColumnList] = useState<ColumnItem[]>([]);
   // const [error, setError] = useState('');
 
   const navigate = useNavigate();
-  const goToBoards = () => navigate('/main');
+  const goToBoards = () => navigate('/');
+  const dispatch = useAppDispatch();
 
-  const boardId = '79b1e016-e840-4ac1-9c65-ba18aee1e015'; //add id from props (wait from boards)
-  const { getAllColumns } = columnService;
+  const columnsList = useAppSelector(selectColumnList);
+
+  const boardId = '8003a52c-82e1-443c-b002-cd1492e00685'; //add id from props (wait from boards)
+  const columnRequestData: RequestCreateColumn = {
+    boardId: boardId,
+    body: {
+      title: 'test',
+    },
+  }; //delete after implementation of 'add column' popup;
 
   useEffect(() => {
-    async function fetchData() {
-      try {
-        const response = await getAllColumns(boardId);
-        setColumnList(response.data);
-      } catch (e) {
-        console.log(e);
-      }
-    }
-    fetchData();
-  }, []); //add id to dependency
+    dispatch(getAllColumns(boardId));
+  }, [dispatch]);
 
   return (
     <>
       <div className={styles.header}>
-        <h2 className={styles.title}>Example board</h2> {/*add from boards*/}
-        <button className={cn(styles.button, 'btn')} />
+        <h2 className={styles.title}>Example board</h2> {/*add from boards slice*/}
+        <Button
+          className={cn(styles.button, 'btn')}
+          type="button"
+          onClick={() => {
+            dispatch(createColumn(columnRequestData));
+          }}
+        >
+          {''}
+        </Button>
       </div>
-      <button className={styles.allBoards} onClick={goToBoards}>
+      <Button className={styles.allBoards} onClick={goToBoards}>
         &#8592; All boards
-      </button>
+      </Button>
       <div>{columnsList.length === 0 && 'Add new column'}</div>
       <div className={styles.list}>
         {columnsList.map((item) => (
-          <Column key={item.id} id={item.id} title={item.title} />
+          <Column key={item.id} id={item.id} title={item.title} boardId={boardId} />
         ))}
       </div>
     </>

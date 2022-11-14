@@ -1,0 +1,16 @@
+@import '../../styles/constants';
+
+.input {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+.submit,
+.cancel {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  &:hover {
+    color: $primary;
+  }
+}

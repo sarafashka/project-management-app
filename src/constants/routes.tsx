@@ -4,6 +4,7 @@ import Error404 from '../pages/Error404';
 import Board from 'pages/Board/Board';
 import Auth from '../pages/Auth/Auth';
 import Profile from '../pages/Profile/Profile';
+import ErrorBoundary from '../components/ErrorBoundary/ErrorBoundary';
 
 const AppRoutes = [
   {
@@ -12,7 +13,11 @@ const AppRoutes = [
   },
   {
     path: '/auth',
-    component: <Auth />,
+    component: (
+      <ErrorBoundary>
+        <Auth />
+      </ErrorBoundary>
+    ),
   },
   {
     path: '/profile',

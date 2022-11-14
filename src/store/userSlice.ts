@@ -7,9 +7,10 @@ import { tokenService } from '../api/tokenService';
 
 const initialState: UserInitialState = {
   userLoadingStatus: 'idle',
+  userUpdatingStatus: 'idle',
   user: {
-    userId: '',
-    userName: '',
+    id: '',
+    name: '',
     login: '',
   },
 };
@@ -43,8 +44,9 @@ export const deleteUser = createAsyncThunk(
   'user/deleteUser',
   async (id: string, { rejectWithValue }) => {
     try {
-      const response = await userService.deleteUser(id);
-      return response.data;
+      await userService.deleteUser(id);
+      userService.removeUserData();
+      tokenService.removeToken();
     } catch (e) {
       const error = e as AxiosError;
       const errorData = error.response?.data as AxiosErrorData;
@@ -60,10 +62,12 @@ interface updateUserArg {
 
 export const updateUser = createAsyncThunk(
   'user/updateUser',
-  async ({ id, userData }: updateUserArg, { rejectWithValue }) => {
+  async ({ id, userData }: updateUserArg, { dispatch, rejectWithValue }) => {
     try {
       const response = await userService.updateUser(id, userData);
-      return response.data;
+      const user = response.data;
+      dispatch(setUser(user));
+      return user;
     } catch (e) {
       const error = e as AxiosError;
       const errorData = error.response?.data as AxiosErrorData;
@@ -79,8 +83,8 @@ export const userSlice = createSlice({
     logout: (state) => {
       state.userLoadingStatus = 'idle';
       state.user = {
-        userId: '',
-        userName: '',
+        id: '',
+        name: '',
         login: '',
       };
       tokenService.removeToken();
@@ -96,16 +100,27 @@ export const userSlice = createSlice({
       .addCase(getUserById.pending, (state) => {
         state.userLoadingStatus = 'loading';
       })
+      .addCase(getUserById.rejected, (state) => {
+        state.userLoadingStatus = 'failed';
+      })
       .addCase(getUserById.fulfilled, (state) => {
         state.userLoadingStatus = 'succeeded';
-        // state.user = { ...action.payload };
-        // userService.setUserData(action.payload);
+      })
+      .addCase(updateUser.pending, (state) => {
+        state.userUpdatingStatus = 'loading';
+      })
+      .addCase(updateUser.rejected, (state) => {
+        state.userUpdatingStatus = 'failed';
+      })
+      .addCase(updateUser.fulfilled, (state) => {
+        state.userUpdatingStatus = 'succeeded';
       });
   },
 });
 
 export const selectUser = (state: RootState) => state.user.user;
 export const selectUserLoadingStatus = (state: RootState) => state.user.userLoadingStatus;
+export const selectUserUpdatingStatus = (state: RootState) => state.user.userUpdatingStatus;
 
 export const { logout, setUser } = userSlice.actions;
 

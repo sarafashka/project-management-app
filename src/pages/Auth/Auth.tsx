@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import Button from '../../components/Button/Button';
 import styles from './Auth.module.scss';
-import LoginForm from '../../components/AuthForms/LoginForm';
-import RegisterForm from '../../components/AuthForms/RegisterForm';
+import LoginForm from '../../components/Forms/LoginForm';
+import RegisterForm from '../../components/Forms/RegisterForm';
 import { authService } from '../../api/authService';
 import { Navigate } from 'react-router-dom';
 

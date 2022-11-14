@@ -2,14 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import Input from '../Input/Input';
 import Button from '../Button/Button';
-import styles from './AuthForms.module.scss';
+import styles from './Forms.module.scss';
 import { useAppDispatch, useAppSelector } from '../../hooks/reduxTypedHooks';
-import { logging, selectLoginStatus } from '../../store/authSlice';
-import { SignInResponse, User, UserLogin } from '../../types/types';
+import { login, selectLoginStatus } from '../../store/authSlice';
+import { UserLogin } from '../../types/types';
 import { useNavigate } from 'react-router-dom';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
-import { getUserById, logout, selectUserLoadingStatus, setUser } from '../../store/userSlice';
-import { authService } from '../../api/authService';
+import { logout, selectUserLoadingStatus } from '../../store/userSlice';
 
 const LoginForm: React.FC = () => {
   const {
@@ -42,16 +41,12 @@ const LoginForm: React.FC = () => {
     }
   }, [isSubmitSuccessful, loginStatus, reset]);
 
-  const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    dispatch(logging(data as UserLogin)).then((response) => {
-      if (response.type === 'auth/logging/rejected') {
+  const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+    dispatch(login(data as UserLogin)).then((response) => {
+      if (response.meta.requestStatus === 'rejected') {
         setErrorMessage(response.payload as string);
       } else {
-        const id = authService.getUserId((response.payload as SignInResponse).token);
-        dispatch(getUserById(id)).then((res) => {
-          dispatch(setUser(res.payload as User));
-          navigate('/');
-        });
+        navigate('/profile');
       }
     });
   };

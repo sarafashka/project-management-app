@@ -11,7 +11,8 @@
 }
 
 .sign,
-.back {
+.back,
+.delete {
   font-weight: 600;
   text-transform: uppercase;
   color: #ffffff;
@@ -22,6 +23,11 @@
 .back {
   color: #aaaaaa;
   background: transparent;
+}
+
+.delete {
+  color: black;
+  background: red;
 }
 
 .loading {

@@ -64,11 +64,10 @@ const LoginForm: React.FC = () => {
           onClick={() => {
             dispatch(logout());
           }}
-          kind="close"
         >
           Logout
         </Button>
-        <Button className={styles.sign} type="submit" kind="close">
+        <Button className={styles.sign} type="submit">
           Sign In
         </Button>
       </div>

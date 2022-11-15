@@ -52,10 +52,10 @@ const RegisterForm: React.FC = () => {
       <Input label="Choose password:" type="password" reactHookFormProps={passwordInputParams} />
       {errors.password && <ErrorMessage>{errors.password.message as string}</ErrorMessage>}
       <div className={styles.buttons}>
-        <Button className={styles.back} type="button" kind="close">
+        <Button className={styles.back} type="button">
           Back
         </Button>
-        <Button className={styles.sign} type="submit" kind="close">
+        <Button className={styles.sign} type="submit">
           Sign Up
         </Button>
       </div>

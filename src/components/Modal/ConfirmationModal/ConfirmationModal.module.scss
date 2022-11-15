@@ -9,28 +9,40 @@
   width: 100%;
   margin: 0 auto;
 
-  font-size: 20px;
-
   @include big-tablet {
     gap: 3.12vw;
-
-    font-size: 2.08vw;
   }
 
   @include small-tablet {
     gap: 23.9px;
-
-    font-size: 15.9px;
   }
 }
 
 .content {
+  font-size: 20px;
   text-align: center;
+
+  @include big-tablet {
+    font-size: 2.08vw;
+  }
+
+  @include small-tablet {
+    font-size: 15.9px;
+  }
 }
 
 .attributeValue {
   color: $primary;
   font-weight: 500;
+  font-size: 20px;
+
+  @include big-tablet {
+    font-size: 2.08vw;
+  }
+
+  @include small-tablet {
+    font-size: 15.9px;
+  }
 }
 
 .container {

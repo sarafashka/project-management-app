@@ -1,8 +1,11 @@
 import React from 'react';
 import './Error404.scss';
 import Error404Svg from './Error404svg';
+import Button from '../../components/Button/Button';
+import { useNavigate } from 'react-router-dom';
 
 const Error404: React.FC = () => {
+  const navigate = useNavigate();
   return (
     <div className="error404">
       <Error404Svg />
@@ -10,13 +13,8 @@ const Error404: React.FC = () => {
         <h1>404</h1>
         <p>Page not found</p>
         <div className="buttons-con">
-          <div className="action-link-wrap">
-            {/*<a onClick="history.back(-1)" className="link-button link-back-button">*/}
-            {/*  Go Back*/}
-            {/*</a>*/}
-            {/*<a href="" className="link-button">*/}
-            {/*  Go to Home Page*/}
-            {/*</a>*/}
+          <div className="action-button-wrap">
+            <Button onClick={() => navigate('/')}>Go to main page</Button>
           </div>
         </div>
       </div>

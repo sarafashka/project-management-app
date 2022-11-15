@@ -12,3 +12,14 @@
     @content;
   }
 }
+
+@mixin button($color, $second-color) {
+  background-color: $color;
+  border-color: $color;
+  color: $second-color;
+
+  &:hover {
+    background-color: $second-color;
+    color: $color;
+  }
+}

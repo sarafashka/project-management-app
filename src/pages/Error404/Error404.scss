@@ -11,6 +11,7 @@
 .message-box {
 display: flex;
   flex-direction: column;
+  text-align: center;
   color: #ffffff;
   gap: 40px;
 }
@@ -20,8 +21,9 @@ display: flex;
   line-height: 46px;
 }
 
-.buttons-con .action-button-wrap {
-  margin-top: 40px;
+.message-box button {
+  background: #ffffff;
+  color: #000000;
 }
 
 #Polygon-1 , #Polygon-2 , #Polygon-3 , #Polygon-4 , #Polygon-4, #Polygon-5 {
@@ -57,6 +59,6 @@ display: flex;
   .message-box {
     position: relative;
     z-index: 2;
-    text-align: center;
   }
 }
+

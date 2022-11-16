@@ -35,11 +35,12 @@ const Board: React.FC = () => {
       <div className={styles.header}>
         <h2 className={styles.title}>Example board</h2> {/*add from boards slice*/}
         <Button
-          className={cn(styles.button, 'btn')}
+          className={cn(styles.button)}
           type="button"
           onClick={() => {
             dispatch(createColumn(columnRequestData));
           }}
+          kind="boardBtn"
         >
           {''}
         </Button>

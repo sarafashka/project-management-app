@@ -41,8 +41,9 @@ const Column: React.FC<Props> = (column) => {
       <div className={styles.header}>
         <ColumnTitle title={title} submit={handleSubmit} />
         <Button
-          className={cn(styles.button, 'btn')}
+          className={cn(styles.button)}
           type="button"
+          kind="boardBtn"
           onClick={() => {
             dispatch(deleteColumn(dataForDeleteColumn));
           }}

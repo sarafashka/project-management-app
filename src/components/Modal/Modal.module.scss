@@ -1,0 +1,146 @@
+@import '../../styles/constants';
+@import '../../styles/mixins';
+
+#modal-root {
+  position: relative;
+  z-index: 2;
+}
+
+.openModal,
+.closeModal {
+  & ~ #root {
+    overflow: hidden;
+    padding-right: 5px;
+
+    pointer-events: none;
+  }
+}
+
+.openModal {
+  & .overlay,
+  & .popup {
+    animation: 0.5s open;
+  }
+}
+
+.closeModal {
+  & .overlay,
+  & .popup {
+    animation: 0.5s close forwards;
+  }
+}
+
+.overlay {
+  background-color: $overlay;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+}
+
+.popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  padding: 20px;
+  max-height: 78vh;
+  max-width: 78%;
+
+  background-color: $background;
+  border-radius: 20px;
+  box-shadow: 0 0 30px $primary;
+
+  transform: translate(-50%, -50%);
+  z-index: 3;
+
+  @include big-tablet {
+    padding: 2.08vw;
+
+    border-radius: 2.08vw;
+    box-shadow: 0 0 3.12vw $primary;
+  }
+
+  @include small-tablet {
+    box-shadow: 0 0 20px $primary;
+  }
+
+  @include middle-mobile {
+    max-height: calc(100vh - 22px * 2 - 32px);
+    max-width: 90%;
+    width: 90%;
+    padding: 10px;
+
+    border-radius: 10px;
+  }
+}
+
+.closeBtn {
+  position: absolute;
+  top: -30px;
+  right: -30px;
+
+  @include big-tablet {
+    top: -3.12vw;
+    right: -3.12vw;
+  }
+
+  @include small-tablet {
+    top: -22px;
+    right: -22px;
+  }
+
+  @include middle-mobile {
+    top: -32px;
+    right: 0;
+  }
+}
+
+.container {
+  max-height: calc(78vh - 40px);
+  overflow: auto;
+
+  @include big-tablet {
+    max-height: calc(78vh - 2.08vw * 2);
+  }
+
+  @include middle-mobile {
+    max-height: calc(100vh - 22px * 2 - 32px - 20px);
+  }
+}
+
+.confirmation {
+  width: 440px;
+
+  @include big-tablet {
+    width: 45.83vw;
+  }
+
+  @include small-tablet {
+    width: 351.6px;
+  }
+
+  @include middle-mobile {
+    max-width: 351.6px;
+    width: 90%;
+  }
+}
+
+@keyframes open {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes close {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}

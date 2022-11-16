@@ -33,6 +33,37 @@ const taskSlice = createSlice({
           state.tasksList.push(action.payload);
         }
       });
+    /*.addCase(createColumn.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(createColumn.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.columns.push(action.payload);
+      })
+      .addCase(deleteColumn.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(deleteColumn.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.columns = state.columns.filter((column) => column.id !== action.payload);
+      })
+      .addCase(updateColumn.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(updateColumn.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.columns = state.columns.map((column) =>
+          column.id === action.payload.id ? action.payload : column
+        );
+      })
+      .addMatcher(isError, (state, action: PayloadAction<string>) => {
+        state.error = action.payload;
+        state.isLoading = false;
+      });
+      */
   },
 });
 

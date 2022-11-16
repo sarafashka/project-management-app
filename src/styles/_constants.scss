@@ -7,6 +7,7 @@ $line-height: 16px;
 $main-text: #000;
 $text: #b6b6b6;
 $primary: #6c5dd3;
+$hover-primary: #4c37d6;
 $main-background: #f9f8f8;
 $background: #fff;
 
@@ -16,7 +17,15 @@ $pink: #e391ea;
 
 $footer-icon: #b6b6b6;
 
+$overlay: rgba(255, 255, 255, 0.9);
+
+$cancel-background: #e3defe;
+$btn-text: #fff;
+
 /* Break points */
 $big-desktop: 1920px;
+
+$big-tablet: 960px;
+$small-tablet: 767px;
 
 $middle-mobile: 480px;

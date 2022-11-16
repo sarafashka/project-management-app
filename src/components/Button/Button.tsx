@@ -1,20 +1,18 @@
+import classNames from 'classnames';
 import React, { ButtonHTMLAttributes } from 'react';
 import styles from './Button.module.scss';
 
+const { button } = styles;
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  className?: string;
-  isDisabled?: boolean;
-  children: React.ReactNode;
+  kind?: 'close' | 'confirm' | 'cancel' | 'boardBtn';
 }
 
-const Button: React.FC<ButtonProps> = ({
-  className = '',
-  isDisabled = false,
-  children,
-  ...rest
-}) => {
+const Button: React.FC<ButtonProps> = ({ children, className, kind, ...rest }) => {
   return (
-    <button className={`${styles.button} ${className}`} disabled={isDisabled} {...rest}>
+    <button
+      className={classNames(button, { [`${styles[kind || '']}`]: kind }, className)}
+      {...rest}
+    >
       {children}
     </button>
   );

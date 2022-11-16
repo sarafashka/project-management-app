@@ -6,6 +6,7 @@
   font-size: $font-size;
   font-weight: 400;
 }
+
 html {
   scroll-behavior: smooth;
   height: 100%;
@@ -17,6 +18,12 @@ body {
   flex-direction: column;
   background-color: $main-background;
   color: $main-text;
+}
+
+#root {
+  max-height: 100vh;
+  max-width: 100%;
+  overflow: auto;
 }
 
 h2 {
@@ -39,16 +46,4 @@ h3 {
 main {
   flex-grow: 1;
   position: relative;
-}
-.btn {
-  cursor: pointer;
-  border-style: solid;
-  border-width: 0.1rem;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 1rem;
-  line-height: 1.1rem;
-  text-align: center;
-  transition: 0.25s;
-  @include button($primary, $main-background);
 }

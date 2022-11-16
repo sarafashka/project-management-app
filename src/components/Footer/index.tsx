@@ -1,4 +1,5 @@
 import React from 'react';
+import classNames from 'classnames';
 
 import { ABOUT } from 'constants/contacts';
 
@@ -6,32 +7,35 @@ import GithubIcon from 'components/Icons/ContactsIcons';
 import RSShoolIcon from 'components/Icons/RSSchoolIcon';
 import GitHubLinks from './GitHubLinks';
 
-import './Footer.scss';
+import styles from './Footer.module.scss';
 
-const footerIconClassName = 'footer__icon';
+const { footer, container, column, icon } = styles;
+type FooterProps = {
+  className?: string;
+};
 
-const Footer: React.FC = () => {
+const Footer: React.FC<FooterProps> = ({ className }) => {
   return (
-    <footer className="footer">
-      <div className="footer__container">
+    <footer className={classNames(footer, className)}>
+      <div className={container}>
         <a target="_blank" rel="noopener noreferrer" href="https://rs.school/react/">
-          <RSShoolIcon className={footerIconClassName} />
+          <RSShoolIcon className={icon} />
         </a>
-        <span className="footer__column">
+        <span className={column}>
           Project
           <a
             target="_blank"
             rel="noopener noreferrer"
             href="https://github.com/Aliseiko/project-management-app/"
           >
-            <GithubIcon className={footerIconClassName} />
+            <GithubIcon className={icon} />
           </a>
         </span>
-        <span className="footer__column">
+        <span className={column}>
           Developers
           <GitHubLinks contacts={ABOUT} />
         </span>
-        <span className="footer__year">© 2022</span>
+        © 2022
       </div>
     </footer>
   );

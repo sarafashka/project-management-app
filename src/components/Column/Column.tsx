@@ -6,6 +6,7 @@ import { deleteColumn, updateColumn } from 'store/columnSlice/columnThunk';
 import { useAppDispatch } from 'hooks/reduxTypedHooks';
 import { RequestDeleteColumn } from 'types/types';
 import ColumnTitle from './ColumnTitle';
+import Task from 'components/Task';
 
 type Props = {
   id: string;
@@ -16,6 +17,7 @@ type Props = {
 const Column: React.FC<Props> = (column) => {
   const { id, title, boardId } = column;
   const dispatch = useAppDispatch();
+
   const dataForDeleteColumn: RequestDeleteColumn = {
     columnId: id,
     boardId: boardId,
@@ -49,20 +51,7 @@ const Column: React.FC<Props> = (column) => {
         </Button>
       </div>
 
-      <div className={styles.task}>
-        <h4>1 task</h4>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-          ut labore et dolore magna aliqua.
-        </p>
-      </div>
-      <div className={styles.task}>
-        <h4>2 task</h4>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-          ut labore et dolore magna aliqua.
-        </p>
-      </div>
+      <Task columnId={id} />
 
       <button className={styles.newTask}>+ Add a task</button>
     </div>

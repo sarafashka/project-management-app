@@ -49,6 +49,7 @@ export interface NewUser {
   login: string;
   password: string;
 }
+
 export type ColumnState = {
   columns: ColumnItem[];
   isLoading: boolean;
@@ -61,6 +62,19 @@ export interface ColumnItem {
   order: number;
 }
 
+export interface ColumnDetail extends ColumnItem {
+  tasks: TasksInColumn[];
+}
+
+export type TasksInColumn = {
+  id: string;
+  title: string;
+  order: number;
+  description: string;
+  userId: string;
+  files?: string[];
+};
+
 export type RequestCreateColumn = {
   boardId: string;
   body: {
@@ -69,6 +83,11 @@ export type RequestCreateColumn = {
 };
 
 export type RequestDeleteColumn = {
+  boardId: string;
+  columnId: string;
+};
+
+export type RequestGetColumn = {
   boardId: string;
   columnId: string;
 };
@@ -93,3 +112,31 @@ export interface UserInitialState {
   userUpdatingStatus: LoadingStatus;
   user: User;
 }
+
+export type TaskState = {
+  tasksList: ColumnDetail[];
+  isLoading: boolean;
+  error: string | null;
+};
+
+// export type TaskState = {
+//   tasks: Task[];
+//   isLoading: boolean;
+//   error: string | null;
+// };
+
+export interface Task {
+  id: string;
+  title: string;
+  order: number;
+  description: string;
+  userId: string;
+  boardId: string;
+  columnId: string;
+  files?: string[];
+}
+
+export type RequestGetAllTasks = {
+  boardId: string;
+  columnId: string;
+};

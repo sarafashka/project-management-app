@@ -1,13 +1,15 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { authReducer } from './authSlice';
 import { columnReducer } from './columnSlice/columnSlice';
+import { taskReducer } from './task/taskSlice';
 import { userReducer } from './userSlice';
 
 export const store = configureStore({
   reducer: {
     auth: authReducer,
-    column: columnReducer,
     user: userReducer,
+    column: columnReducer,
+    task: taskReducer,
   },
 });
 

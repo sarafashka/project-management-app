@@ -21,7 +21,7 @@ const columnSlice = createSlice({
       })
       .addCase(getAllColumns.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.columns = [...state.columns, ...action.payload];
+        state.columns = [...state.columns, ...action.payload]; // = action.payload;
       })
       .addCase(createColumn.pending, (state) => {
         state.isLoading = true;

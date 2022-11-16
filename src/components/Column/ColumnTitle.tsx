@@ -12,7 +12,7 @@ const ColumnTitle: React.FC<Props> = (columnTitle) => {
   const [title, setTitle] = useState(columnTitle.title);
   const [isEdited, setIsEdited] = useState(false);
 
-  const handleSubmit = () => {
+  const clickSubmit = () => {
     columnTitle.submit(title);
     setIsEdited(false);
   };
@@ -26,13 +26,13 @@ const ColumnTitle: React.FC<Props> = (columnTitle) => {
     const elementClicked = event.relatedTarget;
     if (elementClicked?.hasAttribute('type')) {
       if ((elementClicked as HTMLInputElement).type === 'submit') {
-        handleSubmit();
+        clickSubmit();
       }
     } else clickCancel();
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form>
       <input
         className={styles.input}
         value={title}
@@ -42,7 +42,7 @@ const ColumnTitle: React.FC<Props> = (columnTitle) => {
       />
       {isEdited && (
         <>
-          <Button type="submit" className={styles.submit} onClick={() => handleSubmit()}>
+          <Button type="submit" className={styles.submit} onClick={() => clickSubmit()}>
             ok
           </Button>
           <Button type="button" className={styles.cancel} onClick={() => clickCancel()}>

@@ -12,11 +12,7 @@ const Error404: React.FC = () => {
       <div className="message-box">
         <h1>404</h1>
         <p>Page not found</p>
-        <div className="buttons-con">
-          <div className="action-button-wrap">
-            <Button onClick={() => navigate('/')}>Go to main page</Button>
-          </div>
-        </div>
+        <Button onClick={() => navigate('/')}>To main page</Button>
       </div>
     </div>
   );

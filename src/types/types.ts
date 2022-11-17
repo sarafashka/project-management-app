@@ -66,15 +66,6 @@ export interface ColumnDetail extends ColumnItem {
   tasks: TasksInColumn[];
 }
 
-export type TasksInColumn = {
-  id: string;
-  title: string;
-  order: number;
-  description: string;
-  userId: string;
-  files?: string[];
-};
-
 export type RequestCreateColumn = {
   boardId: string;
   body: {
@@ -114,16 +105,11 @@ export interface UserInitialState {
 }
 
 export type TaskState = {
-  tasksList: ColumnDetail[];
+  //tasksList: ColumnDetail[];
+  tasksList: TaskId[];
   isLoading: boolean;
   error: string | null;
 };
-
-// export type TaskState = {
-//   tasks: Task[];
-//   isLoading: boolean;
-//   error: string | null;
-// };
 
 export interface Task {
   id: string;
@@ -135,8 +121,31 @@ export interface Task {
   columnId: string;
   files?: string[];
 }
+export type TaskId = {
+  id: string;
+  task: Task;
+};
 
 export type RequestGetAllTasks = {
   boardId: string;
   columnId: string;
 };
+export type RequestGetTask = {
+  boardId: string;
+  columnId: string;
+  taskId: string;
+};
+
+export type RequestCreateTask = {
+  boardId: string;
+  columnId: string;
+  body: {
+    title: string;
+    description: string;
+    userId: string;
+  };
+};
+
+export type TaskCreated = Omit<Task, 'order' | 'boardId' | 'columnId'>;
+
+export type TasksInColumn = Omit<Task, 'boardId' | 'columnId'>;

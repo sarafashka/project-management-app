@@ -29,12 +29,12 @@ const TasksList: React.FC<Props> = (columnInfo: Props) => {
 
   return (
     <>
-      <ul className={styles.list}>
+      {/*<ul className={styles.list}>
         {currentTasks &&
           currentTasks.tasks.map((task) => (
             <TaskCard key={task.id} taskId={task.id} columnId={columnId} />
           ))}
-      </ul>
+          </ul>*/}
     </>
   );
 };

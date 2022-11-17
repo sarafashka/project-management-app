@@ -1,7 +1,7 @@
 import { AnyAction, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from 'store/store';
 import { TaskState } from 'types/types';
-import { getColumn } from './taskThunk';
+import { createTask, getColumn, getTask } from './taskThunk';
 
 const initialState: TaskState = {
   tasksList: [],
@@ -15,55 +15,25 @@ const taskSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(getColumn.pending, (state) => {
+      .addCase(getTask.pending, (state) => {
         state.isLoading = true;
         state.error = null;
       })
-      .addCase(getColumn.fulfilled, (state, action) => {
+      .addCase(getTask.fulfilled, (state, action) => {
         state.isLoading = false;
-
-        const columnExist = state.tasksList.find((item) => item.id === action.payload.id);
-        if (columnExist) {
-          state.tasksList = state.tasksList.map((item) => {
-            if (item.id === action.payload.id) {
-              return action.payload;
-            } else return item;
+        const taskWithId = {
+          id: action.payload.id,
+          task: action.payload,
+        };
+        const taskExist = state.tasksList.find((task) => task.id === action.payload.id);
+        if (taskExist) {
+          state.tasksList = state.tasksList.map((task) => {
+            if (task.id === action.payload.id) {
+              return taskWithId;
+            } else return task;
           });
-        } else {
-          state.tasksList.push(action.payload);
-        }
+        } else state.tasksList.push(taskWithId);
       });
-    /*.addCase(createColumn.pending, (state) => {
-        state.isLoading = true;
-        state.error = null;
-      })
-      .addCase(createColumn.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.columns.push(action.payload);
-      })
-      .addCase(deleteColumn.pending, (state) => {
-        state.isLoading = true;
-        state.error = null;
-      })
-      .addCase(deleteColumn.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.columns = state.columns.filter((column) => column.id !== action.payload);
-      })
-      .addCase(updateColumn.pending, (state) => {
-        state.isLoading = true;
-        state.error = null;
-      })
-      .addCase(updateColumn.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.columns = state.columns.map((column) =>
-          column.id === action.payload.id ? action.payload : column
-        );
-      })
-      .addMatcher(isError, (state, action: PayloadAction<string>) => {
-        state.error = action.payload;
-        state.isLoading = false;
-      });
-      */
   },
 });
 

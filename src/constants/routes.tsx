@@ -5,11 +5,12 @@ import Board from 'pages/Board/Board';
 import Auth from '../pages/Auth/Auth';
 import Profile from '../pages/Profile/Profile';
 import ErrorBoundary from '../components/ErrorBoundary/ErrorBoundary';
+import Layout from 'components/Layout';
 
 const AppRoutes = [
   {
     path: '/',
-    component: <Welcome />,
+    component: <Layout />,
   },
   {
     path: '/auth',

@@ -39,11 +39,17 @@ const Modal: React.FC<ModalProps> = ({ children, className, kind, onClose, isOpe
     }
   }, [current, isOpen]);
 
+  const handleClose = (e: CloseModalEvent) => {
+    if (isOpen) {
+      onClose(e);
+    }
+  };
+
   const wrapper = (
     <div>
-      <div className={overlay} onClick={onClose} />
+      <div className={overlay} onClick={handleClose} />
       <div className={classNames(popup, { [`${styles[kind || '']}`]: kind }, className)}>
-        <Button className={closeBtn} onClick={onClose} kind="close" />
+        <Button className={closeBtn} onClick={handleClose} kind="close" />
         <div className={container}>{children}</div>
       </div>
     </div>

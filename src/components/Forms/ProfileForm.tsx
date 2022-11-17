@@ -8,6 +8,7 @@ import { loginOptions, nameOptions, passwordOptions } from './formInputOptions';
 import { useAppDispatch, useAppSelector } from '../../hooks/reduxTypedHooks';
 import {
   deleteUser,
+  logout,
   selectUser,
   selectUserLoadingStatus,
   selectUserUpdatingStatus,
@@ -57,6 +58,11 @@ const ProfileForm = () => {
     navigate('/auth');
   };
 
+  const handleLogoutClick = () => {
+    dispatch(logout());
+    navigate('/auth');
+  };
+
   return (
     <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
       <Input
@@ -76,6 +82,9 @@ const ProfileForm = () => {
       <div className={styles.buttons}>
         <Button className={styles.sign} type="submit">
           Update profile
+        </Button>
+        <Button className={styles.back} type="button" onClick={handleLogoutClick}>
+          Logout
         </Button>
         <Button className={styles.delete} type="button" onClick={handleDeleteUserClick}>
           Delete user

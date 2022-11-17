@@ -52,8 +52,14 @@ const RegisterForm: React.FC = () => {
       <Input label="Choose password:" type="password" reactHookFormProps={passwordInputParams} />
       {errors.password && <ErrorMessage>{errors.password.message as string}</ErrorMessage>}
       <div className={styles.buttons}>
-        <Button className={styles.back} type="button">
-          Back
+        <Button
+          className={styles.back}
+          type="button"
+          onClick={() => {
+            navigate('/');
+          }}
+        >
+          Back to Main
         </Button>
         <Button className={styles.sign} type="submit">
           Sign Up

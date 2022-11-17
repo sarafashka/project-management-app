@@ -8,7 +8,7 @@ import { login, selectLoginStatus } from '../../store/authSlice';
 import { UserLogin } from '../../types/types';
 import { useNavigate } from 'react-router-dom';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
-import { logout, selectUserLoadingStatus } from '../../store/userSlice';
+import { selectUserLoadingStatus } from '../../store/userSlice';
 
 const LoginForm: React.FC = () => {
   const {
@@ -62,10 +62,10 @@ const LoginForm: React.FC = () => {
           className={styles.back}
           type="button"
           onClick={() => {
-            dispatch(logout());
+            navigate('/');
           }}
         >
-          Logout
+          Back to Main
         </Button>
         <Button className={styles.sign} type="submit">
           Sign In

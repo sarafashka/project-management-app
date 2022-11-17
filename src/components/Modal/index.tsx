@@ -24,10 +24,10 @@ const Modal: React.FC<ModalProps> = ({ children, className, kind, onClose, isOpe
   const { current } = useRef(document.createElement('div'));
 
   useEffect(() => {
-    if (isOpen && !current.closest(`.${closeModal}`)) {
+    if (isOpen && !modalRoot?.classList.contains(closeModal)) {
       modalRoot?.appendChild(current);
       modalRoot?.classList.add(openModal);
-    } else if (current.closest(`.${openModal}`)) {
+    } else if (modalRoot?.classList.contains(openModal)) {
       modalRoot?.classList.remove(openModal);
       modalRoot?.classList.add(closeModal);
 
@@ -39,17 +39,11 @@ const Modal: React.FC<ModalProps> = ({ children, className, kind, onClose, isOpe
     }
   }, [current, isOpen]);
 
-  const handleClose = (e: CloseModalEvent) => {
-    if (isOpen) {
-      onClose(e);
-    }
-  };
-
   const wrapper = (
     <div>
-      <div className={overlay} onClick={handleClose} />
+      <div className={overlay} onClick={onClose} />
       <div className={classNames(popup, { [`${styles[kind || '']}`]: kind }, className)}>
-        <Button className={closeBtn} onClick={handleClose} kind="close" />
+        <Button className={closeBtn} onClick={onClose} kind="close" />
         <div className={container}>{children}</div>
       </div>
     </div>

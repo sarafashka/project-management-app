@@ -8,7 +8,7 @@ const Error404: React.FC = () => {
   const navigate = useNavigate();
   return (
     <div className="error404">
-      <Error404Svg />
+      <Error404Svg className="error-404-svg" />
       <div className="message-box">
         <h1>404</h1>
         <p>Page not found</p>

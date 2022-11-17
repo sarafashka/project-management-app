@@ -1,0 +1,26 @@
+@import '../../../styles/constants';
+
+.list {
+  display: flex;
+  column-gap: 5px;
+
+  list-style: none;
+}
+
+.icon {
+  &:hover {
+    fill: $hover-footer-icon;
+  }
+}
+
+.purple {
+  fill: $primary;
+}
+
+.red {
+  fill: $red;
+}
+
+.pink {
+  fill: $pink;
+}

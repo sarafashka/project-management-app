@@ -94,6 +94,10 @@ export const userSlice = createSlice({
       state.user = { ...action.payload };
       userService.setUserData(action.payload);
     },
+    resetLoadingStatus: (state) => {
+      state.userLoadingStatus = 'idle';
+      state.userUpdatingStatus = 'idle';
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -122,6 +126,6 @@ export const selectUser = (state: RootState) => state.user.user;
 export const selectUserLoadingStatus = (state: RootState) => state.user.userLoadingStatus;
 export const selectUserUpdatingStatus = (state: RootState) => state.user.userUpdatingStatus;
 
-export const { logout, setUser } = userSlice.actions;
+export const { logout, setUser, resetLoadingStatus } = userSlice.actions;
 
 export const userReducer = userSlice.reducer;

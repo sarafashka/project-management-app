@@ -9,6 +9,7 @@ import { UserLogin } from '../../types/types';
 import { useNavigate } from 'react-router-dom';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
 import { selectUserLoadingStatus } from '../../store/userSlice';
+import Loader from '../Loader';
 
 const LoginForm: React.FC = () => {
   const {
@@ -71,9 +72,7 @@ const LoginForm: React.FC = () => {
           Sign In
         </Button>
       </div>
-      {(loginStatus === 'loading' || userLoadingStatus === 'loading') && (
-        <p className={styles.loading}>Loading...</p>
-      )}
+      {(loginStatus === 'loading' || userLoadingStatus === 'loading') && <Loader />}
       {(loginStatus === 'failed' || userLoadingStatus === 'failed') && (
         <ErrorMessage>{errorMessage}</ErrorMessage>
       )}

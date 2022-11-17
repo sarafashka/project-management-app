@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './Forms.module.scss';
 import Input from '../Input/Input';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
@@ -9,6 +9,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks/reduxTypedHooks';
 import {
   deleteUser,
   logout,
+  resetLoadingStatus,
   selectUser,
   selectUserLoadingStatus,
   selectUserUpdatingStatus,
@@ -16,6 +17,7 @@ import {
 } from '../../store/userSlice';
 import { SignUpResponse } from '../../types/types';
 import { useNavigate } from 'react-router-dom';
+import Loader from '../Loader';
 
 const ProfileForm = () => {
   const {
@@ -30,6 +32,14 @@ const ProfileForm = () => {
   const userLoadingStatus = useAppSelector(selectUserLoadingStatus);
   const userUpdatingStatus = useAppSelector(selectUserUpdatingStatus);
   const [errorMessage, setErrorMessage] = useState<string>();
+
+  const isLoading = userLoadingStatus === 'loading' || userUpdatingStatus === 'loading';
+
+  useEffect(() => {
+    return () => {
+      dispatch(resetLoadingStatus());
+    };
+  }, []);
 
   const nameInputParams = {
     ...register('name', nameOptions),
@@ -80,19 +90,27 @@ const ProfileForm = () => {
       <Input label="Choose password:" type="password" reactHookFormProps={passwordInputParams} />
       {errors.password && <ErrorMessage>{errors.password.message as string}</ErrorMessage>}
       <div className={styles.buttons}>
-        <Button className={styles.sign} type="submit">
+        <Button className={styles.sign} type="submit" disabled={isLoading}>
           Update profile
         </Button>
-        <Button className={styles.back} type="button" onClick={handleLogoutClick}>
+        <Button
+          className={styles.back}
+          type="button"
+          onClick={handleLogoutClick}
+          disabled={isLoading}
+        >
           Logout
         </Button>
-        <Button className={styles.delete} type="button" onClick={handleDeleteUserClick}>
+        <Button
+          className={styles.delete}
+          type="button"
+          onClick={handleDeleteUserClick}
+          disabled={isLoading}
+        >
           Delete user
         </Button>
       </div>
-      {(userLoadingStatus === 'loading' || userUpdatingStatus === 'loading') && (
-        <p className={styles.loading}>Please wait...</p>
-      )}
+      {isLoading && <Loader />}
       {(userLoadingStatus === 'failed' || userUpdatingStatus === 'failed') && (
         <ErrorMessage>{errorMessage}</ErrorMessage>
       )}

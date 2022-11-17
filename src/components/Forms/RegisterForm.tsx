@@ -9,6 +9,7 @@ import { NewUser } from '../../types/types';
 import { useNavigate } from 'react-router-dom';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
 import { loginOptions, nameOptions, passwordOptions } from './formInputOptions';
+import Loader from '../Loader';
 
 const RegisterForm: React.FC = () => {
   const {
@@ -65,7 +66,7 @@ const RegisterForm: React.FC = () => {
           Sign Up
         </Button>
       </div>
-      {registerStatus === 'loading' && <p className={styles.loading}>Loading...</p>}
+      {registerStatus === 'loading' && <Loader />}
       {registerStatus === 'failed' && <ErrorMessage>{errorMessage}</ErrorMessage>}
       {loginStatus === 'loading' && <p className={styles.loading}>Loading...</p>}
     </form>

@@ -3,13 +3,15 @@ import classNames from 'classnames';
 
 import { Icon } from 'types/types';
 
-import './Icon.scss';
+import styles from './Icon.module.scss';
+
+const { icon } = styles;
 
 const GithubIcon = ({ className }: Icon): JSX.Element => {
   return (
     <svg
       fill="none"
-      className={classNames('icon', 'contact-icon', className)}
+      className={classNames(icon, className)}
       width="30"
       height="30"
       viewBox="0 0 30 30"

@@ -104,6 +104,7 @@ export interface UserInitialState {
   user: User;
 }
 
+<<<<<<< HEAD
 export type TaskState = {
   //tasksList: ColumnDetail[];
   tasksList: TaskId[];
@@ -149,3 +150,38 @@ export type RequestCreateTask = {
 export type TaskCreated = Omit<Task, 'order' | 'boardId' | 'columnId'>;
 
 export type TasksInColumn = Omit<Task, 'boardId' | 'columnId'>;
+=======
+export type CloseModalEvent = React.MouseEvent<HTMLButtonElement | HTMLDivElement>;
+
+export interface BoardData {
+  id: string;
+  title: string;
+  description: string;
+}
+
+export type CreateBoardData = Omit<BoardData, 'id'>;
+
+export interface FileData {
+  filename: string;
+  fileSize: number;
+}
+
+export interface GetTaskByIdData {
+  id: string;
+  title: string;
+  order: number;
+  description: string;
+  userId: string;
+  boardId: string;
+  columnId: string;
+  files: FileData[];
+}
+export type GetBoardByIdTaskData = Omit<GetTaskByIdData, 'boardId' | 'columnId'>;
+
+export interface GetBoardByIdColumnData extends ColumnItem {
+  tasks: GetBoardByIdTaskData[];
+}
+export interface GetBoardByIdData extends BoardData {
+  columns: GetBoardByIdColumnData[];
+}
+>>>>>>> b5d9cb5bfb9a7571b2546aa672f80937ff5df289

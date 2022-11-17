@@ -1,0 +1,50 @@
+@import '../../styles/constants';
+@import '../../styles/mixins';
+
+.loader {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  z-index: 3;
+  width: 110px;
+  height: 110px;
+
+  transform: translate(-50%, -50%);
+
+  @include big-tablet {
+    min-width: 95px;
+    min-height: 95px;
+    width: 11.55vw;
+    height: 11.55vw;
+  }
+
+  @include middle-mobile {
+    min-width: 80px;
+    min-height: 80px;
+    width: 19.7vw;
+    height: 19.7vw;
+  }
+
+  &::before,
+  &::after {
+    content: '';
+    border-radius: 50%;
+    position: absolute;
+    inset: 0;
+    box-shadow: 0 0 12px 2px $loader-box-shadow inset;
+  }
+
+  &::after {
+    box-shadow: 0 4px 0 $loader-box-shadow-after inset;
+    animation: rotate 2s linear infinite;
+  }
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

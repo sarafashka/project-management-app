@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from 'hooks/reduxTypedHooks';
 import Column from 'components/Column';
 import { createColumn, getAllColumns } from 'store/columnSlice/columnThunk';
@@ -13,12 +13,15 @@ const Board: React.FC = () => {
   // const [error, setError] = useState('');
 
   const navigate = useNavigate();
-  const goToBoards = () => navigate('/');
+  const goToBoards = () => navigate('/boards/');
   const dispatch = useAppDispatch();
+  const params = useParams();
+  console.log(params);
 
   const columnsList = useAppSelector(selectColumnList);
 
-  const boardId = '8003a52c-82e1-443c-b002-cd1492e00685'; //add id from props (wait from boards)
+  const boardId = params.boardId as string;
+  // const boardId = '8003a52c-82e1-443c-b002-cd1492e00685'; //add id from props (wait from boards)
   const columnRequestData: RequestCreateColumn = {
     boardId: boardId,
     body: {

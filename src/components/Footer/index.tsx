@@ -10,6 +10,7 @@ import GitHubLinks from './GitHubLinks';
 import styles from './Footer.module.scss';
 
 const { footer, container, column, icon } = styles;
+
 type FooterProps = {
   className?: string;
 };

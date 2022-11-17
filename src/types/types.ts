@@ -94,8 +94,36 @@ export interface UserInitialState {
   user: User;
 }
 
-export interface Error {
-  statusCode?: number;
-  title?: string;
-  message?: string;
+export type CloseModalEvent = React.MouseEvent<HTMLButtonElement | HTMLDivElement>;
+
+export interface BoardData {
+  id: string;
+  title: string;
+  description: string;
+}
+
+export type CreateBoardData = Omit<BoardData, 'id'>;
+
+export interface FileData {
+  filename: string;
+  fileSize: number;
+}
+
+export interface GetTaskByIdData {
+  id: string;
+  title: string;
+  order: number;
+  description: string;
+  userId: string;
+  boardId: string;
+  columnId: string;
+  files: FileData[];
+}
+export type GetBoardByIdTaskData = Omit<GetTaskByIdData, 'boardId' | 'columnId'>;
+
+export interface GetBoardByIdColumnData extends ColumnItem {
+  tasks: GetBoardByIdTaskData[];
+}
+export interface GetBoardByIdData extends BoardData {
+  columns: GetBoardByIdColumnData[];
 }

@@ -2,20 +2,22 @@ import React, { useEffect } from 'react';
 
 import { useAppSelector, useAppDispatch } from '../../hooks/reduxTypedHooks';
 
+import { selectBoards } from '../../store/selectors/selectors';
+
 import BoardCard from 'components/BoardCard';
 import Loader from 'components/Loader';
-import { getBoardsAction } from 'store/boardsSlice';
+import { getAllBoardsAction } from 'store/boardsSlice/boardsThunk';
 
 import styles from './Main.module.scss';
 
 const { container, list, item } = styles;
 
 const Main: React.FC = () => {
-  const { data, isLoaded, error } = useAppSelector((state) => state.boardsState);
+  const { boards, isLoaded, error } = useAppSelector(selectBoards);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(getBoardsAction());
+    dispatch(getAllBoardsAction());
   }, [dispatch]);
 
   return (
@@ -26,11 +28,11 @@ const Main: React.FC = () => {
           {error.statusCode} {error.message}
         </div>
       )}
-      {data.length !== 0 && (
+      {boards.length !== 0 && (
         <ul className={list}>
-          {data.map((cardData) => (
-            <li key={cardData.id} className={item}>
-              <BoardCard boardData={cardData} />
+          {boards.map((board) => (
+            <li key={board.id} className={item}>
+              <BoardCard boardData={board} />
             </li>
           ))}
         </ul>

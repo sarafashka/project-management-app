@@ -2,6 +2,8 @@ import React, { useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import classNames from 'classnames';
 
+import { CloseModalEvent } from 'types/types';
+
 import Button from 'components/Button/Button';
 
 import styles from './Modal.module.scss';
@@ -14,7 +16,7 @@ type ModalProps = {
   className?: string;
   children?: React.ReactNode;
   kind: 'form' | 'confirmation';
-  onClose: () => void;
+  onClose: (e: CloseModalEvent) => void;
   isOpen: boolean;
 };
 

@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './Profile.module.scss';
 import ProfileForm from '../../components/Forms/ProfileForm';
 import { useAppSelector } from '../../hooks/reduxTypedHooks';
-import { selectUser } from '../../store/userSlice';
+import { selectUser } from '../../store/selectors/selectors';
 
 const Profile: React.FC = () => {
   const user = useAppSelector(selectUser);

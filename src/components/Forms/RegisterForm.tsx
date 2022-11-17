@@ -4,12 +4,13 @@ import Input from '../Input/Input';
 import Button from '../Button/Button';
 import styles from './Forms.module.scss';
 import { useAppDispatch, useAppSelector } from '../../hooks/reduxTypedHooks';
-import { registerUser, selectLoginStatus, selectRegisterStatus } from '../../store/authSlice';
+import { registerUser } from '../../store/authSlice';
 import { NewUser } from '../../types/types';
 import { useNavigate } from 'react-router-dom';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
 import { loginOptions, nameOptions, passwordOptions } from './formInputOptions';
 import Loader from '../Loader';
+import { selectLoginStatus, selectRegisterStatus } from '../../store/selectors/selectors';
 
 const RegisterForm: React.FC = () => {
   const {

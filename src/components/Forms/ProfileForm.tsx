@@ -6,21 +6,18 @@ import Button from '../Button/Button';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import { loginOptions, nameOptions, passwordOptions } from './formInputOptions';
 import { useAppDispatch, useAppSelector } from '../../hooks/reduxTypedHooks';
-import {
-  deleteUser,
-  logout,
-  resetLoadingStatus,
-  selectUser,
-  selectUserLoadingStatus,
-  selectUserUpdatingStatus,
-  updateUser,
-} from '../../store/userSlice';
+import { deleteUser, logout, resetLoadingStatus, updateUser } from '../../store/userSlice';
 import { SignUpResponse } from '../../types/types';
 import { useNavigate } from 'react-router-dom';
 import Loader from '../Loader';
 import Modal from '../Modal';
 import ConfirmationModal from '../Modal/ConfirmationModal';
 import modalStyles from '../Modal/ConfirmationModal/ConfirmationModal.module.scss';
+import {
+  selectUser,
+  selectUserLoadingStatus,
+  selectUserUpdatingStatus,
+} from '../../store/selectors/selectors';
 
 const ProfileForm = () => {
   const {

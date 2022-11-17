@@ -4,12 +4,12 @@ import Input from '../Input/Input';
 import Button from '../Button/Button';
 import styles from './Forms.module.scss';
 import { useAppDispatch, useAppSelector } from '../../hooks/reduxTypedHooks';
-import { login, selectLoginStatus } from '../../store/authSlice';
+import { login } from '../../store/authSlice';
 import { UserLogin } from '../../types/types';
 import { useNavigate } from 'react-router-dom';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
-import { selectUserLoadingStatus } from '../../store/userSlice';
 import Loader from '../Loader';
+import { selectLoginStatus, selectUserLoadingStatus } from '../../store/selectors/selectors';
 
 const LoginForm: React.FC = () => {
   const {

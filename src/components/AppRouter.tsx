@@ -9,14 +9,6 @@ import Auth from '../pages/Auth/Auth';
 import Main from '../pages/Main';
 import Profile from '../pages/Profile/Profile';
 
-// const AppRouter: React.FC = () => {
-//   const routeComponents = AppRoutes.map(({ path, component }, key) => (
-//     <Route path={path} element={component} key={key} />
-//   ));
-//
-//   return <Routes>{routeComponents}</Routes>;
-// };
-
 const AppRouter: React.FC = () => {
   return (
     <Routes>

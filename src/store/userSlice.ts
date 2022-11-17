@@ -2,7 +2,6 @@ import { AxiosErrorData, SignUpResponse, User, UserInitialState } from '../types
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { userService } from '../api/userService';
 import { AxiosError } from 'axios';
-import { RootState } from './store';
 import { tokenService } from '../api/tokenService';
 
 const initialState: UserInitialState = {
@@ -121,10 +120,6 @@ export const userSlice = createSlice({
       });
   },
 });
-
-export const selectUser = (state: RootState) => state.user.user;
-export const selectUserLoadingStatus = (state: RootState) => state.user.userLoadingStatus;
-export const selectUserUpdatingStatus = (state: RootState) => state.user.userUpdatingStatus;
 
 export const { logout, setUser, resetLoadingStatus } = userSlice.actions;
 

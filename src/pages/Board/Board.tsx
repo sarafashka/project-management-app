@@ -1,39 +1,52 @@
 import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from 'hooks/reduxTypedHooks';
 import Column from 'components/Column';
 import { createColumn, getAllColumns } from 'store/columnSlice/columnThunk';
-import { selectColumnList } from 'store/columnSlice/columnSlice';
+import { selectColumns, selectTasksList } from 'store/selectors/selectors';
 import Button from 'components/Button/Button';
 import { RequestCreateColumn } from 'types/types';
 import cn from 'classnames';
 import styles from './Board.module.scss';
+import { getAllTasks } from 'store/taskSlice/taskThunk';
+import Loader from 'components/Loader';
 
 const Board: React.FC = () => {
-  // const [error, setError] = useState('');
-
   const navigate = useNavigate();
-  const goToBoards = () => navigate('/');
+  const goToBoards = () => navigate('/boards');
+
   const dispatch = useAppDispatch();
+  const { isLoading, error, columnsList } = useAppSelector(selectColumns);
+  const board = useAppSelector(selectTasksList); //change;
 
-  const columnsList = useAppSelector(selectColumnList);
+  const { id, title, description, columns } = board;
 
-  const boardId = '8003a52c-82e1-443c-b002-cd1492e00685'; //add id from props (wait from boards)
+  const boardId = useParams().id;
+
   const columnRequestData: RequestCreateColumn = {
-    boardId: boardId,
+    boardId: id,
     body: {
       title: 'test',
     },
   }; //delete after implementation of 'add column' popup;
 
   useEffect(() => {
-    dispatch(getAllColumns(boardId));
-  }, [dispatch]);
+    if (boardId) {
+      dispatch(getAllTasks(boardId));
+      dispatch(getAllColumns(boardId));
+    }
+  }, [boardId, dispatch]);
 
   return (
     <>
+      {isLoading && <Loader />}
+      {error && (
+        <div>
+          {error.statusCode} {error.message}
+        </div>
+      )}
       <div className={styles.header}>
-        <h2 className={styles.title}>Example board</h2> {/*add from boards slice*/}
+        <h2 className={styles.title}>{title}</h2> {/*add from boards slice*/}
         <Button
           className={cn(styles.button)}
           type="button"
@@ -51,7 +64,7 @@ const Board: React.FC = () => {
       <div>{columnsList.length === 0 && 'Add new column'}</div>
       <div className={styles.list}>
         {columnsList.map((item) => (
-          <Column key={item.id} id={item.id} title={item.title} boardId={boardId} />
+          <Column key={item.id} id={item.id} title={item.title} boardId={id} />
         ))}
       </div>
     </>

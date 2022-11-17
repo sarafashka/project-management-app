@@ -5,6 +5,7 @@ import Board from 'pages/Board/Board';
 import Auth from '../pages/Auth/Auth';
 import Profile from '../pages/Profile/Profile';
 import ErrorBoundary from '../components/ErrorBoundary/ErrorBoundary';
+import Main from 'pages/Main';
 
 const AppRoutes = [
   {
@@ -28,8 +29,12 @@ const AppRoutes = [
     component: <Error404 />,
   },
   {
-    path: 'board/:id',
+    path: '/board/:id',
     component: <Board />,
+  },
+  {
+    path: '/boards',
+    component: <Main />,
   },
 ];
 

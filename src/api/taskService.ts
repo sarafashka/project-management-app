@@ -1,7 +1,14 @@
 import axiosApiInstance from './axiosApiInstance';
 import endpoints from '../constants/endpoints';
 import { AxiosResponse } from 'axios';
-import { RequestCreateTask, RequestGetAllTasks, RequestGetTask, Task } from 'types/types';
+import {
+  RequestCreateTask,
+  RequestDeleteColumn,
+  RequestDeleteTask,
+  RequestGetAllTasks,
+  RequestGetTask,
+  Task,
+} from 'types/types';
 
 export const taskService = {
   getAllTasks(request: RequestGetAllTasks): Promise<AxiosResponse<Task[]>> {
@@ -22,4 +29,20 @@ export const taskService = {
       `${endpoints.BOARDS}/${request.boardId}${endpoints.COLUMNS}/${request.columnId}${endpoints.TASKS}/${request.taskId}`
     );
   },
+
+  deleteTask(request: RequestDeleteTask) {
+    return axiosApiInstance.delete(
+      `${endpoints.BOARDS}/${request.boardId}${endpoints.COLUMNS}/${request.columnId}${endpoints.TASKS}/${request.taskId}`
+    );
+  },
+  /*
+  updateColumn(request: RequestUpdateColumn) {
+    return axiosApiInstance.put(
+      `${endpoints.BOARDS}/${request.boardId}${endpoints.COLUMNS}/${request.columnId}`,
+      {
+        ...request.body,
+      }
+    );
+  },
+  */
 };

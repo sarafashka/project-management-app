@@ -51,9 +51,9 @@ export interface NewUser {
 }
 
 export type ColumnState = {
-  columns: ColumnItem[];
+  columnsList: ColumnItem[];
   isLoading: boolean;
-  error: string | null;
+  error: AxiosErrorData | null;
 };
 
 export interface ColumnItem {
@@ -104,12 +104,10 @@ export interface UserInitialState {
   user: User;
 }
 
-<<<<<<< HEAD
 export type TaskState = {
-  //tasksList: ColumnDetail[];
-  tasksList: TaskId[];
+  tasksList: GetBoardByIdData;
   isLoading: boolean;
-  error: string | null;
+  error: AxiosErrorData | null;
 };
 
 export interface Task {
@@ -122,16 +120,17 @@ export interface Task {
   columnId: string;
   files?: string[];
 }
-export type TaskId = {
-  id: string;
-  task: Task;
-};
 
 export type RequestGetAllTasks = {
   boardId: string;
   columnId: string;
 };
 export type RequestGetTask = {
+  boardId: string;
+  columnId: string;
+  taskId: string;
+};
+export type RequestDeleteTask = {
   boardId: string;
   columnId: string;
   taskId: string;
@@ -150,7 +149,6 @@ export type RequestCreateTask = {
 export type TaskCreated = Omit<Task, 'order' | 'boardId' | 'columnId'>;
 
 export type TasksInColumn = Omit<Task, 'boardId' | 'columnId'>;
-=======
 export type CloseModalEvent = React.MouseEvent<HTMLButtonElement | HTMLDivElement>;
 
 export interface BoardData {
@@ -174,7 +172,7 @@ export interface GetTaskByIdData {
   userId: string;
   boardId: string;
   columnId: string;
-  files: FileData[];
+  files?: FileData[];
 }
 export type GetBoardByIdTaskData = Omit<GetTaskByIdData, 'boardId' | 'columnId'>;
 
@@ -184,4 +182,3 @@ export interface GetBoardByIdColumnData extends ColumnItem {
 export interface GetBoardByIdData extends BoardData {
   columns: GetBoardByIdColumnData[];
 }
->>>>>>> b5d9cb5bfb9a7571b2546aa672f80937ff5df289

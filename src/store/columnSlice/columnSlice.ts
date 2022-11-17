@@ -1,10 +1,10 @@
 import { AnyAction, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from 'store/store';
-import { ColumnState } from 'types/types';
+import { AxiosErrorData, ColumnState } from 'types/types';
 import { createColumn, deleteColumn, getAllColumns, updateColumn } from './columnThunk';
 
 const initialState: ColumnState = {
-  columns: [],
+  columnsList: [],
   isLoading: false,
   error: null,
 };
@@ -21,7 +21,7 @@ const columnSlice = createSlice({
       })
       .addCase(getAllColumns.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.columns = [...state.columns, ...action.payload]; // = action.payload;
+        state.columnsList = action.payload;
       })
       .addCase(createColumn.pending, (state) => {
         state.isLoading = true;
@@ -29,7 +29,7 @@ const columnSlice = createSlice({
       })
       .addCase(createColumn.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.columns.push(action.payload);
+        state.columnsList.push(action.payload);
       })
       .addCase(deleteColumn.pending, (state) => {
         state.isLoading = true;
@@ -37,7 +37,7 @@ const columnSlice = createSlice({
       })
       .addCase(deleteColumn.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.columns = state.columns.filter((column) => column.id !== action.payload);
+        state.columnsList = state.columnsList.filter((column) => column.id !== action.payload);
       })
       .addCase(updateColumn.pending, (state) => {
         state.isLoading = true;
@@ -45,11 +45,11 @@ const columnSlice = createSlice({
       })
       .addCase(updateColumn.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.columns = state.columns.map((column) =>
+        state.columnsList = state.columnsList.map((column) =>
           column.id === action.payload.id ? action.payload : column
         );
       })
-      .addMatcher(isError, (state, action: PayloadAction<string>) => {
+      .addMatcher(isError, (state, action: PayloadAction<AxiosErrorData>) => {
         state.error = action.payload;
         state.isLoading = false;
       });
@@ -59,7 +59,5 @@ const columnSlice = createSlice({
 function isError(action: AnyAction) {
   return action.type.endsWith('rejected');
 }
-
-export const selectColumnList = (state: RootState) => state.column.columns;
 
 export const columnReducer = columnSlice.reducer;

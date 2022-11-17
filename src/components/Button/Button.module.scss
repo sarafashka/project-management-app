@@ -37,17 +37,17 @@
     display: block;
     width: 116%;
     height: 14.8%;
-  
+
     background: $primary;
     border-radius: 3.44rem;
 
     transition: 0.5s;
   }
-  
+
   &::before {
     transform: rotate(45deg);
   }
-  
+
   &::after {
     transform: rotate(-45deg);
   }
@@ -94,7 +94,7 @@
 .confirm {
   color: $btn-text;
 
-  background-color: $primary; 
+  background-color: $primary;
   border: 2px solid $primary;
 
   &:hover {
@@ -110,11 +110,22 @@
   padding: 10px;
   border-style: solid;
   border-width: 0.1rem;
-  font-style: normal;
   font-weight: 500;
   font-size: 1rem;
   line-height: 1.1rem;
   @include button($primary, $background);
+}
+
+.delete {
+  width: 1.2rem;
+  height: 1.2rem;
+  background-image: url('../../assets/img/delete.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+  filter: invert(87%) sepia(0%) saturate(38%) hue-rotate(175deg) brightness(88%) contrast(81%);
+  &:hover {
+    filter: invert(41%) sepia(33%) saturate(1775%) hue-rotate(216deg) brightness(87%) contrast(88%);
+  }
 }
 
 .btnIcon {

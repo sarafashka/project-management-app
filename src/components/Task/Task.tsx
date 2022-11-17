@@ -1,11 +1,11 @@
 import { useAppDispatch } from 'hooks/reduxTypedHooks';
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { selectTaskList } from 'store/task/taskSlice';
-import { getColumn } from 'store/task/taskThunk';
+import {} from 'store/taskSlice/taskThunk';
 import { RequestGetColumn } from 'types/types';
 import TaskCard from './TaskCard';
 import styles from './Task.module.scss';
+import { selectTasksList } from 'store/selectors/selectors';
 
 type Props = {
   columnId: string;
@@ -13,28 +13,20 @@ type Props = {
 
 const TasksList: React.FC<Props> = (columnInfo: Props) => {
   const dispatch = useAppDispatch();
-  const tasksList = useSelector(selectTaskList);
+  const tasksList = useSelector(selectTasksList);
 
   const { columnId } = columnInfo;
-  const currentTasks = tasksList.find((item) => item.id === columnId);
-  const boardId = '8003a52c-82e1-443c-b002-cd1492e00685'; //add id from props (wait from boards)
-  const dataForGetColumn: RequestGetColumn = {
-    boardId: boardId,
-    columnId: columnId,
-  };
 
-  useEffect(() => {
-    dispatch(getColumn(dataForGetColumn));
-  }, [dispatch]);
+  const currentTasks = tasksList.columns.find((column) => columnId === column.id)?.tasks;
 
   return (
     <>
-      {/*<ul className={styles.list}>
+      <ul className={styles.list}>
         {currentTasks &&
-          currentTasks.tasks.map((task) => (
+          currentTasks.map((task) => (
             <TaskCard key={task.id} taskId={task.id} columnId={columnId} />
           ))}
-          </ul>*/}
+      </ul>
     </>
   );
 };

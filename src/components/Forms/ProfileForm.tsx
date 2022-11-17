@@ -128,11 +128,9 @@ const ProfileForm = () => {
         }}
         isOpen={isModalOpened}
       >
-        <p className={modalStyles.attributeValue}>
-          WARNING! Your profile will be permanently deleted!
-        </p>
+        <p className={modalStyles.content}>WARNING! Your profile will be permanently deleted!</p>
         <ConfirmationModal
-          entity={'user'}
+          entity="user"
           onCancel={() => {
             setIsModalOpened(false);
           }}

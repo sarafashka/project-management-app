@@ -98,6 +98,9 @@
 .container {
   max-height: calc(78vh - 40px);
   overflow: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 
   @include big-tablet {
     max-height: calc(78vh - 2.08vw * 2);
@@ -105,6 +108,10 @@
 
   @include middle-mobile {
     max-height: calc(100vh - 22px * 2 - 32px - 20px);
+  }
+
+  @include small-tablet {
+    gap: 10px;
   }
 }
 

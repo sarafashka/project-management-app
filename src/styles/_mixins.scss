@@ -7,6 +7,12 @@
   }
 }
 
+@mixin middle-desktop {
+  @media (max-width: $middle-desktop) {
+    @content;
+  }
+}
+
 @mixin big-tablet {
   @media (max-width: $big-tablet) {
     @content;
@@ -34,4 +40,30 @@
     background-color: $second-color;
     color: $color;
   }
+}
+
+/* Common Container */
+@mixin common-container {
+  max-width: 1920px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 20px 20px;
+
+  @include big-tablet {
+    padding-left: 2.08vw;
+    padding-right: 2.08vw;
+  }
+
+  @include middle-mobile {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}
+
+/* Layout */
+@mixin layout {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 100vh;
 }

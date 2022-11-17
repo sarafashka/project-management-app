@@ -116,3 +116,7 @@
   line-height: 1.1rem;
   @include button($primary, $background);
 }
+
+.btnIcon {
+  display: block;
+}

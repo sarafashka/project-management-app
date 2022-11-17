@@ -3,12 +3,14 @@ import classNames from 'classnames';
 
 import { Icon } from 'types/types';
 
-import './Icon.scss';
+import styles from './Icon.module.scss';
+
+const { icon } = styles;
 
 const RSShoolIcon = ({ className }: Icon): JSX.Element => {
   return (
     <svg
-      className={classNames('icon', className)}
+      className={classNames(icon, className)}
       width="100"
       height="36"
       version="1.1"

@@ -7,6 +7,7 @@ import { useAppDispatch } from '../../hooks/reduxTypedHooks';
 import { BoardData } from 'types/types';
 
 import { deleteBoardAction } from 'store/boardsSlice/boardsThunk';
+import { selectBoard } from '../../store/boardsSlice/boardsSlice';
 
 import Button from 'components/Button/Button';
 import Modal from 'components/Modal';
@@ -36,9 +37,13 @@ const BoardCard: React.FC<BoardCardProps> = ({ className, boardData }) => {
     setIsOpen((prevState) => !prevState);
   };
 
+  const handleSelectBoard = () => {
+    dispatch(selectBoard);
+  };
+
   return (
     <>
-      <Link to={`board/${id}`} className={link}>
+      <Link to={`board/${id}`} className={link} onClick={handleSelectBoard}>
         <div className={classNames(card, className)}>
           <span className={icon}></span>
           <div className={content}>

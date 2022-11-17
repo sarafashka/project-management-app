@@ -13,12 +13,14 @@ interface BoardsState {
   boards: BoardData[];
   isLoaded: boolean;
   error: AxiosErrorData | null;
+  currentBoardId: string;
 }
 
 const initialState: BoardsState = {
   boards: [],
   isLoaded: false,
   error: null,
+  currentBoardId: '',
 };
 
 const isPending = (action: { type: string }) => {
@@ -32,7 +34,11 @@ const isRejected = (action: { type: string }) => {
 export const boardsSlice = createSlice({
   name: 'boards',
   initialState,
-  reducers: {},
+  reducers: {
+    selectBoard: (state, { payload }: PayloadAction<string>) => {
+      state.currentBoardId = payload;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getAllBoardsAction.fulfilled, (state, { payload }) => {
@@ -61,5 +67,7 @@ export const boardsSlice = createSlice({
       });
   },
 });
+
+export const { selectBoard } = boardsSlice.actions;
 
 export default boardsSlice.reducer;

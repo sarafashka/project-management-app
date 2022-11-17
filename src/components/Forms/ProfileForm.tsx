@@ -18,6 +18,9 @@ import {
 import { SignUpResponse } from '../../types/types';
 import { useNavigate } from 'react-router-dom';
 import Loader from '../Loader';
+import Modal from '../Modal';
+import ConfirmationModal from '../Modal/ConfirmationModal';
+import modalStyles from '../Modal/ConfirmationModal/ConfirmationModal.module.scss';
 
 const ProfileForm = () => {
   const {
@@ -32,6 +35,7 @@ const ProfileForm = () => {
   const userLoadingStatus = useAppSelector(selectUserLoadingStatus);
   const userUpdatingStatus = useAppSelector(selectUserUpdatingStatus);
   const [errorMessage, setErrorMessage] = useState<string>();
+  const [isModalOpened, setIsModalOpened] = useState<boolean>(false);
 
   const isLoading = userLoadingStatus === 'loading' || userUpdatingStatus === 'loading';
 
@@ -104,7 +108,9 @@ const ProfileForm = () => {
         <Button
           className={styles.delete}
           type="button"
-          onClick={handleDeleteUserClick}
+          onClick={() => {
+            setIsModalOpened(true);
+          }}
           disabled={isLoading}
         >
           Delete user
@@ -115,6 +121,24 @@ const ProfileForm = () => {
         <ErrorMessage>{errorMessage}</ErrorMessage>
       )}
       {userUpdatingStatus === 'succeeded' && <ErrorMessage>User data updated</ErrorMessage>}
+      <Modal
+        kind={'confirmation'}
+        onClose={() => {
+          setIsModalOpened(false);
+        }}
+        isOpen={isModalOpened}
+      >
+        <p className={modalStyles.attributeValue}>
+          WARNING! Your profile will be permanently deleted!
+        </p>
+        <ConfirmationModal
+          entity={'user'}
+          onCancel={() => {
+            setIsModalOpened(false);
+          }}
+          onConfirm={handleDeleteUserClick}
+        />
+      </Modal>
     </form>
   );
 };

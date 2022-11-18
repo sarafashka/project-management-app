@@ -4,8 +4,8 @@ import { useState } from 'react';
 import styles from './ColumnTitle.module.scss';
 
 type Props = {
-  title?: string;
-  submit: (title: string | undefined) => void;
+  title: string;
+  submit: (title: string) => void;
 };
 
 const ColumnTitle: React.FC<Props> = (columnTitle) => {

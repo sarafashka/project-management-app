@@ -54,7 +54,7 @@ const BoardCard: React.FC<BoardCardProps> = ({ className, boardData }) => {
             <h3 className={cardTitle}>{title}</h3>
             <p className={cardDescription}>{description}</p>
           </div>
-          <Button className={deleteBtn} onClick={openModal} kind="confirm">
+          <Button className={deleteBtn} onClick={openModal} kind="delete">
             Delete
           </Button>
         </div>

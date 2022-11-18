@@ -88,7 +88,7 @@ export type RequestUpdateColumn = {
   columnId: string;
   body: {
     title: string;
-    order: number | undefined;
+    order: number;
   };
 };
 

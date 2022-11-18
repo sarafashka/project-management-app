@@ -8,7 +8,7 @@ import { RequestDeleteColumn } from 'types/types';
 import ColumnTitle from './ColumnTitle';
 import Task from 'components/Task';
 import { createTask } from 'store/taskSlice/taskThunk';
-import { selectUser } from 'store/userSlice';
+import { selectUser } from 'store/selectors/selectors';
 import { selectTasksList } from 'store/selectors/selectors';
 import { findColumn } from 'utils/utils';
 

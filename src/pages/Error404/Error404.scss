@@ -47,8 +47,9 @@ display: flex;
     transform: translateY(20px);
   }
 }
+
 @media (max-width: 767px) {
-  svg {
+  .error-404-svg {
     position: absolute;
     top: 50%;
     left: 50%;

@@ -13,13 +13,15 @@ import Loader from 'components/Loader';
 
 const Board: React.FC = () => {
   const navigate = useNavigate();
-  const goToBoards = () => navigate('/boards');
-  const boardId = useParams().id;
+  const goToBoards = () => navigate('/boards/');
+  const params = useParams();
 
   const dispatch = useAppDispatch();
   const board = useAppSelector(selectBoard);
   const { isLoading, error, tasksList } = board;
   const { id, title, columns } = tasksList;
+
+  const boardId = params.boardId as string;
 
   const columnRequestData: RequestCreateColumn = {
     boardId: id,

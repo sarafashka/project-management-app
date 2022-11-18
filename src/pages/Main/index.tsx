@@ -9,6 +9,8 @@ import Loader from 'components/Loader';
 import { getAllBoardsAction } from 'store/boardsSlice/boardsThunk';
 
 import styles from './Main.module.scss';
+import { Outlet, useMatch } from 'react-router-dom';
+import AppRoutes from '../../constants/routes';
 
 const { container, list, item } = styles;
 
@@ -20,7 +22,7 @@ const Main: React.FC = () => {
     dispatch(getAllBoardsAction());
   }, [dispatch]);
 
-  return (
+  return useMatch(AppRoutes.BOARDS) ? (
     <div className={container}>
       {isLoaded && <Loader />}
       {error && (
@@ -38,6 +40,8 @@ const Main: React.FC = () => {
         </ul>
       )}
     </div>
+  ) : (
+    <Outlet />
   );
 };
 

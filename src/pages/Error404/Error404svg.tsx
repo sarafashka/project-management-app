@@ -1,8 +1,13 @@
 import React from 'react';
 
-const Error404Svg = () => {
+type Error404SvgProps = {
+  className: string;
+};
+
+const Error404Svg: React.FC<Error404SvgProps> = ({ className }) => {
   return (
     <svg
+      className={className}
       width="380px"
       height="500px"
       viewBox="0 0 837 1045"

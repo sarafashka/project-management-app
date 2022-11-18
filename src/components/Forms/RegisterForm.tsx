@@ -4,11 +4,13 @@ import Input from '../Input/Input';
 import Button from '../Button/Button';
 import styles from './Forms.module.scss';
 import { useAppDispatch, useAppSelector } from '../../hooks/reduxTypedHooks';
-import { registerUser, selectLoginStatus, selectRegisterStatus } from '../../store/authSlice';
+import { registerUser } from '../../store/authSlice';
 import { NewUser } from '../../types/types';
 import { useNavigate } from 'react-router-dom';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
 import { loginOptions, nameOptions, passwordOptions } from './formInputOptions';
+import Loader from '../Loader';
+import { selectLoginStatus, selectRegisterStatus } from '../../store/selectors/selectors';
 
 const RegisterForm: React.FC = () => {
   const {
@@ -52,14 +54,20 @@ const RegisterForm: React.FC = () => {
       <Input label="Choose password:" type="password" reactHookFormProps={passwordInputParams} />
       {errors.password && <ErrorMessage>{errors.password.message as string}</ErrorMessage>}
       <div className={styles.buttons}>
-        <Button className={styles.back} type="button">
-          Back
+        <Button
+          className={styles.back}
+          type="button"
+          onClick={() => {
+            navigate('/');
+          }}
+        >
+          Back to Main
         </Button>
         <Button className={styles.sign} type="submit">
           Sign Up
         </Button>
       </div>
-      {registerStatus === 'loading' && <p className={styles.loading}>Loading...</p>}
+      {registerStatus === 'loading' && <Loader />}
       {registerStatus === 'failed' && <ErrorMessage>{errorMessage}</ErrorMessage>}
       {loginStatus === 'loading' && <p className={styles.loading}>Loading...</p>}
     </form>

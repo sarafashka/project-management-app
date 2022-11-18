@@ -32,9 +32,13 @@ const BoardCard: React.FC<BoardCardProps> = ({ className, boardData }) => {
     dispatch(deleteBoardAction(id));
   };
 
-  const toggleModal = (event: CloseModalEvent) => {
+  const openModal = (event: CloseModalEvent) => {
     event.preventDefault();
-    setIsOpen((prevState) => !prevState);
+    setIsOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsOpen(false);
   };
 
   const handleSelectBoard = () => {
@@ -43,24 +47,24 @@ const BoardCard: React.FC<BoardCardProps> = ({ className, boardData }) => {
 
   return (
     <>
-      <Link to={`/board/${id}`} className={link} onClick={handleSelectBoard}>
+      <Link to={`${id}`} className={link} onClick={handleSelectBoard}>
         <div className={classNames(card, className)}>
           <span className={icon}></span>
           <div className={content}>
             <h3 className={cardTitle}>{title}</h3>
             <p className={cardDescription}>{description}</p>
           </div>
-          <Button className={deleteBtn} onClick={toggleModal} kind="confirm">
+          <Button className={deleteBtn} onClick={openModal} kind="confirm">
             Delete
           </Button>
         </div>
       </Link>
-      <Modal kind="confirmation" onClose={toggleModal} isOpen={isOpen}>
+      <Modal kind="confirmation" onClose={closeModal} isOpen={isOpen}>
         <ConfirmationModal
           entity="board"
           value={title}
           onConfirm={handleClick}
-          onCancel={toggleModal}
+          onCancel={closeModal}
         />
       </Modal>
     </>

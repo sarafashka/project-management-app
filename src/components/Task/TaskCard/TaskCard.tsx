@@ -5,7 +5,7 @@ import styles from './TaskCard.module.scss';
 import Button from 'components/Button/Button';
 import { deleteTask } from 'store/taskSlice/taskThunk';
 import { RequestDeleteTask } from 'types/types';
-import { selectUser } from 'store/userSlice';
+import { selectUser } from 'store/selectors/selectors';
 import { findTask } from 'utils/utils';
 
 type Props = {

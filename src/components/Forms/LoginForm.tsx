@@ -4,11 +4,12 @@ import Input from '../Input/Input';
 import Button from '../Button/Button';
 import styles from './Forms.module.scss';
 import { useAppDispatch, useAppSelector } from '../../hooks/reduxTypedHooks';
-import { login, selectLoginStatus } from '../../store/authSlice';
+import { login } from '../../store/authSlice';
 import { UserLogin } from '../../types/types';
 import { useNavigate } from 'react-router-dom';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
-import { logout, selectUserLoadingStatus } from '../../store/userSlice';
+import Loader from '../Loader';
+import { selectLoginStatus, selectUserLoadingStatus } from '../../store/selectors/selectors';
 
 const LoginForm: React.FC = () => {
   const {
@@ -62,18 +63,16 @@ const LoginForm: React.FC = () => {
           className={styles.back}
           type="button"
           onClick={() => {
-            dispatch(logout());
+            navigate('/');
           }}
         >
-          Logout
+          Back to Main
         </Button>
         <Button className={styles.sign} type="submit">
           Sign In
         </Button>
       </div>
-      {(loginStatus === 'loading' || userLoadingStatus === 'loading') && (
-        <p className={styles.loading}>Loading...</p>
-      )}
+      {(loginStatus === 'loading' || userLoadingStatus === 'loading') && <Loader />}
       {(loginStatus === 'failed' || userLoadingStatus === 'failed') && (
         <ErrorMessage>{errorMessage}</ErrorMessage>
       )}

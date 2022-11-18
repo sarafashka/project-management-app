@@ -1,4 +1,4 @@
-import { AnyAction, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AxiosErrorData, TaskState } from 'types/types';
 import { findColumnIndex, findColumnTasks } from 'utils/utils';
 import { createColumn, deleteColumn, updateColumn } from './columnThunk';
@@ -112,8 +112,8 @@ const taskSlice = createSlice({
   },
 });
 
-function isError(action: AnyAction) {
-  return action.type.endsWith('rejected');
-}
+const isError = (action: { type: string }) => {
+  return /^task\/[a-z]+\/rejected$/.test(action.type);
+};
 
 export const taskReducer = taskSlice.reducer;

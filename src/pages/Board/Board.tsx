@@ -10,10 +10,10 @@ import cn from 'classnames';
 import styles from './Board.module.scss';
 import { getAllTasks } from 'store/taskSlice/taskThunk';
 import Loader from 'components/Loader';
+import { resetTasksList } from 'store/taskSlice/taskSlice';
 
 const Board: React.FC = () => {
   const navigate = useNavigate();
-  const goToBoards = () => navigate('/boards/');
   const params = useParams();
 
   const dispatch = useAppDispatch();
@@ -22,6 +22,11 @@ const Board: React.FC = () => {
   const { id, title, columns } = tasksList;
 
   const boardId = params.boardId as string;
+
+  const goToBoards = () => {
+    navigate('/boards/');
+    dispatch(resetTasksList());
+  };
 
   const columnRequestData: RequestCreateColumn = {
     boardId: id,

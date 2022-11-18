@@ -4,13 +4,15 @@ import { findColumnIndex, findColumnTasks } from 'utils/utils';
 import { createColumn, deleteColumn, updateColumn } from './columnThunk';
 import { createTask, deleteTask, getAllTasks } from './taskThunk';
 
+const defaultTasksList = {
+  id: '',
+  title: '',
+  description: '',
+  columns: [],
+};
+
 const initialState: TaskState = {
-  tasksList: {
-    id: '',
-    title: '',
-    description: '',
-    columns: [],
-  },
+  tasksList: defaultTasksList,
   isLoading: false,
   error: null,
 };
@@ -18,7 +20,11 @@ const initialState: TaskState = {
 const taskSlice = createSlice({
   name: 'task',
   initialState,
-  reducers: {},
+  reducers: {
+    resetTasksList(state) {
+      state.tasksList = defaultTasksList;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getAllTasks.pending, (state) => {
@@ -115,5 +121,7 @@ const taskSlice = createSlice({
 const isError = (action: { type: string }) => {
   return /^task\/[a-z]+\/rejected$/.test(action.type);
 };
+
+export const { resetTasksList } = taskSlice.actions;
 
 export const taskReducer = taskSlice.reducer;

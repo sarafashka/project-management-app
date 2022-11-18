@@ -16,7 +16,6 @@ export const getAllTasks = createAsyncThunk<GetBoardByIdData, string, { rejectVa
   async function (id, { rejectWithValue }) {
     try {
       const response = await boardsService.getBoardById(id);
-      console.log('allTasks', response);
       return response;
     } catch (error) {
       const axiosError = <AxiosError>error;

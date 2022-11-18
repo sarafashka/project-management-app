@@ -2,7 +2,6 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { AuthInitialState, AxiosErrorData, NewUser, UserLogin } from '../types/types';
 import { authService } from '../api/authService';
 import { AxiosError } from 'axios';
-import { RootState } from './store';
 import { tokenService } from '../api/tokenService';
 import { userService } from '../api/userService';
 import { setUser } from './userSlice';
@@ -74,8 +73,5 @@ export const authSlice = createSlice({
       });
   },
 });
-
-export const selectLoginStatus = (state: RootState) => state.auth.loginStatus;
-export const selectRegisterStatus = (state: RootState) => state.auth.registerStatus;
 
 export const authReducer = authSlice.reducer;

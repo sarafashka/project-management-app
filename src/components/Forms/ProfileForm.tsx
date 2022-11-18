@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './Forms.module.scss';
 import Input from '../Input/Input';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
@@ -6,15 +6,18 @@ import Button from '../Button/Button';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import { loginOptions, nameOptions, passwordOptions } from './formInputOptions';
 import { useAppDispatch, useAppSelector } from '../../hooks/reduxTypedHooks';
+import { deleteUser, logout, resetLoadingStatus, updateUser } from '../../store/userSlice';
+import { SignUpResponse } from '../../types/types';
+import { useNavigate } from 'react-router-dom';
+import Loader from '../Loader';
+import Modal from '../Modal';
+import ConfirmationModal from '../Modal/ConfirmationModal';
+import modalStyles from '../Modal/ConfirmationModal/ConfirmationModal.module.scss';
 import {
-  deleteUser,
   selectUser,
   selectUserLoadingStatus,
   selectUserUpdatingStatus,
-  updateUser,
-} from '../../store/userSlice';
-import { SignUpResponse } from '../../types/types';
-import { useNavigate } from 'react-router-dom';
+} from '../../store/selectors/selectors';
 
 const ProfileForm = () => {
   const {
@@ -29,6 +32,15 @@ const ProfileForm = () => {
   const userLoadingStatus = useAppSelector(selectUserLoadingStatus);
   const userUpdatingStatus = useAppSelector(selectUserUpdatingStatus);
   const [errorMessage, setErrorMessage] = useState<string>();
+  const [isModalOpened, setIsModalOpened] = useState<boolean>(false);
+
+  const isLoading = userLoadingStatus === 'loading' || userUpdatingStatus === 'loading';
+
+  useEffect(() => {
+    return () => {
+      dispatch(resetLoadingStatus());
+    };
+  }, []);
 
   const nameInputParams = {
     ...register('name', nameOptions),
@@ -57,6 +69,11 @@ const ProfileForm = () => {
     navigate('/auth');
   };
 
+  const handleLogoutClick = () => {
+    dispatch(logout());
+    navigate('/auth');
+  };
+
   return (
     <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
       <Input
@@ -74,20 +91,49 @@ const ProfileForm = () => {
       <Input label="Choose password:" type="password" reactHookFormProps={passwordInputParams} />
       {errors.password && <ErrorMessage>{errors.password.message as string}</ErrorMessage>}
       <div className={styles.buttons}>
-        <Button className={styles.sign} type="submit">
+        <Button className={styles.sign} type="submit" disabled={isLoading}>
           Update profile
         </Button>
-        <Button className={styles.delete} type="button" onClick={handleDeleteUserClick}>
+        <Button
+          className={styles.back}
+          type="button"
+          onClick={handleLogoutClick}
+          disabled={isLoading}
+        >
+          Logout
+        </Button>
+        <Button
+          className={styles.delete}
+          type="button"
+          onClick={() => {
+            setIsModalOpened(true);
+          }}
+          disabled={isLoading}
+        >
           Delete user
         </Button>
       </div>
-      {(userLoadingStatus === 'loading' || userUpdatingStatus === 'loading') && (
-        <p className={styles.loading}>Please wait...</p>
-      )}
+      {isLoading && <Loader />}
       {(userLoadingStatus === 'failed' || userUpdatingStatus === 'failed') && (
         <ErrorMessage>{errorMessage}</ErrorMessage>
       )}
       {userUpdatingStatus === 'succeeded' && <ErrorMessage>User data updated</ErrorMessage>}
+      <Modal
+        kind={'confirmation'}
+        onClose={() => {
+          setIsModalOpened(false);
+        }}
+        isOpen={isModalOpened}
+      >
+        <p className={modalStyles.content}>WARNING! Your profile will be permanently deleted!</p>
+        <ConfirmationModal
+          entity="user"
+          onCancel={() => {
+            setIsModalOpened(false);
+          }}
+          onConfirm={handleDeleteUserClick}
+        />
+      </Modal>
     </form>
   );
 };

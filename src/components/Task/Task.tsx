@@ -1,23 +1,20 @@
-import { useAppDispatch } from 'hooks/reduxTypedHooks';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
-import {} from 'store/taskSlice/taskThunk';
-import { RequestGetColumn } from 'types/types';
 import TaskCard from './TaskCard';
 import styles from './Task.module.scss';
 import { selectTasksList } from 'store/selectors/selectors';
+import { findColumnTasks } from 'utils/utils';
 
 type Props = {
   columnId: string;
 };
 
 const TasksList: React.FC<Props> = (columnInfo: Props) => {
-  const dispatch = useAppDispatch();
   const tasksList = useSelector(selectTasksList);
 
   const { columnId } = columnInfo;
 
-  const currentTasks = tasksList.columns.find((column) => columnId === column.id)?.tasks;
+  const currentTasks = findColumnTasks(tasksList, columnId);
 
   return (
     <>

@@ -3,9 +3,10 @@ import { useAppDispatch, useAppSelector } from 'hooks/reduxTypedHooks';
 import { selectTasksList } from 'store/selectors/selectors';
 import styles from './TaskCard.module.scss';
 import Button from 'components/Button/Button';
-import { createTask, deleteTask } from 'store/taskSlice/taskThunk';
+import { deleteTask } from 'store/taskSlice/taskThunk';
 import { RequestDeleteTask } from 'types/types';
 import { selectUser } from 'store/userSlice';
+import { findTask } from 'utils/utils';
 
 type Props = {
   taskId: string;
@@ -14,12 +15,12 @@ type Props = {
 
 const TaskCard: React.FC<Props> = (props) => {
   const { taskId, columnId } = props;
+
   const dispatch = useAppDispatch();
-  const user = useAppSelector(selectUser).id;
+  const user = useAppSelector(selectUser);
   const tasksList = useAppSelector(selectTasksList);
-  const currentTask = tasksList.columns
-    .find((column) => columnId === column.id)
-    ?.tasks.find((task) => task.id === taskId);
+
+  const currentTask = findTask(tasksList, columnId, taskId);
 
   const dataForDeleteTask: RequestDeleteTask = {
     taskId: taskId,
@@ -27,7 +28,7 @@ const TaskCard: React.FC<Props> = (props) => {
     columnId: columnId,
   };
 
-  const isOwner = () => currentTask?.userId === user;
+  const isOwner = () => currentTask?.userId === user.id;
 
   return (
     <li className={styles.item}>

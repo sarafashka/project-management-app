@@ -88,7 +88,7 @@ export type RequestUpdateColumn = {
   columnId: string;
   body: {
     title: string;
-    order: number | null;
+    order: number | undefined;
   };
 };
 
@@ -144,6 +144,13 @@ export type RequestCreateTask = {
     description: string;
     userId: string;
   };
+};
+
+export type RequestUpdateTask = {
+  boardId: string;
+  columnId: string;
+  taskId: string;
+  body: Omit<Task, 'taskId'>;
 };
 
 export type TaskCreated = Omit<Task, 'order' | 'boardId' | 'columnId'>;

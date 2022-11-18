@@ -3,10 +3,10 @@ import endpoints from '../constants/endpoints';
 import { AxiosResponse } from 'axios';
 import {
   RequestCreateTask,
-  RequestDeleteColumn,
   RequestDeleteTask,
   RequestGetAllTasks,
   RequestGetTask,
+  RequestUpdateTask,
   Task,
 } from 'types/types';
 
@@ -35,14 +35,13 @@ export const taskService = {
       `${endpoints.BOARDS}/${request.boardId}${endpoints.COLUMNS}/${request.columnId}${endpoints.TASKS}/${request.taskId}`
     );
   },
-  /*
-  updateColumn(request: RequestUpdateColumn) {
+
+  updateTask(request: RequestUpdateTask) {
     return axiosApiInstance.put(
-      `${endpoints.BOARDS}/${request.boardId}${endpoints.COLUMNS}/${request.columnId}`,
+      `${endpoints.BOARDS}/${request.boardId}${endpoints.COLUMNS}/${request.columnId}${endpoints.TASKS}/${request.taskId}`,
       {
         ...request.body,
       }
     );
   },
-  */
 };

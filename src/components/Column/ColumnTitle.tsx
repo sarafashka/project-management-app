@@ -4,8 +4,8 @@ import { useState } from 'react';
 import styles from './ColumnTitle.module.scss';
 
 type Props = {
-  title: string;
-  submit: (title: string) => void;
+  title?: string;
+  submit: (title: string | undefined) => void;
 };
 
 const ColumnTitle: React.FC<Props> = (columnTitle) => {
@@ -32,7 +32,7 @@ const ColumnTitle: React.FC<Props> = (columnTitle) => {
   };
 
   return (
-    <form>
+    <form className={styles.form}>
       <input
         className={styles.input}
         value={title}
@@ -41,14 +41,14 @@ const ColumnTitle: React.FC<Props> = (columnTitle) => {
         onBlur={(event) => updateInputValue(event)}
       />
       {isEdited && (
-        <>
-          <Button type="submit" className={styles.submit} onClick={() => clickSubmit()}>
-            ok
-          </Button>
+        <div className={styles.buttons}>
           <Button type="button" className={styles.cancel} onClick={() => clickCancel()}>
             cancel
           </Button>
-        </>
+          <Button type="submit" className={styles.submit} onClick={() => clickSubmit()}>
+            submit
+          </Button>
+        </div>
       )}
     </form>
   );

@@ -9,24 +9,11 @@ import {
   RequestUpdateColumn,
 } from 'types/types';
 
-export const getAllColumns = createAsyncThunk<ColumnItem[], string, { rejectValue: unknown }>(
-  'column/getAllColumns',
-  async function (boardId, { rejectWithValue }) {
-    try {
-      const response = await columnService.getAllColumns(boardId);
-      return response.data;
-    } catch (error) {
-      const axiosError = <AxiosError>error;
-      return rejectWithValue(axiosError.response?.data);
-    }
-  }
-);
-
 export const createColumn = createAsyncThunk<
   ColumnItem,
   RequestCreateColumn,
   { rejectValue: unknown }
->('column/createColumn', async function (data, { rejectWithValue }) {
+>('task/createColumn', async function (data, { rejectWithValue }) {
   try {
     const response = await columnService.createColumn(data);
     return response.data;
@@ -37,7 +24,7 @@ export const createColumn = createAsyncThunk<
 });
 
 export const deleteColumn = createAsyncThunk<string, RequestDeleteColumn, { rejectValue: unknown }>(
-  'column/deleteColumn',
+  'task/deleteColumn',
   async function (data, { rejectWithValue }) {
     try {
       await columnService.deleteColumn(data);
@@ -53,12 +40,7 @@ export const updateColumn = createAsyncThunk<
   ColumnItem,
   RequestUpdateColumn,
   { rejectValue: unknown; state: RootState }
->('column/updateColumn', async function (data, { rejectWithValue, getState }) {
-  const { columnsList } = getState().column;
-  const columnForUpdate = columnsList.filter((column) => data.columnId === column.id);
-  const { order } = columnForUpdate[0];
-  data.body.order = order;
-
+>('task/updateColumn', async function (data, { rejectWithValue }) {
   try {
     const response = await columnService.updateColumn(data);
     return response.data;

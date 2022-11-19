@@ -2,41 +2,55 @@ import React, { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from 'hooks/reduxTypedHooks';
 import Column from 'components/Column';
-import { createColumn, getAllColumns } from 'store/columnSlice/columnThunk';
-import { selectColumnList } from 'store/columnSlice/columnSlice';
+import { createColumn } from 'store/taskSlice/columnThunk';
+import { selectBoard } from 'store/selectors/selectors';
 import Button from 'components/Button/Button';
 import { RequestCreateColumn } from 'types/types';
 import cn from 'classnames';
 import styles from './Board.module.scss';
+import { getAllTasks } from 'store/taskSlice/taskThunk';
+import Loader from 'components/Loader';
+import { resetTasksList } from 'store/taskSlice/taskSlice';
 
 const Board: React.FC = () => {
-  // const [error, setError] = useState('');
-
   const navigate = useNavigate();
-  const goToBoards = () => navigate('/boards/');
-  const dispatch = useAppDispatch();
   const params = useParams();
-  console.log(params);
 
-  const columnsList = useAppSelector(selectColumnList);
+  const dispatch = useAppDispatch();
+  const board = useAppSelector(selectBoard);
+  const { isLoading, error, tasksList } = board;
+  const { id, title, columns } = tasksList;
 
   const boardId = params.boardId as string;
-  // const boardId = '8003a52c-82e1-443c-b002-cd1492e00685'; //add id from props (wait from boards)
+
+  const goToBoards = () => {
+    navigate('/boards/');
+    dispatch(resetTasksList());
+  };
+
   const columnRequestData: RequestCreateColumn = {
-    boardId: boardId,
+    boardId: id,
     body: {
       title: 'test',
     },
   }; //delete after implementation of 'add column' popup;
 
   useEffect(() => {
-    dispatch(getAllColumns(boardId));
-  }, [dispatch]);
+    if (boardId) {
+      dispatch(getAllTasks(boardId));
+    }
+  }, [boardId, dispatch]);
 
   return (
     <>
+      {isLoading && <Loader />}
+      {error && (
+        <div>
+          {error.statusCode} {error.message}
+        </div>
+      )}
       <div className={styles.header}>
-        <h2 className={styles.title}>Example board</h2> {/*add from boards slice*/}
+        <h2 className={styles.title}>{title}</h2>
         <Button
           className={cn(styles.button)}
           type="button"
@@ -51,10 +65,10 @@ const Board: React.FC = () => {
       <Button className={styles.allBoards} onClick={goToBoards}>
         &#8592; All boards
       </Button>
-      <div>{columnsList.length === 0 && 'Add new column'}</div>
+      <div>{columns.length === 0 && 'Add new column'}</div>
       <div className={styles.list}>
-        {columnsList.map((item) => (
-          <Column key={item.id} id={item.id} title={item.title} boardId={boardId} />
+        {columns.map((item) => (
+          <Column key={item.id} id={item.id} />
         ))}
       </div>
     </>

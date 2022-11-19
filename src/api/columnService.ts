@@ -1,7 +1,9 @@
 import {
+  ColumnDetail,
   ColumnItem,
   RequestCreateColumn,
   RequestDeleteColumn,
+  RequestGetColumn,
   RequestUpdateColumn,
 } from '../types/types';
 import axiosApiInstance from './axiosApiInstance';
@@ -11,6 +13,11 @@ import { AxiosResponse } from 'axios';
 export const columnService = {
   getAllColumns(boardId: string): Promise<AxiosResponse<ColumnItem[]>> {
     return axiosApiInstance.get(`${endpoints.BOARDS}/${boardId}${endpoints.COLUMNS}`);
+  },
+  getColumn(request: RequestGetColumn): Promise<AxiosResponse<ColumnDetail>> {
+    return axiosApiInstance.get(
+      `${endpoints.BOARDS}/${request.boardId}${endpoints.COLUMNS}/${request.columnId}`
+    );
   },
   createColumn(request: RequestCreateColumn) {
     return axiosApiInstance.post(`${endpoints.BOARDS}/${request.boardId}${endpoints.COLUMNS}`, {

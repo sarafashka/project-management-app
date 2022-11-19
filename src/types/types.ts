@@ -49,16 +49,21 @@ export interface NewUser {
   login: string;
   password: string;
 }
+
 export type ColumnState = {
-  columns: ColumnItem[];
+  columnsList: ColumnItem[];
   isLoading: boolean;
-  error: string | null;
+  error: AxiosErrorData | null;
 };
 
 export interface ColumnItem {
   id: string;
   title: string;
   order: number;
+}
+
+export interface ColumnDetail extends ColumnItem {
+  tasks: TasksInColumn[];
 }
 
 export type RequestCreateColumn = {
@@ -73,12 +78,17 @@ export type RequestDeleteColumn = {
   columnId: string;
 };
 
+export type RequestGetColumn = {
+  boardId: string;
+  columnId: string;
+};
+
 export type RequestUpdateColumn = {
   boardId: string;
   columnId: string;
   body: {
     title: string;
-    order: number | null;
+    order: number;
   };
 };
 
@@ -94,6 +104,58 @@ export interface UserInitialState {
   user: User;
 }
 
+export type TaskState = {
+  tasksList: GetBoardByIdData;
+  isLoading: boolean;
+  error: AxiosErrorData | null;
+};
+
+export interface Task {
+  id: string;
+  title: string;
+  order: number;
+  description: string;
+  userId: string;
+  boardId: string;
+  columnId: string;
+  files?: string[];
+}
+
+export type RequestGetAllTasks = {
+  boardId: string;
+  columnId: string;
+};
+export type RequestGetTask = {
+  boardId: string;
+  columnId: string;
+  taskId: string;
+};
+export type RequestDeleteTask = {
+  boardId: string;
+  columnId: string;
+  taskId: string;
+};
+
+export type RequestCreateTask = {
+  boardId: string;
+  columnId: string;
+  body: {
+    title: string;
+    description: string;
+    userId: string;
+  };
+};
+
+export type RequestUpdateTask = {
+  boardId: string;
+  columnId: string;
+  taskId: string;
+  body: Omit<Task, 'taskId'>;
+};
+
+export type TaskCreated = Omit<Task, 'order' | 'boardId' | 'columnId'>;
+
+export type TasksInColumn = Omit<Task, 'boardId' | 'columnId'>;
 export type CloseModalEvent = React.MouseEvent<HTMLButtonElement | HTMLDivElement>;
 
 export interface BoardData {
@@ -117,7 +179,7 @@ export interface GetTaskByIdData {
   userId: string;
   boardId: string;
   columnId: string;
-  files: FileData[];
+  files?: FileData[];
 }
 export type GetBoardByIdTaskData = Omit<GetTaskByIdData, 'boardId' | 'columnId'>;
 

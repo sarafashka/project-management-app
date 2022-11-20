@@ -4,6 +4,7 @@ import styles from './Welcome.module.scss';
 import Button from '../../components/Button/Button';
 import { useNavigate } from 'react-router-dom';
 import tryImg from '../../assets/img/welcome-try.png';
+import TeamMemberCard from '../../components/TeamMemberCard/TeamMemberCard';
 
 const Welcome: React.FC = () => {
   const navigate = useNavigate();
@@ -79,7 +80,9 @@ const Welcome: React.FC = () => {
       </section>
       <section className={styles.team}>
         <h2 className={styles.teamTitle}>Our team</h2>
-        <div className="team__members"></div>
+        <div className="team__members">
+          <TeamMemberCard />
+        </div>
       </section>
     </div>
   );

@@ -77,7 +77,6 @@
 }
 
 .try {
-  //position: relative;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -88,9 +87,8 @@
   background: linear-gradient(96.04deg, #F2EEFD 0%, #E1BEFC 100%);
 
   &Img {
-    //position: absolute;
-    //left: 20px;
-    //bottom: -60px;
+    width: 461px;
+    height: 406px;
   }
 
   &TextBlock {
@@ -132,10 +130,16 @@
   max-width: 1160px;
 
   &Title {
+    text-align: center;
     font-weight: 600;
     font-size: 36px;
     line-height: 1.2;
     margin-bottom: 100px;
+  }
+
+  &Members {
+    display: flex;
+    justify-content: space-between;
   }
 }
 

@@ -1,29 +1,31 @@
 @import '../../styles/mixins';
 
-.welcome {
-  //@include layout;
-}
-
-.container {
-  max-width: 1160px;
-  margin:  0 auto;
-}
-
 .hero {
   display: flex;
   align-items: center;
   flex-direction: column;
-  padding: 7% 0;
+  padding: 6% 20px;
   background: linear-gradient(180deg, #BCBFFF 0%, #F6EAFF 100%);
   gap: 28px;
 
   &Title {
-    width: 730px;
     font-size: 72px;
     font-weight: 500;
     line-height: 1.1;
     text-align: center;
     letter-spacing: -0.7px;
+
+    @include big-tablet {
+      font-size: 60px;
+    }
+
+    @include small-tablet {
+      font-size: 40px;
+    }
+
+    @include mobile {
+      font-size: 30px;
+    }
   }
 
   &Text {
@@ -32,6 +34,19 @@
     line-height: 1.5;
     text-align: center;
     letter-spacing: 0.3px;
+
+    @include big-tablet {
+      width: auto;
+      font-size: 18px;
+    }
+
+    @include small-tablet {
+      font-size: 16px;
+    }
+
+    @include mobile {
+      font-size: 14px;
+    }
   }
 
   &Img {
@@ -41,18 +56,46 @@
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
+
+    @include big-tablet {
+      height: 450px;
+    }
+
+    @include small-tablet {
+      height: 400px;
+    }
+
+    @include middle-mobile {
+      height: 280px;
+    }
+
+    @include mobile {
+      height: 170px;
+    }
   }
 }
 
 .drag {
   display: flex;
+  align-items: center;
   justify-content: space-between;
   max-width: 1160px;
   margin:  0 auto;
-  padding: 100px 0;
+  padding: 6% 20px;
+  gap: 40px;
+
+  @include small-tablet {
+    align-items: center;
+    flex-direction: column;
+  }
+
 
   &TextBlock {
-    max-width: 550px;
+    max-width: 50%;
+
+    @include small-tablet {
+      max-width: none;
+    }
   }
 
   &Title {
@@ -61,6 +104,29 @@
     font-weight: 500;
     line-height: 1.33;
     letter-spacing: -0.4px;
+
+    @include big-tablet {
+      margin-bottom: 30px;
+      font-size: 38px;
+      line-height: 1.2;
+    }
+
+    @include small-tablet {
+      margin-bottom: 20px;
+      font-size: 32px;
+      line-height: 1.1;
+      text-align: center;
+    }
+
+    @include middle-mobile {
+      margin-bottom: 20px;
+      font-size: 28px;
+      line-height: 1.1;
+    }
+
+    @include mobile {
+      font-size: 24px;
+    }
   }
 
   &Text {
@@ -69,11 +135,32 @@
     line-height: 1.5;
     letter-spacing: 0.3px;
     color: #6b6b7f;
+
+    @include big-tablet {
+      font-size: 16px;
+      line-height: 1.3;
+    }
+
+    @include small-tablet {
+      text-align: center;
+    }
+
+    @include middle-mobile {
+      font-size: 14px;
+    }
   }
 
   &Img {
     width: 420px;
+
+    @include small-tablet {
+      width: 80%;
+    }
   }
+}
+
+.tryApp {
+  padding: 0 20px;
 }
 
 .try {
@@ -85,14 +172,40 @@
   padding: 70px 50px;
   border-radius: 24px;
   background: linear-gradient(96.04deg, #F2EEFD 0%, #E1BEFC 100%);
+  gap: 20px;
+
+  @include big-tablet {
+    flex-direction: column;
+  }
+
+  @include small-tablet {
+    padding: 30px;
+  }
+
+  @include middle-mobile {
+
+  }
+
+  @include mobile {
+
+  }
 
   &Img {
-    width: 461px;
-    height: 406px;
+    width: 43%;
+    height: 43%;
+
+    @include middle-mobile {
+      width: 70%;
+      height: 70%;
+    }
   }
 
   &TextBlock {
     width: 500px;
+
+    @include small-tablet {
+      width: auto;
+    }
   }
 
   &Title {
@@ -100,6 +213,19 @@
     font-size: 36px;
     font-weight: 600;
     line-height: 1.2;
+
+    @include big-tablet {
+      text-align: center;
+    }
+
+    @include small-tablet {
+      margin-bottom: 20px;
+      font-size: 32px;
+    }
+
+    @include middle-mobile {
+      font-size: 25px;
+    }
   }
 
   &List {
@@ -108,16 +234,36 @@
     padding-bottom: 40px;
     list-style: inside;
     gap: 12px;
+
+    @include small-tablet {
+      padding-bottom: 20px;
+    }
   }
 
   &ListItem {
     font-size: 18px;
     line-height: 1.33;
+
+    @include small-tablet {
+      font-size: 16px;
+      line-height: 1.2;
+    }
+
+    @include middle-mobile {
+      font-size: 14px;
+      line-height: 1.1;
+    }
   }
 
   &Buttons {
     display: flex;
     justify-content: space-between;
+
+    @include middle-mobile {
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+    }
   }
 
   &Button {
@@ -126,20 +272,31 @@
   }
 }
 .team {
-  margin: 100px auto;
-  max-width: 1160px;
+  margin: 6% auto;
+  padding: 0 20px;
 
   &Title {
-    text-align: center;
-    font-weight: 600;
+    margin-bottom: 6%;
     font-size: 36px;
-    line-height: 1.2;
-    margin-bottom: 100px;
+    font-weight: 600;
+    text-align: center;
+
+    @include small-tablet {
+      font-size: 32px;
+    }
+
+    @include middle-mobile {
+      font-size: 25px;
+    }
   }
 
   &Members {
     display: flex;
-    justify-content: space-between;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 1160px;
+    margin: 0 auto;
+    gap: 30px;
   }
 }
 

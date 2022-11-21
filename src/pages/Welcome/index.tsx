@@ -7,6 +7,7 @@ import tryImg from '../../assets/img/welcome-try.png';
 import TeamMemberCard from '../../components/TeamMemberCard/TeamMemberCard';
 import teamMembers from '../../constants/team';
 import dndimg from '../../assets/img/DnDtemp.png';
+import { authService } from '../../api/authService';
 
 const Welcome: React.FC = () => {
   const navigate = useNavigate();
@@ -54,30 +55,25 @@ const Welcome: React.FC = () => {
               </li>
             </ul>
             <div className={styles.tryButtons}>
-              <Button
-                className={styles.tryButton}
-                onClick={() => {
-                  navigate('/auth');
-                }}
-              >
-                Sign In / Register
-              </Button>
-              <Button
-                className={styles.tryButton}
-                onClick={() => {
-                  navigate('/profile');
-                }}
-              >
-                Profile
-              </Button>
-              <Button
-                className={styles.tryButton}
-                onClick={() => {
-                  navigate('/boards');
-                }}
-              >
-                Boards
-              </Button>
+              {!authService.isUserLogged() ? (
+                <Button
+                  className={styles.tryButton}
+                  onClick={() => {
+                    navigate('/auth');
+                  }}
+                >
+                  Sign In / Register
+                </Button>
+              ) : (
+                <Button
+                  className={styles.tryButton}
+                  onClick={() => {
+                    navigate('/boards');
+                  }}
+                >
+                  Go to Main Page
+                </Button>
+              )}
             </div>
           </div>
         </div>

@@ -1,5 +1,6 @@
 import React, { InputHTMLAttributes } from 'react';
 import styles from './Input.module.scss';
+import cn from 'classnames';
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label: string;
@@ -11,7 +12,12 @@ const Input: React.FC<InputProps> = ({ label, className = '', reactHookFormProps
   return (
     <label className={`${styles.label} ${className}`}>
       {label}
-      <input className={styles.input} {...rest} {...reactHookFormProps} />
+      <input
+        className={cn(styles.input, { [`${styles[className || '']}`]: className })}
+        {...rest}
+        {...reactHookFormProps}
+        autoComplete="off"
+      />
     </label>
   );
 };

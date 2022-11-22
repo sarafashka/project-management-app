@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
 import Loader from '../Loader';
 import { selectLoginStatus, selectUserLoadingStatus } from '../../store/selectors/selectors';
+import { useTranslation } from 'react-i18next';
 
 const LoginForm: React.FC = () => {
   const {
@@ -19,20 +20,24 @@ const LoginForm: React.FC = () => {
     reset,
   } = useForm();
 
+  const { t } = useTranslation('translation', { keyPrefix: 'auth' });
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const loginStatus = useAppSelector(selectLoginStatus);
   const userLoadingStatus = useAppSelector(selectUserLoadingStatus);
   const [errorMessage, setErrorMessage] = useState<string>();
 
+  const loginInputErrorText = t('errors.login-required');
   const loginInputParams = {
     ...register('login', {
-      required: 'Login is required',
+      required: loginInputErrorText,
     }),
   };
+
+  const passwordInputErrorText = t('errors.password-required');
   const passwordInputParams = {
     ...register('password', {
-      required: 'Password is required',
+      required: passwordInputErrorText,
     }),
   };
 
@@ -54,9 +59,13 @@ const LoginForm: React.FC = () => {
 
   return (
     <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
-      <Input label="Enter login:" reactHookFormProps={loginInputParams} />
+      <Input label={t('form.enterLogin')} reactHookFormProps={loginInputParams} />
       {errors.login && <ErrorMessage>{errors.login.message as string}</ErrorMessage>}
-      <Input label="Enter password:" type="password" reactHookFormProps={passwordInputParams} />
+      <Input
+        label={t('form.enterPassword')}
+        type="password"
+        reactHookFormProps={passwordInputParams}
+      />
       {errors.password && <ErrorMessage>{errors.password.message as string}</ErrorMessage>}
       <div className={styles.buttons}>
         <Button
@@ -66,10 +75,10 @@ const LoginForm: React.FC = () => {
             navigate('/');
           }}
         >
-          Back to Main
+          {t('button.back-to-main')}
         </Button>
         <Button className={styles.sign} type="submit">
-          Sign In
+          {t('button.signIn')}
         </Button>
       </div>
       {(loginStatus === 'loading' || userLoadingStatus === 'loading') && <Loader />}

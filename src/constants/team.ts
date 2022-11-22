@@ -20,7 +20,7 @@ const teamMembers = [
       '“Chainlist is amazing stuff. I use it everyday and it helps me to maintain my sanity.”',
     photoLink: 'https://avatars.githubusercontent.com/u/78043992?v=4',
     githubLink: 'https://github.com/zhadan93',
-    name: 'zhadan93',
+    name: 'Evgeniia Zhadan',
     role: 'Software Developer',
   },
 ];

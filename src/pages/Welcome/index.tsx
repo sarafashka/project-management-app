@@ -56,14 +56,24 @@ const Welcome: React.FC = () => {
             </ul>
             <div className={styles.tryButtons}>
               {!authService.isUserLogged() ? (
-                <Button
-                  className={styles.tryButton}
-                  onClick={() => {
-                    navigate('/auth');
-                  }}
-                >
-                  Sign In / Register
-                </Button>
+                <>
+                  <Button
+                    className={styles.tryButton}
+                    onClick={() => {
+                      navigate('/auth');
+                    }}
+                  >
+                    Sign In
+                  </Button>
+                  <Button
+                    className={styles.tryButton}
+                    onClick={() => {
+                      navigate('/auth', { state: 'reg' });
+                    }}
+                  >
+                    Register
+                  </Button>
+                </>
               ) : (
                 <Button
                   className={styles.tryButton}

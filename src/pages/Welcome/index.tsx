@@ -71,7 +71,7 @@ const Welcome: React.FC = () => {
                       navigate('/auth', { state: 'reg' });
                     }}
                   >
-                    Register
+                    Sign Up
                   </Button>
                 </>
               ) : (

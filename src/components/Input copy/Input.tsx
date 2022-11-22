@@ -1,36 +1,28 @@
-import React, { TextareaHTMLAttributes } from 'react';
-import styles from './Textarea.module.scss';
+import React, { InputHTMLAttributes } from 'react';
 import cn from 'classnames';
+import styles from './Input.module.scss';
 
-interface TextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
+interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label: string;
   reactHookFormProps?: Record<string, unknown>;
   className?: string;
 }
 
-const Textarea: React.FC<TextareaProps> = ({
-  label,
-  className = '',
-  reactHookFormProps,
-  ...rest
-}) => {
+const Input: React.FC<InputProps> = ({ label, className = '', reactHookFormProps, ...rest }) => {
   return (
     <label className={`${styles.label} ${className}`}>
       {label}
-      <textarea
-        className={cn(styles.textarea, { [`${styles[className || '']}`]: className })}
+      <input
+        className={cn(styles.input, { [`${styles[className || '']}`]: className })}
         {...rest}
         {...reactHookFormProps}
         autoComplete="off"
-        spellCheck="false"
-        rows={8}
-        cols={5}
       />
     </label>
   );
 };
 
-export default Textarea;
+export default Input;
 
 {
   /* <label className={cn(styles.label, className)}>

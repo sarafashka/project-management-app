@@ -1,7 +1,7 @@
 @import '../../../styles/constants';
 @import '../../../styles/mixins';
 
-.confirmation {
+.editing {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -20,47 +20,14 @@
 
 .content {
   font-size: 20px;
-  text-align: center;
-
-  @include big-tablet {
-    font-size: 2.08vw;
-  }
-
-  @include small-tablet {
-    font-size: 15.9px;
-  }
-}
-
-.attributeValue {
-  color: $primary;
   font-weight: 500;
-  font-size: 20px;
-
-  @include big-tablet {
-    font-size: 2.08vw;
-  }
-
-  @include small-tablet {
-    font-size: 15.9px;
-  }
-}
-
-.container {
-  display: flex;
-  justify-content: center;
-  gap: 15px;
-
-  @include big-tablet {
-    gap: 1.56vw;
-  }
-
-  @include small-tablet {
-    gap: 11.9px;
+  text-align: center;
+  &::first-letter {
+    text-transform: uppercase;
   }
 }
 
 .btn {
-  width: 40%;
   padding: 3.5% 0;
 
   @include small-tablet {

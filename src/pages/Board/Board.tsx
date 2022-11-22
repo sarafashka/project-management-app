@@ -54,13 +54,7 @@ const Board: React.FC = () => {
   };
 
   const closeModal = () => {
-    console.log('close');
     setIsOpen(false);
-  };
-
-  const test = {
-    title: 'default',
-    description: 'test',
   };
 
   return (
@@ -94,7 +88,6 @@ const Board: React.FC = () => {
           onConfirm={handleClick}
           onCancel={closeModal}
           isOpen={isOpen}
-          // currentValue={test}
         />
       </Modal>
     </>

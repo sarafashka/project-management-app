@@ -19,7 +19,7 @@
     padding-right: 2rem;
   }
   &:focus {
-    background-color: rgba(108, 93, 211, 0.2);
+    border-bottom: 1px solid $primary;
   }
 }
 .buttons {

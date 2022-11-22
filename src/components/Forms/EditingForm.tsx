@@ -13,8 +13,8 @@ type EditingFormProps = {
   isOpen: boolean;
   currentValue?: DataFromEditForm;
   operation: 'edit' | 'create';
-  // hasDescription: boolean;
 };
+
 const EditingForm: React.FC<EditingFormProps> = (props) => {
   const {
     register,
@@ -54,8 +54,6 @@ const EditingForm: React.FC<EditingFormProps> = (props) => {
     }),
   };
 
-  console.log('form', currentValue);
-
   useEffect(() => {
     reset();
   }, [isOpen, reset]);
@@ -69,32 +67,25 @@ const EditingForm: React.FC<EditingFormProps> = (props) => {
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     const dataFromEditForm = data as DataFromEditForm;
-    console.log('form', data);
     onConfirm(dataFromEditForm);
   };
-
-  const hasDescription = true;
 
   return (
     <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
       <Input className={operation} label="Title" reactHookFormProps={titleInputParams} />
       {errors.title && <ErrorMessage>{errors.title.message as string}</ErrorMessage>}
-      {hasDescription && (
-        <>
-          <Textarea
-            className={operation}
-            label="Description"
-            reactHookFormProps={descriptionTextareaParams}
-          />
-          <ErrorMessage>{errors.description?.message as string}</ErrorMessage>
-        </>
-      )}
+      <Textarea
+        className={operation}
+        label="Description"
+        reactHookFormProps={descriptionTextareaParams}
+      />
+      {errors.description && <ErrorMessage>{errors.description.message as string}</ErrorMessage>}
 
-      <div>
-        <Button type="button" kind="cancel" onClick={onCancel}>
+      <div className={styles.container}>
+        <Button type="button" className={styles.btn} kind="cancel" onClick={onCancel}>
           Cancel
         </Button>
-        <Button type="submit" kind="confirm">
+        <Button type="submit" className={styles.btn} kind="confirm">
           Confirm
         </Button>
       </div>

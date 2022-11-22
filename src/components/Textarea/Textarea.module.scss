@@ -1,3 +1,5 @@
+@import '../../styles/constants';
+
 .label {
   display: flex;
   flex-direction: column;
@@ -8,18 +10,19 @@
 }
 
 .textarea {
-  height: 54px;
+  height: 140px;
   padding: 12px 18px;
   font-size: 20px;
   border: 1px solid #c1cfff;
   border-radius: 8px;
+  resize: none;
 }
 .edit {
-  font-weight: 500;
   font-size: 1.4rem;
   line-height: 1.6rem;
   margin-bottom: 0.2rem;
   padding: 0.2rem;
+  color: $text;
   background-color: transparent;
   border: none;
   outline: none;
@@ -28,6 +31,7 @@
     padding-right: 2rem;
   }
   &:focus {
-    background-color: rgba(108, 93, 211, 0.2);
+    border: 1px solid #c1cfff;
+    color: $main-text;
   }
 }

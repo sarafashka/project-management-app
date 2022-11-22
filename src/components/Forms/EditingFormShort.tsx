@@ -1,7 +1,6 @@
 import Button from 'components/Button/Button';
 import ErrorMessage from 'components/ErrorMessage/ErrorMessage';
 import Input from 'components/Input/Input';
-import Textarea from 'components/Textarea/Textarea';
 import React, { useEffect } from 'react';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import { CloseModalEvent, DataFromEditForm } from 'types/types';
@@ -12,8 +11,10 @@ type EditingFormProps = {
   onCancel: (event: CloseModalEvent) => void;
   isOpen: boolean;
   currentValue?: DataFromEditForm;
+  operation: 'edit' | 'create';
 };
-const EditingForm: React.FC<EditingFormProps> = (props) => {
+
+const EditingFormShort: React.FC<EditingFormProps> = (props) => {
   const {
     register,
     handleSubmit,
@@ -23,11 +24,10 @@ const EditingForm: React.FC<EditingFormProps> = (props) => {
   } = useForm({
     defaultValues: {
       title: '',
-      description: '',
     },
   });
 
-  const { onCancel, onConfirm, isOpen, currentValue } = props;
+  const { onCancel, onConfirm, isOpen, currentValue, operation } = props;
 
   const titleInputParams = {
     ...register('title', {
@@ -43,34 +43,30 @@ const EditingForm: React.FC<EditingFormProps> = (props) => {
     }),
   };
 
-  console.log('form', currentValue);
-
   useEffect(() => {
     reset();
   }, [isOpen, reset]);
 
   useEffect(() => {
-    console.log('hello');
-    if (currentValue?.description && currentValue.title) {
+    if (currentValue?.title) {
       setValue('title', currentValue.title);
     }
   }, [currentValue, setValue]);
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     const dataFromEditForm = data as DataFromEditForm;
-    console.log('form', data);
     onConfirm(dataFromEditForm);
   };
 
   return (
     <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
-      <Input className={'editing'} label="Title" reactHookFormProps={titleInputParams} />
+      <Input className={operation} label="Title" reactHookFormProps={titleInputParams} />
       {errors.title && <ErrorMessage>{errors.title.message as string}</ErrorMessage>}
-      <div>
-        <Button type="button" kind="cancel" onClick={onCancel}>
+      <div className={styles.container}>
+        <Button type="button" className={styles.btn} kind="cancel" onClick={onCancel}>
           Cancel
         </Button>
-        <Button type="submit" kind="confirm">
+        <Button type="submit" className={styles.btn} kind="confirm">
           Confirm
         </Button>
       </div>
@@ -78,4 +74,4 @@ const EditingForm: React.FC<EditingFormProps> = (props) => {
   );
 };
 
-export default EditingForm;
+export default EditingFormShort;

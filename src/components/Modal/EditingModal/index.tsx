@@ -26,18 +26,19 @@ const EditingModal: React.FC<EditingModalProps> = ({
   isOpen,
   currentValue,
 }) => {
+  const props = {
+    onConfirm,
+    onCancel,
+    isOpen,
+    currentValue,
+    operation,
+  };
   return (
     <div className={Editing}>
       <p className={content}>
         {operation} {entity}
       </p>
-      <EditingForm
-        onConfirm={onConfirm}
-        onCancel={onCancel}
-        isOpen={isOpen}
-        currentValue={currentValue}
-        operation={operation}
-      />
+      {entity === 'column' ? <EditingFormShort {...props} /> : <EditingForm {...props} />}
     </div>
   );
 };

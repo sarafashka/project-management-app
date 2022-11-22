@@ -1,3 +1,5 @@
+@import '../../styles/constants';
+
 .label {
   display: flex;
   flex-direction: column;
@@ -15,8 +17,8 @@
   border-radius: 8px;
 }
 .edit {
-  font-weight: 500;
   font-size: 1.4rem;
+  color: $text;
   line-height: 1.6rem;
   margin-bottom: 0.2rem;
   padding: 0.2rem;
@@ -28,6 +30,7 @@
     padding-right: 2rem;
   }
   &:focus {
-    background-color: rgba(108, 93, 211, 0.2);
+    border: 1px solid #c1cfff;
+    color: $main-text;
   }
 }

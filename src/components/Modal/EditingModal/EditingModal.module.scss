@@ -1,0 +1,40 @@
+@import '../../../styles/constants';
+@import '../../../styles/mixins';
+
+.editing {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 30px;
+  width: 100%;
+  margin: 0 auto;
+
+  @include big-tablet {
+    gap: 3.12vw;
+  }
+
+  @include small-tablet {
+    gap: 23.9px;
+  }
+}
+
+.content {
+  font-size: 20px;
+  font-weight: 500;
+  text-align: center;
+  &::first-letter {
+    text-transform: uppercase;
+  }
+}
+
+.btn {
+  padding: 3.5% 0;
+
+  @include small-tablet {
+    width: 127.88px;
+  }
+
+  @include middle-mobile {
+    width: 38.55%;
+  }
+}

@@ -1,3 +1,6 @@
+@import '../../styles/constants';
+@import '../../styles/mixins';
+
 .form {
   display: flex;
   flex-direction: column;
@@ -32,4 +35,29 @@
 
 .loading {
   text-align: center;
+}
+.container {
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+  gap: 15px;
+
+  @include big-tablet {
+    gap: 1.56vw;
+  }
+
+  @include small-tablet {
+    gap: 11.9px;
+  }
+}
+.btn {
+  padding: 3.5% 0;
+
+  @include small-tablet {
+    width: 127.88px;
+  }
+
+  @include middle-mobile {
+    width: 38.55%;
+  }
 }

@@ -15,7 +15,7 @@ const modalRoot = document.getElementById('modal-root');
 type ModalProps = {
   className?: string;
   children?: React.ReactNode;
-  kind: 'form' | 'confirmation';
+  kind: 'form' | 'confirmation' | 'editing';
   onClose: (e: CloseModalEvent) => void;
   isOpen: boolean;
 };

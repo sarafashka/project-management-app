@@ -1,6 +1,6 @@
 import React, { InputHTMLAttributes } from 'react';
-import styles from './Input.module.scss';
 import cn from 'classnames';
+import styles from './Input.module.scss';
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label: string;
@@ -23,3 +23,10 @@ const Input: React.FC<InputProps> = ({ label, className = '', reactHookFormProps
 };
 
 export default Input;
+
+{
+  /* <label className={cn(styles.label, className)}>
+      {label}
+      <input
+        className={cn(styles.input, { [`${styles[className || '']}`]: className })} */
+}

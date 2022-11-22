@@ -189,3 +189,8 @@ export interface GetBoardByIdColumnData extends ColumnItem {
 export interface GetBoardByIdData extends BoardData {
   columns: GetBoardByIdColumnData[];
 }
+
+export type DataFromEditForm = {
+  title: string;
+  description?: string;
+};

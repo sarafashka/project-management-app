@@ -29,7 +29,7 @@ axiosApiInstance.interceptors.response.use(
     if (error.response.status === 401) {
       userService.removeUserData();
       tokenService.removeToken();
-      window.location.replace('/auth');
+      window.location.replace('/');
     }
     return Promise.reject(error);
   }

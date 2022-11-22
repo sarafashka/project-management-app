@@ -14,7 +14,7 @@ const Auth: React.FC = () => {
   console.log(location.state);
 
   if (authService.isUserLogged()) {
-    return <Navigate replace to="/" />;
+    return <Navigate replace to="/boards" />;
   }
 
   return (

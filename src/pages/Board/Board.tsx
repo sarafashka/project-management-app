@@ -6,7 +6,6 @@ import { createColumn } from 'store/taskSlice/columnThunk';
 import { selectBoard } from 'store/selectors/selectors';
 import Button from 'components/Button/Button';
 import { CloseModalEvent, DataFromEditForm, RequestCreateColumn } from 'types/types';
-import cn from 'classnames';
 import styles from './Board.module.scss';
 import { getAllTasks } from 'store/taskSlice/taskThunk';
 import Loader from 'components/Loader';
@@ -67,19 +66,19 @@ const Board: React.FC = () => {
       )}
       <div className={styles.header}>
         <h2 className={styles.title}>{title}</h2>
-        <Button className={cn(styles.button)} type="button" onClick={openModal} kind="boardBtn">
-          {''}
-        </Button>
+        <Button className={styles.button} type="button" onClick={openModal} kind="boardBtn" />
       </div>
       <Button className={styles.allBoards} onClick={goToBoards}>
         &#8592; All boards
       </Button>
       <div>{columns.length === 0 && 'Add new column'}</div>
+
       <div className={styles.list}>
         {columns.map((item) => (
           <Column key={item.id} id={item.id} />
         ))}
       </div>
+
       <Modal kind="confirmation" onClose={closeModal} isOpen={isOpen}>
         <EditingModal
           entity="column"

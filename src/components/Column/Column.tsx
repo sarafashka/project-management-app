@@ -50,19 +50,17 @@ const Column: React.FC<Props> = (column) => {
   }; // delete when modal will be finish
 
   return (
-    <>
-      <div className={styles.item}>
-        <div className={styles.header}>
-          <p className={styles.count}>({tasks.length})</p>
-          <ColumnTitle title={title} submit={handleSubmit} />
-          <ColumnDelete columnId={id} boardId={board.id} title={title} />
-        </div>
-        {<Task columnId={id} />}
-        <Button className={styles.newTask} onClick={() => dispatch(createTask(dataForCreateTask))}>
-          + Add a task
-        </Button>
+    <div className={styles.item}>
+      <div className={styles.header}>
+        <p className={styles.count}>({tasks.length})</p>
+        <ColumnTitle title={title} submit={handleSubmit} />
+        <ColumnDelete columnId={id} boardId={board.id} title={title} />
       </div>
-    </>
+      {<Task columnId={id} />}
+      <Button className={styles.newTask} onClick={() => dispatch(createTask(dataForCreateTask))}>
+        + Add a task
+      </Button>
+    </div>
   );
 };
 

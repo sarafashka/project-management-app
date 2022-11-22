@@ -12,7 +12,7 @@ const Auth: React.FC = () => {
   const registerButtonStyle = isLoginFormActive ? styles.deactivated : '';
 
   if (authService.isUserLogged()) {
-    return <Navigate replace to="/" />;
+    return <Navigate replace to="/boards" />;
   }
 
   return (

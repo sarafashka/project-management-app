@@ -47,7 +47,7 @@ const LoginForm: React.FC = () => {
       if (response.meta.requestStatus === 'rejected') {
         setErrorMessage(response.payload as string);
       } else {
-        navigate('/profile');
+        navigate('/boards');
       }
     });
   };

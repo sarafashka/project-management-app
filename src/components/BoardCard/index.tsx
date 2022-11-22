@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import classNames from 'classnames';
 import { Link } from 'react-router-dom';
 
-import { CloseModalEvent } from 'types/types';
+import { OpenModalEvent } from 'types/types';
 import { useAppDispatch } from '../../hooks/reduxTypedHooks';
 import { BoardData } from 'types/types';
 
@@ -30,9 +30,10 @@ const BoardCard: React.FC<BoardCardProps> = ({ className, boardData }) => {
 
   const handleClick = () => {
     dispatch(deleteBoardAction(id));
+    closeModal();
   };
 
-  const openModal = (event: CloseModalEvent) => {
+  const openModal = (event: OpenModalEvent) => {
     event.preventDefault();
     setIsOpen(true);
   };

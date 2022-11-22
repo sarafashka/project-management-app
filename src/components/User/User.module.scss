@@ -1,0 +1,42 @@
+@import '../../styles/constants';
+
+.btn {
+  padding: 0;
+
+  &:hover {
+    .dropDownBtn {
+      fill: $primary;
+    }
+
+    .avatar {
+      filter: opacity(70%);
+    }
+  }
+}
+
+.avatar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+
+  border-radius: 100%;
+  overflow: hidden;
+
+  transition: 0.5s;
+}
+
+.img {
+  min-width: 100%;
+  min-height: 100%;
+}
+
+.dropDownBtn {
+  order: 1;
+  fill: $text;
+}
+
+.open .dropDownBtn {
+  transform: rotate(180deg);
+}

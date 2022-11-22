@@ -1,5 +1,6 @@
 export type Icon = {
   className?: string;
+  contentClassName?: string;
 };
 
 export interface About {
@@ -156,7 +157,7 @@ export type RequestUpdateTask = {
 export type TaskCreated = Omit<Task, 'order' | 'boardId' | 'columnId'>;
 
 export type TasksInColumn = Omit<Task, 'boardId' | 'columnId'>;
-export type CloseModalEvent = React.MouseEvent<HTMLButtonElement | HTMLDivElement>;
+export type OpenModalEvent = React.MouseEvent<HTMLButtonElement | HTMLDivElement>;
 
 export interface BoardData {
   id: string;

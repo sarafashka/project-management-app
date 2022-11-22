@@ -1,0 +1,41 @@
+@import '../../../styles/constants';
+
+.item {
+  list-style: none;
+
+  transition: 0.5s;
+
+  &:first-child {
+    border-radius: 8px 8px 0 0;
+  }
+
+  &:last-child {
+    border-radius: 0 0 8px 8px;
+  }
+
+  &:hover {
+    background-color: $hover-user-actions;
+  }
+
+  &:hover .btn {
+    color: $primary;
+  }
+
+  &:hover .signOutIcon {
+    stroke: $primary;
+  }
+
+  &:hover .icon {
+    fill: $primary;
+  }
+}
+
+.btn {
+  padding: 10px;
+
+  color: $text;
+}
+
+.btnIcon {
+  margin-right: 5px;
+}

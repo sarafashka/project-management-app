@@ -6,7 +6,7 @@ import styles from './Button.module.scss';
 const { button, btnIcon } = styles;
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  kind?: 'close' | 'confirm' | 'cancel' | 'boardBtn' | 'delete';
+  kind?: 'close' | 'confirm' | 'cancel' | 'boardBtn' | 'delete' | 'fillBackground';
   icon?: React.ReactNode;
 }
 
@@ -16,7 +16,7 @@ const Button: React.FC<ButtonProps> = ({ children, className, kind, icon, ...res
       className={classNames(button, { [`${styles[kind || '']}`]: kind }, className)}
       {...rest}
     >
-      {icon && <span className={btnIcon}>{icon}</span>}
+      {icon}
       {children}
     </button>
   );

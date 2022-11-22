@@ -2,8 +2,6 @@ import React, { useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import classNames from 'classnames';
 
-import { CloseModalEvent } from 'types/types';
-
 import Button from 'components/Button/Button';
 
 import styles from './Modal.module.scss';
@@ -15,38 +13,67 @@ const modalRoot = document.getElementById('modal-root');
 type ModalProps = {
   className?: string;
   children?: React.ReactNode;
-  kind: 'form' | 'confirmation' | 'editing';
-  onClose: (e: CloseModalEvent) => void;
+  kind?: 'form' | 'confirmation' | 'userActions' | 'editing';
+  onClose?: () => void;
+  onCloseSimple?: (e: Event) => void;
   isOpen: boolean;
+  coords?: {
+    left?: number;
+    top?: number;
+    right?: number;
+  };
 };
 
-const Modal: React.FC<ModalProps> = ({ children, className, kind, onClose, isOpen }) => {
+const Modal: React.FC<ModalProps> = ({
+  children,
+  className,
+  kind,
+  onClose,
+  isOpen,
+  coords,
+  onCloseSimple,
+}) => {
   const { current } = useRef(document.createElement('div'));
 
   useEffect(() => {
-    if (isOpen && !modalRoot?.classList.contains(closeModal)) {
+    if (isOpen && !current?.classList.contains(closeModal)) {
       modalRoot?.appendChild(current);
-      modalRoot?.classList.add(openModal);
-    } else if (modalRoot?.classList.contains(openModal)) {
-      modalRoot?.classList.remove(openModal);
-      modalRoot?.classList.add(closeModal);
+      current?.classList.add(openModal);
+
+      if (kind === 'userActions' && onCloseSimple) {
+        window.addEventListener('scroll', onCloseSimple);
+        document.body.addEventListener('click', onCloseSimple);
+      }
+    } else if (current?.classList.contains(openModal)) {
+      current?.classList.remove(openModal);
+      current?.classList.add(closeModal);
 
       const timerId = setTimeout(() => {
-        modalRoot?.classList.remove(closeModal);
+        current?.classList.remove(closeModal);
         modalRoot?.removeChild(current);
         clearTimeout(timerId);
-      }, 500);
+      }, 400);
+
+      if (kind === 'userActions' && onCloseSimple) {
+        return () => {
+          window.removeEventListener('scroll', onCloseSimple);
+          document.body.removeEventListener('click', onCloseSimple);
+        };
+      }
     }
-  }, [current, isOpen]);
+  }, [current, isOpen, kind, onCloseSimple]);
 
   const wrapper = (
-    <div>
-      <div className={overlay} onClick={onClose} />
-      <div className={classNames(popup, { [`${styles[kind || '']}`]: kind }, className)}>
-        <Button className={closeBtn} onClick={onClose} kind="close" />
+    <>
+      {kind !== 'userActions' && <div className={overlay} onClick={onClose} />}
+      <div
+        className={classNames(popup, { [`${styles[kind || '']}`]: kind }, className)}
+        style={{ ...coords }}
+      >
+        {kind !== 'userActions' && <Button className={closeBtn} onClick={onClose} kind="close" />}
         <div className={container}>{children}</div>
       </div>
-    </div>
+    </>
   );
 
   return createPortal(wrapper, current);

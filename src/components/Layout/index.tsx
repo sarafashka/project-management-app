@@ -1,12 +1,13 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
 
+import Header from 'components/Header';
 import Footer from 'components/Footer';
 
 import styles from './Layout.module.scss';
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
 
-const { layout, main, footer } = styles;
+const { layout } = styles;
 
 const Layout = (): JSX.Element => {
   return (
@@ -16,7 +17,7 @@ const Layout = (): JSX.Element => {
           <Outlet />
         </ErrorBoundary>
       </main>
-      <Footer className={footer} />
+      <Footer />
     </div>
   );
 };

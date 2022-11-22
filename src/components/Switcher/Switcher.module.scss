@@ -1,0 +1,95 @@
+@import '../../styles/constants';
+@import '../../styles/mixins';
+
+.switcher {
+  @include checkbox-wrapper;
+}
+
+.checkbox {
+  display: none;
+}
+
+.wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 55px;
+  height: 28px;
+
+  font-size: 14px;
+
+  border: none;
+  border-radius: 20px;
+
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.content {
+  position: absolute;
+  display: flex;
+  width: 200%;
+  height: 100%;
+
+  transform: translateX(-50%);
+
+  transition: 0.3s ease-in;
+
+  &::before,
+  &::after {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 0 7px;
+
+    color: $primary;
+    font-weight: bold;
+    box-sizing: border-box;
+
+    background-color: $switcher-background;
+  }
+
+  &::before {
+    content: attr(data-firstoptionlabel);
+    text-transform: uppercase;
+  }
+
+  &::after {
+    content: attr(data-secondoptionlabel);
+    text-transform: uppercase;
+    justify-content: flex-end;
+  }
+}
+
+.selected {
+  &::after {
+    background-color: $cancel-background;
+  }
+
+  &::before {
+    background-color: $primary;
+  }
+}
+
+.tumbler {
+  position: absolute;
+  display: block;
+  width: 18px;
+  height: 18px;
+  left: 5px;
+
+  background: $switcher-tumbler;
+  border: none;
+  border-radius: 20px;
+
+  transition: 0.3s ease-in;
+}
+
+.checkbox:checked + .wrapper {
+  .content {
+    transform: translateX(0%);
+  }
+  .tumbler {
+    transform: translate(55px - 2 * 5px - 18px);
+  }
+}

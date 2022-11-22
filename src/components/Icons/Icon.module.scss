@@ -9,3 +9,26 @@
 
   transition: 0.5s;
 }
+
+.logo {
+  fill: none;
+  stroke: $primary;
+  stroke-linecap:round;
+  stroke-miterlimit: 10;
+  stroke-width: 32px;
+
+  transition: 0.5s;
+}
+
+.signOut {
+  stroke: $text;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.5px;
+
+  transition: 0.5s;
+}
+
+.editIcon {
+  fill: $text;
+}

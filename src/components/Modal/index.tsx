@@ -13,9 +13,10 @@ const modalRoot = document.getElementById('modal-root');
 type ModalProps = {
   className?: string;
   children?: React.ReactNode;
-  kind?: 'form' | 'confirmation' | 'userActions' | 'editing';
+  kind?: 'form' | 'confirmation' | 'dropDown' | 'editing';
   onClose?: () => void;
-  onCloseSimple?: (e: Event) => void;
+  onCloseByScroll?: () => void;
+  onCloseByDocument?: (e: Event) => void;
   isOpen: boolean;
   coords?: {
     left?: number;
@@ -31,7 +32,8 @@ const Modal: React.FC<ModalProps> = ({
   onClose,
   isOpen,
   coords,
-  onCloseSimple,
+  onCloseByScroll,
+  onCloseByDocument,
 }) => {
   const { current } = useRef(document.createElement('div'));
 
@@ -39,11 +41,6 @@ const Modal: React.FC<ModalProps> = ({
     if (isOpen && !current?.classList.contains(closeModal)) {
       modalRoot?.appendChild(current);
       current?.classList.add(openModal);
-
-      if (kind === 'userActions' && onCloseSimple) {
-        window.addEventListener('scroll', onCloseSimple);
-        document.body.addEventListener('click', onCloseSimple);
-      }
     } else if (current?.classList.contains(openModal)) {
       current?.classList.remove(openModal);
       current?.classList.add(closeModal);
@@ -53,24 +50,33 @@ const Modal: React.FC<ModalProps> = ({
         modalRoot?.removeChild(current);
         clearTimeout(timerId);
       }, 400);
-
-      if (kind === 'userActions' && onCloseSimple) {
-        return () => {
-          window.removeEventListener('scroll', onCloseSimple);
-          document.body.removeEventListener('click', onCloseSimple);
-        };
-      }
     }
-  }, [current, isOpen, kind, onCloseSimple]);
+  }, [current, isOpen]);
+
+  useEffect(() => {
+    const handleCloseByScroll = () => {
+      isOpen && window.scrollY > 0 && onCloseByScroll?.();
+    };
+
+    if (kind === 'dropDown') {
+      window.addEventListener('scroll', handleCloseByScroll);
+      onCloseByDocument && document.body.addEventListener('click', onCloseByDocument);
+
+      return () => {
+        window.removeEventListener('scroll', handleCloseByScroll);
+        onCloseByDocument && document.body.removeEventListener('click', onCloseByDocument);
+      };
+    }
+  }, [isOpen, kind, onCloseByDocument, onCloseByScroll]);
 
   const wrapper = (
     <>
-      {kind !== 'userActions' && <div className={overlay} onClick={onClose} />}
+      {kind !== 'dropDown' && <div className={overlay} onClick={onClose} />}
       <div
         className={classNames(popup, { [`${styles[kind || '']}`]: kind }, className)}
         style={{ ...coords }}
       >
-        {kind !== 'userActions' && <Button className={closeBtn} onClick={onClose} kind="close" />}
+        {kind !== 'dropDown' && <Button className={closeBtn} onClick={onClose} kind="close" />}
         <div className={container}>{children}</div>
       </div>
     </>

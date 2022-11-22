@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 import { useAppDispatch, useAppSelector } from 'hooks/reduxTypedHooks';
 import { selectTasksList } from 'store/selectors/selectors';
 import styles from './TaskCard.module.scss';
-import Button from 'components/Button/Button';
 import { deleteTask } from 'store/taskSlice/taskThunk';
 import { CloseModalEvent, GetBoardByIdTaskData, RequestDeleteTask } from 'types/types';
 import { selectUser } from 'store/selectors/selectors';
 import { findTask } from 'utils/utils';
 import Modal from 'components/Modal';
-import ConfirmationModal from 'components/Modal/ConfirmationModal';
+import TaskDelete from '../TaskDelete';
+import EditingModal from 'components/Modal/EditingModal';
 
 type Props = {
   taskId: string;
@@ -49,24 +49,22 @@ const TaskCard: React.FC<Props> = (props) => {
   return (
     <>
       <li className={styles.item}>
+        {/* onClick={openModal}> */}
         <div className={styles.header}>
-          <h2 className={styles.title}>{currentTask?.title}</h2>
-          <Button
-            type="button"
-            className={styles.delete}
-            kind="delete"
-            onClick={openModal}
-          ></Button>
+          <h2 className={styles.title}>{title}</h2>
+          <TaskDelete taskId={taskId} columnId={columnId} title={title} />
         </div>
         <div className={styles.description}>{currentTask?.description}</div>
         {isOwner() && <div className={styles.owner}>My task</div>}
       </li>
-      <Modal kind="confirmation" onClose={closeModal} isOpen={isOpen}>
-        <ConfirmationModal
-          entity="column"
-          value={title}
+      <Modal kind="editing" onClose={closeModal} isOpen={isOpen}>
+        <EditingModal
+          entity="task"
           onConfirm={handleClick}
           onCancel={closeModal}
+          operation={'edit'}
+          isOpen={false}
+          currentValue={{ title: 'task', description: 'smth' }}
         />
       </Modal>
     </>

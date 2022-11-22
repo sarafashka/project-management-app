@@ -4,12 +4,14 @@ import styles from './Auth.module.scss';
 import LoginForm from '../../components/Forms/LoginForm';
 import RegisterForm from '../../components/Forms/RegisterForm';
 import { authService } from '../../api/authService';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useLocation } from 'react-router-dom';
 
 const Auth: React.FC = () => {
-  const [isLoginFormActive, setIsLoginFormActive] = useState(true);
+  const location = useLocation();
+  const [isLoginFormActive, setIsLoginFormActive] = useState(location.state !== 'reg');
   const loginButtonStyle = !isLoginFormActive ? styles.deactivated : '';
   const registerButtonStyle = isLoginFormActive ? styles.deactivated : '';
+  console.log(location.state);
 
   if (authService.isUserLogged()) {
     return <Navigate replace to="/boards" />;

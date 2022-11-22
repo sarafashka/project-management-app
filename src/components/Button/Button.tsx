@@ -3,7 +3,7 @@ import classNames from 'classnames';
 
 import styles from './Button.module.scss';
 
-const { button, btnIcon } = styles;
+const { button } = styles;
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   kind?: 'close' | 'confirm' | 'cancel' | 'boardBtn' | 'delete' | 'fillBackground';

@@ -1,10 +1,12 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import classNames from 'classnames';
 
 import { useAppDispatch } from 'hooks/reduxTypedHooks';
 
 import { logout } from 'store/userSlice';
 import { userService } from '../../api/userService';
+
+import AppRoutes from 'constants/routes';
 
 import Modal from 'components/Modal';
 import Button from 'components/Button/Button';
@@ -71,12 +73,13 @@ const User: React.FC<UserProps> = ({ className }) => {
       name: 'Edit profile',
       Icon: EditIcon,
       onClick: toggleModal,
-      path: '/profile',
+      path: AppRoutes.PROFILE,
     },
     {
       name: 'Sign Out',
       Icon: SignOutIcon,
       onClick: handleSignOut,
+      path: AppRoutes.AUTH,
     },
   ];
 

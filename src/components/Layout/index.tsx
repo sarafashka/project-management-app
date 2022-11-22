@@ -3,16 +3,17 @@ import { Outlet } from 'react-router-dom';
 
 import Header from 'components/Header';
 import Footer from 'components/Footer';
+import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
 
 import styles from './Layout.module.scss';
-import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
 
 const { layout } = styles;
 
 const Layout = (): JSX.Element => {
   return (
     <div className={layout}>
-      <main className={main}>
+      <Header />
+      <main>
         <ErrorBoundary>
           <Outlet />
         </ErrorBoundary>

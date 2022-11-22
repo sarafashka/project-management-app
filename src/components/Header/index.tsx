@@ -1,12 +1,12 @@
 import React, { useEffect, useRef } from 'react';
 import classNames from 'classnames';
 
+import Logo from 'components/Logo';
 import User from 'components/User';
 import Button from 'components/Button/Button';
 import Switcher from 'components/Switcher';
 
 import styles from './Header.module.scss';
-import Logo from 'components/Logo';
 
 const { header, container, btnContainer, sticky } = styles;
 

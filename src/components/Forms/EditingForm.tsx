@@ -4,12 +4,12 @@ import Input from 'components/Input/Input';
 import Textarea from 'components/Textarea/Textarea';
 import React, { useEffect } from 'react';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
-import { CloseModalEvent, DataFromEditForm } from 'types/types';
+import { OpenModalEvent, DataFromEditForm } from 'types/types';
 import styles from './Forms.module.scss';
 
 type EditingFormProps = {
   onConfirm: (data: DataFromEditForm) => void;
-  onCancel: (event: CloseModalEvent) => void;
+  onCancel: (event: OpenModalEvent) => void;
   isOpen: boolean;
   currentValue?: DataFromEditForm;
   operation: 'edit' | 'create';

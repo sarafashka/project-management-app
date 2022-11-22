@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { CloseModalEvent, DataFromEditForm } from 'types/types';
+import { OpenModalEvent, DataFromEditForm } from 'types/types';
 
 import styles from './EditingModal.module.scss';
 import EditingForm from 'components/Forms/EditingForm';
@@ -12,7 +12,7 @@ type EditingModalProps = {
   entity: 'board' | 'column' | 'task';
   operation: 'create' | 'edit';
   value?: string;
-  onCancel: (event: CloseModalEvent) => void;
+  onCancel: (event: OpenModalEvent) => void;
   onConfirm: (data: DataFromEditForm) => void;
   isOpen: boolean;
   currentValue?: DataFromEditForm;

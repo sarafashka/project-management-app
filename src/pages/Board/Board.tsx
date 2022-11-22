@@ -5,7 +5,7 @@ import Column from 'components/Column';
 import { createColumn } from 'store/taskSlice/columnThunk';
 import { selectBoard } from 'store/selectors/selectors';
 import Button from 'components/Button/Button';
-import { CloseModalEvent, DataFromEditForm, RequestCreateColumn } from 'types/types';
+import { OpenModalEvent, DataFromEditForm, RequestCreateColumn } from 'types/types';
 import styles from './Board.module.scss';
 import { getAllTasks } from 'store/taskSlice/taskThunk';
 import Loader from 'components/Loader';
@@ -47,7 +47,7 @@ const Board: React.FC = () => {
     closeModal();
   };
 
-  const openModal = (event: CloseModalEvent) => {
+  const openModal = (event: OpenModalEvent) => {
     event.preventDefault();
     setIsOpen(true);
   };

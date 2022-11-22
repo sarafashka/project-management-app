@@ -57,7 +57,7 @@ const Board: React.FC = () => {
   };
 
   return (
-    <>
+    <div className={styles.container}>
       {isLoading && <Loader />}
       {error && (
         <div>
@@ -89,7 +89,7 @@ const Board: React.FC = () => {
           isOpen={isOpen}
         />
       </Modal>
-    </>
+    </div>
   );
 };
 

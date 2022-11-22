@@ -57,14 +57,11 @@ const User: React.FC<UserProps> = ({ className }) => {
     toggleModal();
   };
 
-  const closeModal = (e: Event) => {
+  const handleCloseByDocument = (e: Event) => {
     const { target } = e;
-    if (
-      isOpen &&
-      ((target instanceof HTMLElement && !target.closest('#userBtn')) || window.scrollY > 0)
-    ) {
-      setIsOpen(false);
-      userRef.current?.classList.remove(open);
+
+    if (isOpen && target instanceof HTMLElement && !target.closest('#userBtn')) {
+      toggleModal();
     }
   };
 
@@ -95,7 +92,13 @@ const User: React.FC<UserProps> = ({ className }) => {
         </div>
         {login}
       </Button>
-      <Modal kind="userActions" isOpen={isOpen} onCloseSimple={closeModal} coords={coords}>
+      <Modal
+        kind="dropDown"
+        isOpen={isOpen}
+        onCloseByScroll={toggleModal}
+        onCloseByDocument={handleCloseByDocument}
+        coords={coords}
+      >
         <UserActions data={userActions} />
       </Modal>
     </div>

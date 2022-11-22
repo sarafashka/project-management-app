@@ -1,5 +1,9 @@
 import React, { useEffect, useRef } from 'react';
 import classNames from 'classnames';
+import { useLocation } from 'react-router-dom';
+
+import { authService } from 'api/authService';
+import AppRoutes, { publicRoutes } from 'constants/routes';
 
 import Logo from 'components/Logo';
 import User from 'components/User';
@@ -15,6 +19,7 @@ type HeaderProps = {
 };
 
 const Header: React.FC<HeaderProps> = ({ className }) => {
+  const { pathname } = useLocation();
   const headerRef = useRef<HTMLElement>(null);
 
   const changeHeaderStyle = () => {
@@ -35,9 +40,9 @@ const Header: React.FC<HeaderProps> = ({ className }) => {
         <div className={container}>
           <Logo />
           <div className={btnContainer}>
-            <Button kind="fillBackground">New Board</Button>
+            {!publicRoutes.includes(pathname) && <Button kind="fillBackground">New Board</Button>}
             <Switcher optionLabels={['ru', 'en']} />
-            <User />
+            {pathname !== AppRoutes.AUTH && authService.isUserLogged() && <User />}
           </div>
         </div>
       </header>

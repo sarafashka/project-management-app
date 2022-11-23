@@ -4,7 +4,7 @@ import styles from './ColumnDelete.module.scss';
 import Button from 'components/Button/Button';
 import { deleteColumn } from 'store/taskSlice/columnThunk';
 import { useAppDispatch } from 'hooks/reduxTypedHooks';
-import { CloseModalEvent, RequestDeleteColumn } from 'types/types';
+import { OpenModalEvent, RequestDeleteColumn } from 'types/types';
 import Modal from 'components/Modal';
 import ConfirmationModal from 'components/Modal/ConfirmationModal';
 
@@ -27,7 +27,7 @@ const ColumnDelete: React.FC<Props> = (column) => {
     dispatch(deleteColumn(dataForDeleteColumn));
   };
 
-  const openModal = (event: CloseModalEvent) => {
+  const openModal = (event: OpenModalEvent) => {
     event.preventDefault();
     setIsOpen(true);
   };

@@ -2,10 +2,44 @@
 
 .icon {
   display: block;
-
-  border-radius: 5px;
+  max-width: inherit;
+  max-height: inherit;
 
   cursor: pointer;
 
   transition: 0.5s;
+}
+
+.iconContacts {
+  border-radius: 5px;
+}
+
+.logo {
+  fill: none;
+  stroke: $primary;
+  stroke-linecap:round;
+  stroke-miterlimit: 10;
+  stroke-width: 32px;
+
+  transition: 0.5s;
+}
+
+.signOut {
+  stroke: $text;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.5px;
+
+  transition: 0.5s;
+}
+
+.edit {
+  fill: $text;
+}
+
+.plus {
+  stroke: white;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2.6px;
 }

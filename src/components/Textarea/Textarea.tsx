@@ -15,7 +15,7 @@ const Textarea: React.FC<TextareaProps> = ({
   ...rest
 }) => {
   return (
-    <label className={`${styles.label} ${className}`}>
+    <label className={cn(styles.label, className)}>
       {label}
       <textarea
         className={cn(styles.textarea, { [`${styles[className || '']}`]: className })}
@@ -31,10 +31,3 @@ const Textarea: React.FC<TextareaProps> = ({
 };
 
 export default Textarea;
-
-{
-  /* <label className={cn(styles.label, className)}>
-      {label}
-      <input
-        className={cn(styles.input, { [`${styles[className || '']}`]: className })} */
-}

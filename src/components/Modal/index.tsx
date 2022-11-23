@@ -2,8 +2,6 @@ import React, { useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import classNames from 'classnames';
 
-import { CloseModalEvent } from 'types/types';
-
 import Button from 'components/Button/Button';
 
 import styles from './Modal.module.scss';
@@ -15,38 +13,73 @@ const modalRoot = document.getElementById('modal-root');
 type ModalProps = {
   className?: string;
   children?: React.ReactNode;
-  kind: 'form' | 'confirmation' | 'editing';
-  onClose: (e: CloseModalEvent) => void;
+  kind?: 'form' | 'confirmation' | 'dropDown' | 'editing';
+  onClose?: () => void;
+  onCloseByScroll?: () => void;
+  onCloseByDocument?: (e: Event) => void;
   isOpen: boolean;
+  coords?: {
+    left?: number;
+    top?: number;
+    right?: number;
+  };
 };
 
-const Modal: React.FC<ModalProps> = ({ children, className, kind, onClose, isOpen }) => {
+const Modal: React.FC<ModalProps> = ({
+  children,
+  className,
+  kind,
+  onClose,
+  isOpen,
+  coords,
+  onCloseByScroll,
+  onCloseByDocument,
+}) => {
   const { current } = useRef(document.createElement('div'));
 
   useEffect(() => {
-    if (isOpen && !modalRoot?.classList.contains(closeModal)) {
+    if (isOpen && !current?.classList.contains(closeModal)) {
       modalRoot?.appendChild(current);
-      modalRoot?.classList.add(openModal);
-    } else if (modalRoot?.classList.contains(openModal)) {
-      modalRoot?.classList.remove(openModal);
-      modalRoot?.classList.add(closeModal);
+      current?.classList.add(openModal);
+    } else if (current?.classList.contains(openModal)) {
+      current?.classList.remove(openModal);
+      current?.classList.add(closeModal);
 
       const timerId = setTimeout(() => {
-        modalRoot?.classList.remove(closeModal);
+        current?.classList.remove(closeModal);
         modalRoot?.removeChild(current);
         clearTimeout(timerId);
-      }, 500);
+      }, 400);
     }
   }, [current, isOpen]);
 
+  useEffect(() => {
+    const handleCloseByScroll = () => {
+      isOpen && window.scrollY > 0 && onCloseByScroll?.();
+    };
+
+    if (kind === 'dropDown') {
+      window.addEventListener('scroll', handleCloseByScroll);
+      onCloseByDocument && document.body.addEventListener('click', onCloseByDocument);
+
+      return () => {
+        window.removeEventListener('scroll', handleCloseByScroll);
+        onCloseByDocument && document.body.removeEventListener('click', onCloseByDocument);
+      };
+    }
+  }, [isOpen, kind, onCloseByDocument, onCloseByScroll]);
+
   const wrapper = (
-    <div>
-      <div className={overlay} onClick={onClose} />
-      <div className={classNames(popup, { [`${styles[kind || '']}`]: kind }, className)}>
-        <Button className={closeBtn} onClick={onClose} kind="close" />
+    <>
+      {kind !== 'dropDown' && <div className={overlay} onClick={onClose} />}
+      <div
+        className={classNames(popup, { [`${styles[kind || '']}`]: kind }, className)}
+        style={{ ...coords }}
+      >
+        {kind !== 'dropDown' && <Button className={closeBtn} onClick={onClose} kind="close" />}
         <div className={container}>{children}</div>
       </div>
-    </div>
+    </>
   );
 
   return createPortal(wrapper, current);

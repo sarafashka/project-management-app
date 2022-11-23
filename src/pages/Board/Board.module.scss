@@ -1,11 +1,16 @@
 @import '../../styles/constants';
+@import '../../styles/mixins';
+
+.container {
+  @include common-container;
+
+}
 
 .list {
   display: flex;
   gap: 2rem;
   list-style: none;
   overflow-x: auto;
-  width: 100vw;
 }
 .header {
   display: flex;

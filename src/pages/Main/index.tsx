@@ -3,6 +3,7 @@ import React, { useEffect } from 'react';
 import { useAppSelector, useAppDispatch } from '../../hooks/reduxTypedHooks';
 
 import { selectBoards } from '../../store/selectors/selectors';
+import { resetBoards } from 'store/boardsSlice/boardsSlice';
 
 import BoardCard from 'components/BoardCard';
 import Loader from 'components/Loader';
@@ -20,6 +21,10 @@ const Main: React.FC = () => {
 
   useEffect(() => {
     dispatch(getAllBoardsAction());
+
+    return () => {
+      dispatch(resetBoards());
+    };
   }, [dispatch]);
 
   return useMatch(AppRoutes.BOARDS) ? (

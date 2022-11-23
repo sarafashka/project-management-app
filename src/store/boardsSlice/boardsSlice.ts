@@ -24,11 +24,11 @@ const initialState: BoardsState = {
 };
 
 const isPending = (action: { type: string }) => {
-  return action.type.endsWith('/pending');
+  return /^boards\/[a-z]+\/pending$/i.test(action.type);
 };
 
 const isRejected = (action: { type: string }) => {
-  return action.type.endsWith('/rejected');
+  return /^boards\/[a-z]+\/rejected$/.test(action.type);
 };
 
 export const boardsSlice = createSlice({
@@ -37,6 +37,9 @@ export const boardsSlice = createSlice({
   reducers: {
     selectBoard: (state, { payload }: PayloadAction<string>) => {
       state.currentBoardId = payload;
+    },
+    resetBoards: (state) => {
+      state.boards = [];
     },
   },
   extraReducers: (builder) => {
@@ -68,6 +71,6 @@ export const boardsSlice = createSlice({
   },
 });
 
-export const { selectBoard } = boardsSlice.actions;
+export const { selectBoard, resetBoards } = boardsSlice.actions;
 
 export default boardsSlice.reducer;

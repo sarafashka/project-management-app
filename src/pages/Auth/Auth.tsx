@@ -13,7 +13,6 @@ const Auth: React.FC = () => {
   const [isLoginFormActive, setIsLoginFormActive] = useState(location.state !== 'reg');
   const loginButtonStyle = !isLoginFormActive ? styles.deactivated : '';
   const registerButtonStyle = isLoginFormActive ? styles.deactivated : '';
-  console.log(location.state);
 
   if (authService.isUserLogged()) {
     return <Navigate replace to="/boards" />;

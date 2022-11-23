@@ -4,7 +4,7 @@ import { selectTasksList } from 'store/selectors/selectors';
 import styles from './TaskDelete.module.scss';
 import Button from 'components/Button/Button';
 import { deleteTask } from 'store/taskSlice/taskThunk';
-import { CloseModalEvent, RequestDeleteTask } from 'types/types';
+import { OpenModalEvent, RequestDeleteTask } from 'types/types';
 
 import Modal from 'components/Modal';
 import ConfirmationModal from 'components/Modal/ConfirmationModal';
@@ -32,7 +32,7 @@ const TaskDelete: React.FC<Props> = (props) => {
     dispatch(deleteTask(dataForDeleteTask));
   };
 
-  const openModal = (event: CloseModalEvent) => {
+  const openModal = (event: OpenModalEvent) => {
     event.preventDefault();
     setIsOpen(true);
   };

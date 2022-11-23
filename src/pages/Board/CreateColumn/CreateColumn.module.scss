@@ -1,0 +1,45 @@
+@import '../../styles/constants';
+@import '../../styles/mixins';
+
+.container {
+  @include common-container;
+
+}
+
+.list {
+  display: flex;
+  gap: 2rem;
+  list-style: none;
+  overflow-x: auto;
+}
+.header {
+  display: flex;
+  justify-content: space-between;
+}
+.title {
+  color: $primary;
+}
+.allBoards {
+  border: none;
+  background-color: transparent;
+  text-align: start;
+  cursor: pointer;
+  transition: 0.25s;
+
+  &:hover {
+    color: $primary;
+  }
+}
+.button {
+  width: 2.3rem;
+  height: 2.3rem;
+  border-radius: 6px;
+  background-image: url('../../assets/img/btnPlus.png');
+  background-repeat: no-repeat;
+  background-size: auto;
+  background-position: center;
+
+  &:hover {
+    background-image: url('../../assets/img/btnPlusHover.png');
+  }
+}

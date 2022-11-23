@@ -2,9 +2,8 @@ import React, { useState } from 'react';
 import classNames from 'classnames';
 import { Link } from 'react-router-dom';
 
-import { OpenModalEvent } from 'types/types';
+import { BoardData, CreateBoardData, DataFromEditForm, OpenModalEvent } from 'types/types';
 import { useAppDispatch } from '../../hooks/reduxTypedHooks';
-import { BoardData } from 'types/types';
 
 import { deleteBoardAction, updateBoardAction } from 'store/boardsSlice/boardsThunk';
 import { selectBoard } from '../../store/boardsSlice/boardsSlice';
@@ -35,24 +34,22 @@ const BoardCard: React.FC<BoardCardProps> = ({ className, boardData }) => {
     closeModal();
   };
 
-  const handleUpdateClick = () => {
+  const handleSelectBoard = () => {
+    dispatch(selectBoard);
+  };
+
+  const handleUpdateClick = (formData: DataFromEditForm) => {
     dispatch(
       updateBoardAction({
-        id: '',
-        title: '',
-        description: '',
+        id,
+        body: { ...(formData as CreateBoardData) },
       })
     );
     closeModal();
   };
 
-  const handleSelectBoard = () => {
-    dispatch(selectBoard);
-  };
-
   const openModal = (event: OpenModalEvent) => {
     event.preventDefault();
-
     const kind = event.currentTarget.className;
 
     setIsOpen(true);

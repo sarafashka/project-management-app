@@ -5,6 +5,7 @@ import classNames from 'classnames';
 import Button from 'components/Button/Button';
 
 import styles from './Modal.module.scss';
+import { OpenModalEvent } from 'types/types';
 
 const { overlay, popup, closeBtn, container, openModal, closeModal } = styles;
 
@@ -14,7 +15,7 @@ type ModalProps = {
   className?: string;
   children?: React.ReactNode;
   kind?: 'form' | 'confirmation' | 'dropDown' | 'editing';
-  onClose?: () => void;
+  onClose?: (e: OpenModalEvent) => void;
   onCloseByScroll?: () => void;
   onCloseByDocument?: (e: Event) => void;
   isOpen: boolean;

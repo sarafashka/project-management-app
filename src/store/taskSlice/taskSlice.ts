@@ -119,7 +119,7 @@ const taskSlice = createSlice({
 });
 
 const isError = (action: { type: string }) => {
-  return /^task\/[a-z]+\/rejected$/.test(action.type);
+  return /^task\/[a-z]+\/rejected$/i.test(action.type);
 };
 
 export const { resetTasksList } = taskSlice.actions;

@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { type } from 'os';
 
 import { BoardData, AxiosErrorData } from '../../types/types';
 
@@ -28,7 +29,7 @@ const isPending = (action: { type: string }) => {
 };
 
 const isRejected = (action: { type: string }) => {
-  return /^boards\/[a-z]+\/rejected$/.test(action.type);
+  return /^boards\/[a-z]+\/rejected$/i.test(action.type);
 };
 
 export const boardsSlice = createSlice({

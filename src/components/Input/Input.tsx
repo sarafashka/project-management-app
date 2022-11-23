@@ -10,7 +10,7 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 
 const Input: React.FC<InputProps> = ({ label, className = '', reactHookFormProps, ...rest }) => {
   return (
-    <label className={`${styles.label} ${className}`}>
+    <label className={cn(styles.label, className)}>
       {label}
       <input
         className={cn(styles.input, { [`${styles[className || '']}`]: className })}

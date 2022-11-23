@@ -143,3 +143,11 @@
     border: 2px solid $hover-primary;
   }
 }
+
+.btnIcon {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  max-width: 16px;
+  max-height: 16px;
+}

@@ -11,6 +11,7 @@ import Button from 'components/Button/Button';
 import Switcher from 'components/Switcher';
 
 import styles from './Header.module.scss';
+import { PlusIcon } from 'components/Icons/Icons';
 
 const { header, container, btnContainer, sticky } = styles;
 
@@ -40,7 +41,11 @@ const Header: React.FC<HeaderProps> = ({ className }) => {
         <div className={container}>
           <Logo />
           <div className={btnContainer}>
-            {!publicRoutes.includes(pathname) && <Button kind="fillBackground">New Board</Button>}
+            {!publicRoutes.includes(pathname) && (
+              <Button kind="fillBackground" icon={<PlusIcon />}>
+                New Board
+              </Button>
+            )}
             <Switcher optionLabels={['ru', 'en']} />
             {pathname !== AppRoutes.AUTH && authService.isUserLogged() && <User />}
           </div>

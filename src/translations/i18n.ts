@@ -5,6 +5,8 @@ import auth_ru from './ru/auth.json';
 import auth_en from './en/auth.json';
 import footer_ru from './ru/footer.json';
 import footer_en from './en/footer.json';
+import profile_ru from './ru/profile.json';
+import profile_en from './en/profile.json';
 
 i18n
   .use(LanguageDetector)
@@ -20,12 +22,14 @@ i18n
         translation: {
           auth: auth_en,
           footer: footer_en,
+          profile: profile_en,
         },
       },
       ru: {
         translation: {
           auth: auth_ru,
           footer: footer_ru,
+          profile: profile_ru,
         },
       },
     },

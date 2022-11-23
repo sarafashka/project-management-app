@@ -18,6 +18,7 @@ import {
   selectUserLoadingStatus,
   selectUserUpdatingStatus,
 } from '../../store/selectors/selectors';
+import { useTranslation } from 'react-i18next';
 
 const ProfileForm = () => {
   const {
@@ -26,6 +27,7 @@ const ProfileForm = () => {
     formState: { errors },
   } = useForm();
 
+  const { t } = useTranslation('translation');
   const user = useAppSelector(selectUser);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -77,22 +79,26 @@ const ProfileForm = () => {
   return (
     <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
       <Input
-        label="Enter your name:"
+        label={t('auth.form.enterYourName')}
         defaultValue={user.name}
         reactHookFormProps={nameInputParams}
       />
       {errors.name && <ErrorMessage>{errors.name.message as string}</ErrorMessage>}
       <Input
-        label="Enter your login:"
+        label={t('auth.form.enterLogin')}
         defaultValue={user.login}
         reactHookFormProps={loginInputParams}
       />
       {errors.login && <ErrorMessage>{errors.login.message as string}</ErrorMessage>}
-      <Input label="Choose password:" type="password" reactHookFormProps={passwordInputParams} />
+      <Input
+        label={t('auth.form.choosePassword')}
+        type="password"
+        reactHookFormProps={passwordInputParams}
+      />
       {errors.password && <ErrorMessage>{errors.password.message as string}</ErrorMessage>}
       <div className={styles.buttons}>
         <Button className={styles.sign} type="submit" disabled={isLoading}>
-          Update profile
+          {t('profile.button.update')}
         </Button>
         <Button
           className={styles.back}
@@ -100,7 +106,7 @@ const ProfileForm = () => {
           onClick={handleLogoutClick}
           disabled={isLoading}
         >
-          Logout
+          {t('profile.button.logout')}
         </Button>
         <Button
           className={styles.delete}
@@ -110,14 +116,16 @@ const ProfileForm = () => {
           }}
           disabled={isLoading}
         >
-          Delete user
+          {t('profile.button.delete')}
         </Button>
       </div>
       {isLoading && <Loader />}
       {(userLoadingStatus === 'failed' || userUpdatingStatus === 'failed') && (
         <ErrorMessage>{errorMessage}</ErrorMessage>
       )}
-      {userUpdatingStatus === 'succeeded' && <ErrorMessage>User data updated</ErrorMessage>}
+      {userUpdatingStatus === 'succeeded' && (
+        <ErrorMessage>{t('profile.message.updated')}</ErrorMessage>
+      )}
       <Modal
         kind={'confirmation'}
         onClose={() => {
@@ -125,7 +133,7 @@ const ProfileForm = () => {
         }}
         isOpen={isModalOpened}
       >
-        <p className={modalStyles.content}>WARNING! Your profile will be permanently deleted!</p>
+        <p className={modalStyles.content}>{t('profile.message.warning')}</p>
         <ConfirmationModal
           entity="user"
           onCancel={() => {

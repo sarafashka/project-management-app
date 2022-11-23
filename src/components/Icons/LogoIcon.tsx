@@ -12,8 +12,6 @@ const LogoIcon = ({ className, contentClassName }: Icon): JSX.Element => {
     <svg
       className={classNames(icon, className)}
       version="1.1"
-      width="55"
-      height="50"
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 611 604"
       fill="none"

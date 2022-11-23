@@ -32,8 +32,12 @@
   min-height: 100%;
 }
 
-.dropDownBtn {
+.btnIcon {
   order: 1;
+  width: 12px;
+}
+
+.dropDownBtn {
   fill: $text;
 }
 

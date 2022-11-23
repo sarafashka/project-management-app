@@ -31,10 +31,11 @@ const UserActions: React.FC<UserProps> = ({ className, data }) => {
           <li className={item} key={name}>
             <Button
               className={btn}
+              iconClassName={btnIcon}
               icon={
                 Icon && (
                   <Icon
-                    className={classNames(btnIcon, { [icon]: Icon !== SignOutIcon })}
+                    className={classNames({ [icon]: Icon !== SignOutIcon })}
                     contentClassName={classNames({ [signOutIcon]: Icon === SignOutIcon })}
                   />
                 )

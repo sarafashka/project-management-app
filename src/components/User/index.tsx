@@ -15,7 +15,7 @@ import UserActions from './UserActions';
 
 import styles from './User.module.scss';
 
-const { avatar, btn, img, dropDownBtn, open } = styles;
+const { avatar, btn, img, dropDownBtn, open, btnIcon } = styles;
 
 type UserProps = {
   className?: string;
@@ -84,6 +84,7 @@ const User: React.FC<UserProps> = ({ className }) => {
     <div id="userBtn" ref={userRef}>
       <Button
         className={classNames(btn, className)}
+        iconClassName={btnIcon}
         icon={<DropDownIcon className={dropDownBtn} />}
         onClick={handleClick}
       >

@@ -8,10 +8,14 @@
 
   color: $main-text;
   font-size: 16px;
-  font-weight: 600;
+  font-weight: 500;
   text-decoration: none;
 
-  &:hover .logoIcon {
+  &:hover .logoIconContent {
     stroke: $hover-primary;
   }
+}
+
+.logoIcon {
+  width: 60px;
 }

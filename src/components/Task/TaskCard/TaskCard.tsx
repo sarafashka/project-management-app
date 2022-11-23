@@ -39,6 +39,7 @@ const TaskCard: React.FC<Props> = (props) => {
 
   const openModal = (event: OpenModalEvent) => {
     event.preventDefault();
+    console.log('edit');
     setIsOpen(true);
   };
 
@@ -48,8 +49,7 @@ const TaskCard: React.FC<Props> = (props) => {
 
   return (
     <>
-      <li className={styles.item}>
-        {/* onClick={openModal}> */}
+      <li className={styles.item} onClick={openModal}>
         <div className={styles.header}>
           <h2 className={styles.title}>{title}</h2>
           <TaskDelete taskId={taskId} columnId={columnId} title={title} />
@@ -57,7 +57,7 @@ const TaskCard: React.FC<Props> = (props) => {
         <div className={styles.description}>{currentTask?.description}</div>
         {isOwner() && <div className={styles.owner}>My task</div>}
       </li>
-      <Modal kind="editing" onClose={closeModal} isOpen={isOpen}>
+      <Modal kind="confirmation" onClose={closeModal} isOpen={isOpen}>
         <EditingModal
           entity="task"
           onConfirm={handleClick}

@@ -34,6 +34,7 @@ const TaskDelete: React.FC<Props> = (props) => {
 
   const openModal = (event: OpenModalEvent) => {
     event.preventDefault();
+    event.stopPropagation();
     setIsOpen(true);
   };
 

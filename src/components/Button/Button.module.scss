@@ -2,11 +2,17 @@
 @import '../../styles/mixins';
 
 .button {
-  border: none;
-  background-color: transparent;
-  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 10px 15px;
 
-  border-radius: 4px;
+  font-size: 16px;
+  
+  background-color: transparent;
+  border: none;
+  border-radius: 8px;
 
   outline: none;
   cursor: pointer;
@@ -104,8 +110,6 @@
 }
 
 .boardBtn {
-  display: flex;
-  align-items: center;
   justify-content: center;
   padding: 10px;
   border-style: solid;
@@ -128,6 +132,22 @@
   }
 }
 
+.fillBackground {
+  color: $btn-text;
+
+  background-color: $primary; 
+  border: 2px solid $primary;
+
+  &:hover {
+    background-color: $hover-primary;
+    border: 2px solid $hover-primary;
+  }
+}
+
 .btnIcon {
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  max-width: 16px;
+  max-height: 16px;
 }

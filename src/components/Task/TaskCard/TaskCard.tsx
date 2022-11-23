@@ -3,7 +3,7 @@ import { useAppDispatch, useAppSelector } from 'hooks/reduxTypedHooks';
 import { selectTasksList } from 'store/selectors/selectors';
 import styles from './TaskCard.module.scss';
 import { deleteTask } from 'store/taskSlice/taskThunk';
-import { CloseModalEvent, GetBoardByIdTaskData, RequestDeleteTask } from 'types/types';
+import { OpenModalEvent, GetBoardByIdTaskData, RequestDeleteTask } from 'types/types';
 import { selectUser } from 'store/selectors/selectors';
 import { findTask } from 'utils/utils';
 import Modal from 'components/Modal';
@@ -37,7 +37,7 @@ const TaskCard: React.FC<Props> = (props) => {
     dispatch(deleteTask(dataForDeleteTask));
   };
 
-  const openModal = (event: CloseModalEvent) => {
+  const openModal = (event: OpenModalEvent) => {
     event.preventDefault();
     setIsOpen(true);
   };

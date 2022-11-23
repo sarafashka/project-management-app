@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { CloseModalEvent } from 'types/types';
 import Button from 'components/Button/Button';
 
 import styles from './ConfirmationModal.module.scss';
@@ -10,7 +9,7 @@ const { confirmation, attributeValue, container, content, btn } = styles;
 type ConfirmationModalProps = {
   entity: 'user' | 'board' | 'column' | 'task';
   value?: string;
-  onCancel: (event: CloseModalEvent) => void;
+  onCancel: () => void;
   onConfirm: () => void;
 };
 

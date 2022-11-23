@@ -1,0 +1,21 @@
+@import '../../styles/constants';
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  max-width: 200px;
+
+  color: $main-text;
+  font-size: 16px;
+  font-weight: 500;
+  text-decoration: none;
+
+  &:hover .logoIconContent {
+    stroke: $hover-primary;
+  }
+}
+
+.logoIcon {
+  width: 60px;
+}

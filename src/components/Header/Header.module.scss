@@ -1,0 +1,31 @@
+@import '../../styles/mixins';
+@import '../../styles/constants';
+
+.header {
+  position: sticky;
+  top: 0;
+  padding: 10px 0;
+
+  background: $header-background;
+  transition: 0.5s;
+}
+
+.sticky {
+  padding: 0;
+}
+
+.container {
+  @include common-container;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 53.2px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.btnContainer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}

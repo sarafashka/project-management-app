@@ -1,0 +1,13 @@
+.button {
+  width: 2.3rem;
+  height: 2.3rem;
+  border-radius: 6px;
+  background-image: url('../../../assets/img/btnPlus.png');
+  background-repeat: no-repeat;
+  background-size: auto;
+  background-position: center;
+
+  &:hover {
+    background-image: url('../../../assets/img/btnPlusHover.png');
+  }
+}

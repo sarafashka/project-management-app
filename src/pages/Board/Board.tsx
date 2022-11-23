@@ -8,7 +8,8 @@ import styles from './Board.module.scss';
 import { getAllTasks } from 'store/taskSlice/taskThunk';
 import Loader from 'components/Loader';
 import { resetTasksList } from 'store/taskSlice/taskSlice';
-import CreateColumn from './CreateColumn';
+import CreateColumn from './BoardCreateColumn';
+import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 
 const Board: React.FC = () => {
   const navigate = useNavigate();
@@ -49,7 +50,6 @@ const Board: React.FC = () => {
         &#8592; All boards
       </Button>
       <div>{columns.length === 0 && 'Add new column'}</div>
-
       <div className={styles.list}>
         {columns.map((item) => (
           <Column key={item.id} id={item.id} />

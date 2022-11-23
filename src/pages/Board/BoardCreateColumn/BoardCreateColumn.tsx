@@ -1,19 +1,17 @@
 import React, { useState } from 'react';
-import { useAppDispatch, useAppSelector } from 'hooks/reduxTypedHooks';
+import { useAppDispatch } from 'hooks/reduxTypedHooks';
 import { createColumn } from 'store/taskSlice/columnThunk';
-import { selectBoard } from 'store/selectors/selectors';
 import Button from 'components/Button/Button';
-import { CloseModalEvent, DataFromEditForm, RequestCreateColumn } from 'types/types';
-import styles from './Board.module.scss';
+import { OpenModalEvent, DataFromEditForm, RequestCreateColumn } from 'types/types';
+import styles from './BoardCreateColumn.module.scss';
 import EditingModal from 'components/Modal/EditingModal';
 import Modal from 'components/Modal';
-import { Id } from '@reduxjs/toolkit/dist/tsHelpers';
 
 type Props = {
   boardId: string;
 };
 
-const CreateColumn: React.FC<Props> = (props) => {
+const BoardCreateColumn: React.FC<Props> = (props) => {
   const [isOpen, setIsOpen] = useState(false);
   const { boardId } = props;
 
@@ -30,7 +28,7 @@ const CreateColumn: React.FC<Props> = (props) => {
     closeModal();
   };
 
-  const openModal = (event: CloseModalEvent) => {
+  const openModal = (event: OpenModalEvent) => {
     event.preventDefault();
     setIsOpen(true);
   };
@@ -55,4 +53,4 @@ const CreateColumn: React.FC<Props> = (props) => {
   );
 };
 
-export default CreateColumn;
+export default BoardCreateColumn;

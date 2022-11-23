@@ -6,9 +6,10 @@ import { OpenModalEvent } from 'types/types';
 import { useAppDispatch } from '../../hooks/reduxTypedHooks';
 import { BoardData } from 'types/types';
 
-import { deleteBoardAction } from 'store/boardsSlice/boardsThunk';
+import { deleteBoardAction, updateBoardAction } from 'store/boardsSlice/boardsThunk';
 import { selectBoard } from '../../store/boardsSlice/boardsSlice';
 
+import EditingModal from 'components/Modal/EditingModal';
 import Button from 'components/Button/Button';
 import Modal from 'components/Modal';
 import ConfirmationModal from 'components/Modal/ConfirmationModal';
@@ -25,25 +26,41 @@ type BoardCardProps = {
 const BoardCard: React.FC<BoardCardProps> = ({ className, boardData }) => {
   const dispatch = useAppDispatch();
   const [isOpen, setIsOpen] = useState(false);
+  const [modalKind, setModalKind] = useState('');
 
   const { id, title, description } = boardData;
 
-  const handleClick = () => {
+  const handleDeleteClick = () => {
     dispatch(deleteBoardAction(id));
     closeModal();
   };
 
-  const openModal = (event: OpenModalEvent) => {
-    event.preventDefault();
-    setIsOpen(true);
-  };
-
-  const closeModal = () => {
-    setIsOpen(false);
+  const handleUpdateClick = () => {
+    dispatch(
+      updateBoardAction({
+        id: '',
+        title: '',
+        description: '',
+      })
+    );
+    closeModal();
   };
 
   const handleSelectBoard = () => {
     dispatch(selectBoard);
+  };
+
+  const openModal = (event: OpenModalEvent) => {
+    event.preventDefault();
+
+    const kind = event.currentTarget.className;
+
+    setIsOpen(true);
+    kind && setModalKind(kind);
+  };
+
+  const closeModal = () => {
+    setIsOpen(false);
   };
 
   return (
@@ -55,18 +72,31 @@ const BoardCard: React.FC<BoardCardProps> = ({ className, boardData }) => {
             <h3 className={cardTitle}>{title}</h3>
             <p className={cardDescription}>{description}</p>
           </div>
-          <Button className={deleteBtn} onClick={openModal} kind="confirm">
-            Delete
+          <Button onClick={openModal} kind="delete" />
+          <Button className={deleteBtn} onClick={openModal} kind="edit">
+            Edit
           </Button>
         </div>
       </Link>
       <Modal kind="confirmation" onClose={closeModal} isOpen={isOpen}>
-        <ConfirmationModal
-          entity="board"
-          value={title}
-          onConfirm={handleClick}
-          onCancel={closeModal}
-        />
+        {modalKind.includes('edit') && (
+          <EditingModal
+            entity="board"
+            onConfirm={handleUpdateClick}
+            onCancel={closeModal}
+            operation={'edit'}
+            isOpen={false}
+            currentValue={{ title, description }}
+          />
+        )}
+        {modalKind.includes('delete') && (
+          <ConfirmationModal
+            entity="board"
+            value={title}
+            onConfirm={handleDeleteClick}
+            onCancel={closeModal}
+          />
+        )}
       </Modal>
     </>
   );

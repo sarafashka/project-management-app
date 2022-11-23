@@ -6,7 +6,7 @@ import styles from './Button.module.scss';
 const { button, btnIcon } = styles;
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  kind?: 'close' | 'confirm' | 'cancel' | 'boardBtn' | 'delete' | 'fillBackground';
+  kind?: 'close' | 'confirm' | 'cancel' | 'boardBtn' | 'delete' | 'fillBackground' | 'edit';
   icon?: React.ReactNode;
   iconClassName?: string;
 }

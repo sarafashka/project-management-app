@@ -1,31 +1,33 @@
+import i18n from '../../translations/i18n';
+
 export const nameOptions = {
-  required: 'Please enter your name',
+  required: i18n.t('auth.errors.enter-your-name'),
   pattern: {
     value: /^[A-Za-z0-9 _]*[A-Za-z0-9][A-Za-z0-9 _]*$/,
-    message: 'The name can only contain letters (eng) and numbers',
+    message: i18n.t('auth.errors.name-letters-numbers-only'),
   },
 };
 
 export const loginOptions = {
-  required: 'Login is required',
+  required: i18n.t('auth.errors.login-required'),
   minLength: {
     value: 3,
-    message: 'Login must be at least 3 characters',
+    message: i18n.t('auth.errors.login-3-char'),
   },
   pattern: {
     value: /^[A-Za-z0-9_]*[A-Za-z0-9][A-Za-z0-9_]*$/,
-    message: 'Login can only contain letters (eng) and numbers',
+    message: i18n.t('auth.errors.login-letters-numbers-only'),
   },
 };
 
 export const passwordOptions = {
-  required: 'Password is required',
+  required: i18n.t('auth.errors.password-required'),
   minLength: {
     value: 8,
-    message: 'Password must be at least 8 characters',
+    message: i18n.t('auth.errors.password-8-char'),
   },
   pattern: {
     value: /^[A-Za-z0-9~\\!@#$%^&*()_+|}{:"?><=-]*$/,
-    message: 'Login can only contain letters (eng) and numbers',
+    message: i18n.t('auth.errors.password-letters-numbers-symbols-only'),
   },
 };

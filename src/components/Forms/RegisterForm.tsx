@@ -11,6 +11,7 @@ import ErrorMessage from '../ErrorMessage/ErrorMessage';
 import { loginOptions, nameOptions, passwordOptions } from './formInputOptions';
 import Loader from '../Loader';
 import { selectLoginStatus, selectRegisterStatus } from '../../store/selectors/selectors';
+import { useTranslation } from 'react-i18next';
 
 const RegisterForm: React.FC = () => {
   const {
@@ -19,6 +20,7 @@ const RegisterForm: React.FC = () => {
     formState: { errors },
   } = useForm();
 
+  const { t } = useTranslation('translation', { keyPrefix: 'auth' });
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const registerStatus = useAppSelector(selectRegisterStatus);
@@ -28,6 +30,7 @@ const RegisterForm: React.FC = () => {
   const nameInputParams = {
     ...register('name', nameOptions),
   };
+
   const loginInputParams = {
     ...register('login', loginOptions),
   };
@@ -47,11 +50,15 @@ const RegisterForm: React.FC = () => {
 
   return (
     <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
-      <Input label="Enter your name:" reactHookFormProps={nameInputParams} />
+      <Input label={t('form.enterYourName')} reactHookFormProps={nameInputParams} />
       {errors.name && <ErrorMessage>{errors.name.message as string}</ErrorMessage>}
-      <Input label="Enter your login:" reactHookFormProps={loginInputParams} />
+      <Input label={t('form.enterLogin')} reactHookFormProps={loginInputParams} />
       {errors.login && <ErrorMessage>{errors.login.message as string}</ErrorMessage>}
-      <Input label="Choose password:" type="password" reactHookFormProps={passwordInputParams} />
+      <Input
+        label={t('form.choosePassword')}
+        type="password"
+        reactHookFormProps={passwordInputParams}
+      />
       {errors.password && <ErrorMessage>{errors.password.message as string}</ErrorMessage>}
       <div className={styles.buttons}>
         <Button
@@ -61,10 +68,10 @@ const RegisterForm: React.FC = () => {
             navigate('/');
           }}
         >
-          Back to Main
+          {t('button.back-to-main')}
         </Button>
         <Button className={styles.sign} type="submit">
-          Sign Up
+          {t('button.signUp')}
         </Button>
       </div>
       {registerStatus === 'loading' && <Loader />}

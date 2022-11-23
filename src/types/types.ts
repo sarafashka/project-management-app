@@ -151,7 +151,7 @@ export type RequestUpdateTask = {
   boardId: string;
   columnId: string;
   taskId: string;
-  body: Omit<Task, 'taskId'>;
+  body: Omit<Task, 'id'>;
 };
 
 export type TaskCreated = Omit<Task, 'order' | 'boardId' | 'columnId'>;

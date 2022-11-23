@@ -8,6 +8,7 @@ import {
   RequestCreateTask,
   RequestDeleteTask,
   RequestGetTask,
+  RequestUpdateTask,
   Task,
 } from 'types/types';
 
@@ -65,22 +66,17 @@ export const deleteTask = createAsyncThunk<
   }
 });
 
-/*export const updateTask = createAsyncThunk<
-  Task,
-  RequestUpdateTask,
-  { rejectValue: unknown; state: RootState }
->('task/updateTask', async function (data, { rejectWithValue, getState }) {
-  const { columns } = getState().column;
-  const columnForUpdate = columns.filter((column) => data.columnId === column.id);
-  const { order } = columnForUpdate[0];
-  data.body.order = order;
-
-  try {
-    const response = await taskService.updateTask(data);
-    return response.data;
-  } catch (error) {
-    const axiosError = <AxiosError>error;
-    return rejectWithValue(axiosError.message);
+export const updateTask = createAsyncThunk<Task, RequestUpdateTask, { rejectValue: unknown }>(
+  'task/updateTask',
+  async function (data, { rejectWithValue }) {
+    console.log('data', data);
+    try {
+      const response = await taskService.updateTask(data);
+      console.log('response', response.data);
+      return response.data;
+    } catch (error) {
+      const axiosError = <AxiosError>error;
+      return rejectWithValue(axiosError.message);
+    }
   }
-});
-*/
+);

@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { useAppDispatch, useAppSelector } from 'hooks/reduxTypedHooks';
 import { selectTasksList } from 'store/selectors/selectors';
 import styles from './TaskCard.module.scss';
-import { deleteTask } from 'store/taskSlice/taskThunk';
-import { OpenModalEvent, GetBoardByIdTaskData, RequestDeleteTask } from 'types/types';
+import { updateTask } from 'store/taskSlice/taskThunk';
+import { GetBoardByIdTaskData, DataFromEditForm, RequestUpdateTask } from 'types/types';
 import { selectUser } from 'store/selectors/selectors';
 import { findTask } from 'utils/utils';
 import Modal from 'components/Modal';
@@ -24,22 +24,30 @@ const TaskCard: React.FC<Props> = (props) => {
   const tasksList = useAppSelector(selectTasksList);
 
   const currentTask = findTask(tasksList, columnId, taskId) as GetBoardByIdTaskData;
-  const { userId, title } = currentTask;
+  const { userId, title, order, description } = currentTask;
 
   const isOwner = () => userId === user.id;
 
-  const handleClick = () => {
-    const dataForDeleteTask: RequestDeleteTask = {
+  const handleClick = (data: DataFromEditForm) => {
+    const dataForUpdatetask: RequestUpdateTask = {
       taskId: taskId,
       boardId: tasksList.id,
       columnId: columnId,
+      body: {
+        title: data.title,
+        description: data.description as string,
+        userId: userId,
+        order: order,
+        boardId: tasksList.id,
+        columnId: columnId,
+      },
     };
-    dispatch(deleteTask(dataForDeleteTask));
+
+    dispatch(updateTask(dataForUpdatetask));
+    closeModal();
   };
 
-  const openModal = (event: OpenModalEvent) => {
-    event.preventDefault();
-    console.log('edit');
+  const openModal = () => {
     setIsOpen(true);
   };
 
@@ -64,7 +72,7 @@ const TaskCard: React.FC<Props> = (props) => {
           onCancel={closeModal}
           operation={'edit'}
           isOpen={false}
-          currentValue={{ title: 'task', description: 'smth' }}
+          currentValue={{ title: title, description: description }}
         />
       </Modal>
     </>

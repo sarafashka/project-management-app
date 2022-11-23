@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { AxiosErrorData, TaskState } from 'types/types';
-import { findColumnIndex, findColumnTasks } from 'utils/utils';
+import { AxiosErrorData, GetBoardByIdTaskData, Task, TaskState } from 'types/types';
+import { findColumnIndex, findColumnTasks, findTaskIndex } from 'utils/utils';
 import { createColumn, deleteColumn, updateColumn } from './columnThunk';
-import { createTask, deleteTask, getAllTasks } from './taskThunk';
+import { createTask, deleteTask, getAllTasks, updateTask } from './taskThunk';
 
 const defaultTasksList = {
   id: '',
@@ -100,17 +100,36 @@ const taskSlice = createSlice({
         columns[index].tasks = tasksNotDeleted;
       })
 
-      /*
-      .addCase(updateTaskpending, (state) => {
+      .addCase(updateTask.pending, (state) => {
         state.isLoading = true;
         state.error = null;
       })
       .addCase(updateTask.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.columns = state.columns.map((column) =>
-          column.id === action.payload.id ? action.payload : column
-        );
-      }) */
+        const { id, columnId, description, order, title, userId } = action.payload;
+        const indexTask = findTaskIndex(state.tasksList, columnId, id);
+        const indexColumn = findColumnIndex(state.tasksList, columnId);
+
+        const taskUpdating: GetBoardByIdTaskData = {
+          id: id,
+          description: description,
+          order: order,
+          title: title,
+          userId: userId,
+        };
+        if (indexTask && indexTask >= 0) {
+          state.tasksList.columns[indexColumn].tasks.splice(indexTask, 1, taskUpdating);
+        }
+
+        // if (indexTask) {
+        //   const task = state.tasksList.columns[indexColumn].tasks[indexTask];
+        //   task.description = description;
+        //   task.order = order;
+        //   task.title = title;
+        //   task.userId = userId;
+        // }
+      })
+
       .addMatcher(isError, (state, action: PayloadAction<AxiosErrorData>) => {
         state.error = action.payload;
         state.isLoading = false;

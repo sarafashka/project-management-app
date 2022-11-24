@@ -9,7 +9,7 @@ import { getAllTasks } from 'store/taskSlice/taskThunk';
 import Loader from 'components/Loader';
 import { resetTasksList } from 'store/taskSlice/taskSlice';
 import CreateColumn from './BoardCreateColumn';
-import { DragDropContext, Droppable } from 'react-beautiful-dnd';
+import { DragDropContext, Droppable, OnDragEndResponder } from 'react-beautiful-dnd';
 
 const Board: React.FC = () => {
   const navigate = useNavigate();
@@ -33,8 +33,23 @@ const Board: React.FC = () => {
     }
   }, [boardId, dispatch]);
 
-  const onDragEnd = () => {
-    console.log('drag');
+  const onDragEnd: OnDragEndResponder = (result) => {
+    console.log(result);
+    const { destination, source, draggableId, type } = result;
+
+    if (!destination) {
+      return;
+    }
+
+    if (destination.droppableId === source.droppableId && destination.index === source.index) {
+      return;
+    }
+    if (type === 'column') {
+      console.log('column');
+    }
+    if (type === 'task') {
+      console.log('task');
+    }
   };
 
   return (
@@ -55,7 +70,7 @@ const Board: React.FC = () => {
       </Button>
       <div>{columns.length === 0 && 'Add new column'}</div>
       <DragDropContext onDragEnd={onDragEnd}>
-        <Droppable droppableId="columns" direction="horizontal" type="list">
+        <Droppable droppableId="columns" direction="horizontal" type="column">
           {(provided) => (
             <div className={styles.list} {...provided.droppableProps} ref={provided.innerRef}>
               {columns.map((item, index) => (

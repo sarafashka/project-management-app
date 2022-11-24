@@ -18,7 +18,7 @@ const TasksList: React.FC<Props> = (columnInfo: Props) => {
   const currentTasks = findColumnTasks(tasksList, columnId);
 
   return (
-    <Droppable droppableId={columnId} type="card">
+    <Droppable droppableId={columnId} type="task">
       {(provided) => (
         <ul className={styles.list} {...provided.droppableProps} ref={provided.innerRef}>
           {currentTasks &&

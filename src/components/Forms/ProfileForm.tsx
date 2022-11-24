@@ -4,7 +4,6 @@ import Input from '../Input/Input';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
 import Button from '../Button/Button';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
-import { loginOptions, nameOptions, passwordOptions } from './formInputOptions';
 import { useAppDispatch, useAppSelector } from '../../hooks/reduxTypedHooks';
 import { deleteUser, logout, resetLoadingStatus, updateUser } from '../../store/userSlice';
 import { SignUpResponse } from '../../types/types';
@@ -43,6 +42,38 @@ const ProfileForm = () => {
       dispatch(resetLoadingStatus());
     };
   }, []);
+
+  const nameOptions = {
+    required: t('errors.enter-your-name'),
+    pattern: {
+      value: /^[A-Za-z0-9 _]*[A-Za-z0-9][A-Za-z0-9 _]*$/,
+      message: t('errors.name-letters-numbers-only'),
+    },
+  };
+
+  const loginOptions = {
+    required: t('errors.login-required'),
+    minLength: {
+      value: 3,
+      message: t('errors.login-3-char'),
+    },
+    pattern: {
+      value: /^[A-Za-z0-9_]*[A-Za-z0-9][A-Za-z0-9_]*$/,
+      message: t('errors.login-letters-numbers-only'),
+    },
+  };
+
+  const passwordOptions = {
+    required: t('errors.password-required'),
+    minLength: {
+      value: 8,
+      message: t('errors.password-8-char'),
+    },
+    pattern: {
+      value: /^[A-Za-z0-9~\\!@#$%^&*()_+|}{:"?><=-]*$/,
+      message: t('errors.password-letters-numbers-symbols-only'),
+    },
+  };
 
   const nameInputParams = {
     ...register('name', nameOptions),

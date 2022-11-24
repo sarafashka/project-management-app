@@ -7,6 +7,8 @@ import footer_ru from './ru/footer.json';
 import footer_en from './en/footer.json';
 import profile_ru from './ru/profile.json';
 import profile_en from './en/profile.json';
+import error404_ru from './ru/error404.json';
+import error404_en from './en/error404.json';
 
 i18n
   .use(LanguageDetector)
@@ -23,6 +25,7 @@ i18n
           auth: auth_en,
           footer: footer_en,
           profile: profile_en,
+          error404: error404_en,
         },
       },
       ru: {
@@ -30,6 +33,7 @@ i18n
           auth: auth_ru,
           footer: footer_ru,
           profile: profile_ru,
+          error404: error404_ru,
         },
       },
     },

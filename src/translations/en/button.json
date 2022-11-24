@@ -1,3 +1,5 @@
 {
-	"delete": "Delete"
+	"cancel": "cancel",
+	"delete": "Delete",
+	"submit": "submit"
 }

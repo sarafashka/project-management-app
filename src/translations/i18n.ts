@@ -13,6 +13,8 @@ import welcome_ru from './ru/welcome.json';
 import welcome_en from './en/welcome.json';
 import button_ru from './ru/button.json';
 import button_en from './en/button.json';
+import board_ru from './ru/board.json';
+import board_en from './en/board.json';
 
 i18n
   .use(LanguageDetector)
@@ -32,6 +34,7 @@ i18n
           error404: error404_en,
           welcome: welcome_en,
           button: button_en,
+          board: board_en,
         },
       },
       ru: {
@@ -42,6 +45,7 @@ i18n
           error404: error404_ru,
           welcome: welcome_ru,
           button: button_ru,
+          board: board_ru,
         },
       },
     },

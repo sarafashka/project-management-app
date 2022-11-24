@@ -4,6 +4,7 @@ import TaskCard from './TaskCard';
 import styles from './Task.module.scss';
 import { selectTasksList } from 'store/selectors/selectors';
 import { findColumnTasks } from 'utils/utils';
+import { Droppable } from 'react-beautiful-dnd';
 
 type Props = {
   columnId: string;
@@ -17,14 +18,17 @@ const TasksList: React.FC<Props> = (columnInfo: Props) => {
   const currentTasks = findColumnTasks(tasksList, columnId);
 
   return (
-    <>
-      <ul className={styles.list}>
-        {currentTasks &&
-          currentTasks.map((task) => (
-            <TaskCard key={task.id} taskId={task.id} columnId={columnId} />
-          ))}
-      </ul>
-    </>
+    <Droppable droppableId={columnId} type="card">
+      {(provided) => (
+        <ul className={styles.list} {...provided.droppableProps} ref={provided.innerRef}>
+          {currentTasks &&
+            currentTasks.map((task, index) => (
+              <TaskCard key={task.id} taskId={task.id} columnId={columnId} index={index} />
+            ))}
+          {provided.placeholder}
+        </ul>
+      )}
+    </Droppable>
   );
 };
 export default TasksList;

@@ -9,14 +9,16 @@ import { findTask } from 'utils/utils';
 import Modal from 'components/Modal';
 import TaskDelete from '../TaskDelete';
 import EditingModal from 'components/Modal/EditingModal';
+import { Draggable } from 'react-beautiful-dnd';
 
 type Props = {
   taskId: string;
   columnId: string;
+  index: number;
 };
 
 const TaskCard: React.FC<Props> = (props) => {
-  const { taskId, columnId } = props;
+  const { taskId, columnId, index } = props;
   const [isOpen, setIsOpen] = useState(false);
 
   const dispatch = useAppDispatch();
@@ -57,14 +59,25 @@ const TaskCard: React.FC<Props> = (props) => {
 
   return (
     <>
-      <li className={styles.item} onClick={openModal}>
-        <div className={styles.header}>
-          <h2 className={styles.title}>{title}</h2>
-          <TaskDelete taskId={taskId} columnId={columnId} title={title} />
-        </div>
-        <div className={styles.description}>{currentTask?.description}</div>
-        {isOwner() && <div className={styles.owner}>My task</div>}
-      </li>
+      <Draggable draggableId={taskId} index={index}>
+        {(provided) => (
+          <li
+            className={styles.item}
+            onClick={openModal}
+            {...provided.draggableProps}
+            {...provided.dragHandleProps}
+            ref={provided.innerRef}
+          >
+            <div className={styles.header}>
+              <h2 className={styles.title}>{title}</h2>
+              <TaskDelete taskId={taskId} columnId={columnId} title={title} />
+            </div>
+            <div className={styles.description}>{currentTask?.description}</div>
+            {isOwner() && <div className={styles.owner}>My task</div>}
+          </li>
+        )}
+      </Draggable>
+
       <Modal kind="confirmation" onClose={closeModal} isOpen={isOpen}>
         <EditingModal
           entity="task"

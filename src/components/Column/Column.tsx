@@ -10,13 +10,15 @@ import { selectTasksList } from 'store/selectors/selectors';
 import { findColumn } from 'utils/utils';
 import ColumnDelete from './ColumnDelete';
 import ColumnAddTask from './ColumnAddTask';
+import { Draggable } from 'react-beautiful-dnd';
 
 type Props = {
   id: string;
+  index: number;
 };
 
 const Column: React.FC<Props> = (column) => {
-  const { id } = column;
+  const { id, index } = column;
   const dispatch = useAppDispatch();
   const user = useAppSelector(selectUser);
   const board = useAppSelector(selectTasksList);
@@ -39,15 +41,24 @@ const Column: React.FC<Props> = (column) => {
   };
 
   return (
-    <div className={styles.item}>
-      <div className={styles.header}>
-        <p className={styles.count}>({tasks.length})</p>
-        <ColumnTitle title={title} submit={handleSubmit} />
-        <ColumnDelete columnId={id} boardId={board.id} title={title} />
-      </div>
-      {<Task columnId={id} />}
-      <ColumnAddTask boardId={board.id} columnId={id} userId={user.id} />
-    </div>
+    <Draggable draggableId={id} index={index}>
+      {(provided) => (
+        <div
+          className={styles.item}
+          {...provided.draggableProps}
+          {...provided.dragHandleProps}
+          ref={provided.innerRef}
+        >
+          <div className={styles.header}>
+            <p className={styles.count}>({tasks.length})</p>
+            <ColumnTitle title={title} submit={handleSubmit} />
+            <ColumnDelete columnId={id} boardId={board.id} title={title} />
+          </div>
+          {<Task columnId={id} />}
+          <ColumnAddTask boardId={board.id} columnId={id} userId={user.id} />
+        </div>
+      )}
+    </Draggable>
   );
 };
 

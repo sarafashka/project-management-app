@@ -33,6 +33,10 @@ const Board: React.FC = () => {
     }
   }, [boardId, dispatch]);
 
+  const onDragEnd = () => {
+    console.log('drag');
+  };
+
   return (
     <div className={styles.container}>
       {isLoading && <Loader />}
@@ -50,11 +54,18 @@ const Board: React.FC = () => {
         &#8592; All boards
       </Button>
       <div>{columns.length === 0 && 'Add new column'}</div>
-      <div className={styles.list}>
-        {columns.map((item) => (
-          <Column key={item.id} id={item.id} />
-        ))}
-      </div>
+      <DragDropContext onDragEnd={onDragEnd}>
+        <Droppable droppableId="columns" direction="horizontal" type="list">
+          {(provided) => (
+            <div className={styles.list} {...provided.droppableProps} ref={provided.innerRef}>
+              {columns.map((item, index) => (
+                <Column key={item.id} id={item.id} index={index} />
+              ))}
+              {provided.placeholder}
+            </div>
+          )}
+        </Droppable>
+      </DragDropContext>
     </div>
   );
 };

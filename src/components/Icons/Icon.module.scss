@@ -5,6 +5,12 @@
   max-width: inherit;
   max-height: inherit;
 
+  fill: $text;
+
+  &:hover {
+    fill: $primary;
+  }
+
   cursor: pointer;
 
   transition: 0.5s;
@@ -25,6 +31,7 @@
 }
 
 .signOut {
+  fill: none;
   stroke: $text;
   stroke-linecap: round;
   stroke-linejoin: round;
@@ -33,12 +40,8 @@
   transition: 0.5s;
 }
 
-.edit {
-  fill: $text;
-}
-
 .plus {
-  stroke: white;
+  stroke: $btn-text;
   stroke-linecap: round;
   stroke-linejoin: round;
   stroke-width: 2.6px;

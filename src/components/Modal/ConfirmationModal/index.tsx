@@ -10,8 +10,8 @@ const { confirmation, attributeValue, container, content, btn } = styles;
 type ConfirmationModalProps = {
   entity: 'user' | 'board' | 'column' | 'task';
   value?: string;
-  onCancel: (event: OpenModalEvent) => void;
-  onConfirm: () => void;
+  onCancel: (event?: OpenModalEvent) => void;
+  onConfirm: (event?: OpenModalEvent) => void;
 };
 
 const ConfirmationModal: React.FC<ConfirmationModalProps> = ({

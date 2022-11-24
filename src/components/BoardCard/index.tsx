@@ -8,6 +8,7 @@ import { useAppDispatch } from '../../hooks/reduxTypedHooks';
 import { deleteBoardAction, updateBoardAction } from 'store/boardsSlice/boardsThunk';
 import { selectBoard } from '../../store/boardsSlice/boardsSlice';
 
+import { DeleteIcon, EditIcon } from 'components/Icons/Icons';
 import EditingModal from 'components/Modal/EditingModal';
 import Button from 'components/Button/Button';
 import Modal from 'components/Modal';
@@ -15,7 +16,7 @@ import ConfirmationModal from 'components/Modal/ConfirmationModal';
 
 import styles from './BoardCard.module.scss';
 
-const { card, cardTitle, link, cardDescription, icon, content, deleteBtn } = styles;
+const { card, cardTitle, link, cardDescription, icon, content, btnContainer } = styles;
 
 type BoardCardProps = {
   className?: string;
@@ -69,10 +70,10 @@ const BoardCard: React.FC<BoardCardProps> = ({ className, boardData }) => {
             <h3 className={cardTitle}>{title}</h3>
             <p className={cardDescription}>{description}</p>
           </div>
-          <Button onClick={openModal} kind="delete" />
-          <Button className={deleteBtn} onClick={openModal} kind="edit">
-            Edit
-          </Button>
+          <div className={btnContainer}>
+            <Button onClick={openModal} icon={<EditIcon />} kind="edit" />
+            <Button onClick={openModal} icon={<DeleteIcon />} kind="deleteBtn" />
+          </div>
         </div>
       </Link>
       <Modal kind="confirmation" onClose={closeModal} isOpen={isOpen}>

@@ -55,11 +55,11 @@ const Modal: React.FC<ModalProps> = ({
   }, [current, isOpen]);
 
   useEffect(() => {
-    const handleCloseByScroll = () => {
-      isOpen && window.scrollY > 0 && onCloseByScroll?.();
-    };
-
     if (kind === 'dropDown') {
+      const handleCloseByScroll = () => {
+        isOpen && window.scrollY > 0 && onCloseByScroll?.();
+      };
+
       window.addEventListener('scroll', handleCloseByScroll);
       onCloseByDocument && document.body.addEventListener('click', onCloseByDocument);
 

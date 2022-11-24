@@ -144,7 +144,7 @@
   }
 }
 
-.btnIcon {
+.wrapperIcon {
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -152,6 +152,16 @@
   max-height: 16px;
 }
 
+
+.deleteBtn, 
 .edit {
-  color: blue;
+  display: block;
+  padding: 0;
+  width: max-content;
+
+  & .wrapperIcon {
+    max-width: max-content;
+    max-height: 20px;
+    height: 20px;
+  }
 }

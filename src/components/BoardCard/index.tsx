@@ -14,6 +14,7 @@ import Modal from 'components/Modal';
 import ConfirmationModal from 'components/Modal/ConfirmationModal';
 
 import styles from './BoardCard.module.scss';
+import { useTranslation } from 'react-i18next';
 
 const { card, cardTitle, link, cardDescription, icon, content, deleteBtn } = styles;
 
@@ -25,6 +26,7 @@ type BoardCardProps = {
 const BoardCard: React.FC<BoardCardProps> = ({ className, boardData }) => {
   const dispatch = useAppDispatch();
   const [isOpen, setIsOpen] = useState(false);
+  const { t } = useTranslation('translation', { keyPrefix: 'button' });
 
   const { id, title, description } = boardData;
 
@@ -56,7 +58,7 @@ const BoardCard: React.FC<BoardCardProps> = ({ className, boardData }) => {
             <p className={cardDescription}>{description}</p>
           </div>
           <Button className={deleteBtn} onClick={openModal} kind="confirm">
-            Delete
+            {t('delete')}
           </Button>
         </div>
       </Link>

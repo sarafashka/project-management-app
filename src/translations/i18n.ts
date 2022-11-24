@@ -11,6 +11,8 @@ import error404_ru from './ru/error404.json';
 import error404_en from './en/error404.json';
 import welcome_ru from './ru/welcome.json';
 import welcome_en from './en/welcome.json';
+import button_ru from './ru/button.json';
+import button_en from './en/button.json';
 
 i18n
   .use(LanguageDetector)
@@ -29,6 +31,7 @@ i18n
           profile: profile_en,
           error404: error404_en,
           welcome: welcome_en,
+          button: button_en,
         },
       },
       ru: {
@@ -38,6 +41,7 @@ i18n
           profile: profile_ru,
           error404: error404_ru,
           welcome: welcome_ru,
+          button: button_ru,
         },
       },
     },

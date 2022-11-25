@@ -69,10 +69,8 @@ export const deleteTask = createAsyncThunk<
 export const updateTask = createAsyncThunk<Task, RequestUpdateTask, { rejectValue: unknown }>(
   'task/updateTask',
   async function (data, { rejectWithValue }) {
-    console.log('data', data);
     try {
       const response = await taskService.updateTask(data);
-      console.log('response', response.data);
       return response.data;
     } catch (error) {
       const axiosError = <AxiosError>error;

@@ -32,6 +32,7 @@ const taskSlice = createSlice({
         state.error = null;
       })
       .addCase(getAllTasks.fulfilled, (state, action) => {
+        console.log(2);
         state.isLoading = false;
         state.tasksList = action.payload;
       })
@@ -65,6 +66,7 @@ const taskSlice = createSlice({
         state.error = null;
       })
       .addCase(updateColumn.fulfilled, (state, action) => {
+        console.log(1);
         state.isLoading = false;
         const { id, title, order } = action.payload;
         const index = findColumnIndex(state.tasksList, id);
@@ -117,17 +119,9 @@ const taskSlice = createSlice({
           title: title,
           userId: userId,
         };
-        if (indexTask && indexTask >= 0) {
+        if (indexTask !== undefined && indexTask >= 0) {
           state.tasksList.columns[indexColumn].tasks.splice(indexTask, 1, taskUpdating);
         }
-
-        // if (indexTask) {
-        //   const task = state.tasksList.columns[indexColumn].tasks[indexTask];
-        //   task.description = description;
-        //   task.order = order;
-        //   task.title = title;
-        //   task.userId = userId;
-        // }
       })
 
       .addMatcher(isError, (state, action: PayloadAction<AxiosErrorData>) => {

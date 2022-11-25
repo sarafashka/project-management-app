@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AxiosError } from 'axios';
 
-import { BoardData, CreateBoardData } from '../../types/types';
+import { UpdateBoardData, CreateBoardData } from '../../types/types';
 
 import boardsServices from '../../api/boardsService';
 
@@ -50,7 +50,7 @@ export const deleteBoardAction = createAsyncThunk(
 export const updateBoardAction = createAsyncThunk(
   'boards/updateBoardAction',
 
-  async (board: BoardData, { rejectWithValue }) => {
+  async (board: UpdateBoardData, { rejectWithValue }) => {
     try {
       return await updateBoard(board);
     } catch (error) {

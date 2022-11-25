@@ -2,13 +2,14 @@ import React, { useState } from 'react';
 import classNames from 'classnames';
 import { Link } from 'react-router-dom';
 
-import { OpenModalEvent } from 'types/types';
+import { BoardData, CreateBoardData, DataFromEditForm, OpenModalEvent } from 'types/types';
 import { useAppDispatch } from '../../hooks/reduxTypedHooks';
-import { BoardData } from 'types/types';
 
-import { deleteBoardAction } from 'store/boardsSlice/boardsThunk';
+import { deleteBoardAction, updateBoardAction } from 'store/boardsSlice/boardsThunk';
 import { selectBoard } from '../../store/boardsSlice/boardsSlice';
 
+import { DeleteIcon, EditIcon } from 'components/Icons/Icons';
+import EditingModal from 'components/Modal/EditingModal';
 import Button from 'components/Button/Button';
 import Modal from 'components/Modal';
 import ConfirmationModal from 'components/Modal/ConfirmationModal';
@@ -16,7 +17,7 @@ import ConfirmationModal from 'components/Modal/ConfirmationModal';
 import styles from './BoardCard.module.scss';
 import { useTranslation } from 'react-i18next';
 
-const { card, cardTitle, link, cardDescription, icon, content, deleteBtn } = styles;
+const { card, cardTitle, link, cardDescription, icon, content, btnContainer } = styles;
 
 type BoardCardProps = {
   className?: string;
@@ -26,26 +27,40 @@ type BoardCardProps = {
 const BoardCard: React.FC<BoardCardProps> = ({ className, boardData }) => {
   const dispatch = useAppDispatch();
   const [isOpen, setIsOpen] = useState(false);
+  const [modalKind, setModalKind] = useState('');
   const { t } = useTranslation('translation', { keyPrefix: 'button' });
 
   const { id, title, description } = boardData;
 
-  const handleClick = () => {
+  const handleDeleteClick = () => {
     dispatch(deleteBoardAction(id));
+    closeModal();
+  };
+
+  const handleSelectBoard = () => {
+    dispatch(selectBoard);
+  };
+
+  const handleUpdateClick = (formData: DataFromEditForm) => {
+    dispatch(
+      updateBoardAction({
+        id,
+        body: { ...(formData as CreateBoardData) },
+      })
+    );
     closeModal();
   };
 
   const openModal = (event: OpenModalEvent) => {
     event.preventDefault();
+    const kind = event.currentTarget.className;
+
     setIsOpen(true);
+    kind && setModalKind(kind);
   };
 
   const closeModal = () => {
     setIsOpen(false);
-  };
-
-  const handleSelectBoard = () => {
-    dispatch(selectBoard);
   };
 
   return (
@@ -57,18 +72,31 @@ const BoardCard: React.FC<BoardCardProps> = ({ className, boardData }) => {
             <h3 className={cardTitle}>{title}</h3>
             <p className={cardDescription}>{description}</p>
           </div>
-          <Button className={deleteBtn} onClick={openModal} kind="confirm">
-            {t('delete')}
-          </Button>
+          <div className={btnContainer}>
+            <Button onClick={openModal} icon={<EditIcon />} kind="edit" />
+            <Button onClick={openModal} icon={<DeleteIcon />} kind="deleteBtn" />
+          </div>
         </div>
       </Link>
       <Modal kind="confirmation" onClose={closeModal} isOpen={isOpen}>
-        <ConfirmationModal
-          entity="board"
-          value={title}
-          onConfirm={handleClick}
-          onCancel={closeModal}
-        />
+        {modalKind.includes('edit') && (
+          <EditingModal
+            entity="board"
+            onConfirm={handleUpdateClick}
+            onCancel={closeModal}
+            operation={'edit'}
+            isOpen={false}
+            currentValue={{ title, description }}
+          />
+        )}
+        {modalKind.includes('delete') && (
+          <ConfirmationModal
+            entity="board"
+            value={title}
+            onConfirm={handleDeleteClick}
+            onCancel={closeModal}
+          />
+        )}
       </Modal>
     </>
   );

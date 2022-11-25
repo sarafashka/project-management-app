@@ -1,0 +1,26 @@
+@import '../../../styles/constants';
+
+.container {
+  display: flex;
+  gap: 5px;
+}
+
+.iconContent {
+  stroke: $btn-text;
+}
+
+.icon {
+  fill: $btn-text;
+
+  &:hover {
+    fill: $btn-text;
+  }
+}
+
+.mainIcon {
+  order: 1;
+}
+
+.linkBtn {
+  text-decoration: none;
+}

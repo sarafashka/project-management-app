@@ -12,7 +12,7 @@ type EditingModalProps = {
   entity: 'board' | 'column' | 'task';
   operation: 'create' | 'edit';
   value?: string;
-  onCancel: (event: OpenModalEvent) => void;
+  onCancel: (event?: OpenModalEvent) => void;
   onConfirm: (data: DataFromEditForm) => void;
   isOpen: boolean;
   currentValue?: DataFromEditForm;

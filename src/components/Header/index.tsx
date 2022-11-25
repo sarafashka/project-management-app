@@ -20,6 +20,7 @@ import EditingModal from 'components/Modal/EditingModal';
 import WelcomeHeaderNavigation from './WelcomeHeaderNavigation';
 
 import styles from './Header.module.scss';
+import { useTranslation } from 'react-i18next';
 
 const { header, container, btnContainer, sticky } = styles;
 
@@ -32,6 +33,7 @@ const Header: React.FC<HeaderProps> = ({ className }) => {
   const headerRef = useRef<HTMLElement>(null);
   const dispatch = useAppDispatch();
   const [isOpen, setIsOpen] = useState(false);
+  const { t } = useTranslation('translation');
 
   const changeHeaderStyle = () => {
     window.scrollY > 0
@@ -66,7 +68,7 @@ const Header: React.FC<HeaderProps> = ({ className }) => {
           <div className={btnContainer}>
             {!publicRoutes.includes(pathname) && (
               <Button kind="fillBackground" icon={<PlusIcon />} onClick={toggleModal}>
-                New Board
+                {t('header.new-board')}
               </Button>
             )}
             <WelcomeHeaderNavigation />

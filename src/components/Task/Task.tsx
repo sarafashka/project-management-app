@@ -16,13 +16,15 @@ const TasksList: React.FC<Props> = (columnInfo: Props) => {
   const { columnId } = columnInfo;
 
   const currentTasks = findColumnTasks(tasksList, columnId);
+  const currentTasksSorting = currentTasks ? [...currentTasks] : undefined;
+  currentTasksSorting?.sort((a, b) => a.order - b.order);
 
   return (
     <Droppable droppableId={columnId} type="task">
       {(provided) => (
         <ul className={styles.list} {...provided.droppableProps} ref={provided.innerRef}>
-          {currentTasks &&
-            currentTasks.map((task, index) => (
+          {currentTasksSorting &&
+            currentTasksSorting.map((task, index) => (
               <TaskCard key={task.id} taskId={task.id} columnId={columnId} index={index} />
             ))}
           {provided.placeholder}

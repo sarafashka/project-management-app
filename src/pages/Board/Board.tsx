@@ -5,11 +5,19 @@ import Column from 'components/Column';
 import { selectBoard } from 'store/selectors/selectors';
 import Button from 'components/Button/Button';
 import styles from './Board.module.scss';
-import { getAllTasks } from 'store/taskSlice/taskThunk';
+import { getAllTasks, updateTask } from 'store/taskSlice/taskThunk';
 import Loader from 'components/Loader';
 import { resetTasksList } from 'store/taskSlice/taskSlice';
 import CreateColumn from './BoardCreateColumn';
 import { DragDropContext, Droppable, OnDragEndResponder } from 'react-beautiful-dnd';
+import {
+  GetBoardByIdColumnData,
+  GetBoardByIdTaskData,
+  RequestUpdateColumn,
+  RequestUpdateTask,
+} from 'types/types';
+import { findColumn, findTask } from 'utils/utils';
+import { updateColumn } from 'store/taskSlice/columnThunk';
 
 const Board: React.FC = () => {
   const navigate = useNavigate();
@@ -19,6 +27,11 @@ const Board: React.FC = () => {
   const board = useAppSelector(selectBoard);
   const { isLoading, error, tasksList } = board;
   const { id, title, columns } = tasksList;
+
+  const columnsSorting = [...columns];
+  columnsSorting.sort((a, b) => a.order - b.order);
+
+  // columnsSorting.forEach((item) => console.log('order', item.title, item.order));
 
   const boardId = params.boardId as string;
 
@@ -34,7 +47,7 @@ const Board: React.FC = () => {
   }, [boardId, dispatch]);
 
   const onDragEnd: OnDragEndResponder = (result) => {
-    console.log(result);
+    console.log('result', result);
     const { destination, source, draggableId, type } = result;
 
     if (!destination) {
@@ -45,10 +58,52 @@ const Board: React.FC = () => {
       return;
     }
     if (type === 'column') {
-      console.log('column');
+      const currentColumn = findColumn(tasksList, draggableId) as GetBoardByIdColumnData;
+
+      // columnsSorting.splice(source.index, 1);
+      // columnsSorting.splice(destination.index, 0, currentColumn);
+
+      const { order, title } = currentColumn;
+      const distance = source.index - destination.index;
+      // console.log('distance', distance);
+      const dataForUpdateColumn: RequestUpdateColumn = {
+        boardId: id,
+        columnId: draggableId,
+        body: {
+          title: title,
+          order: order - distance,
+        },
+      };
+      // console.log('newOrder', dataForUpdateColumn.body.order);
+      dispatch(updateColumn(dataForUpdateColumn));
     }
     if (type === 'task') {
-      console.log('task');
+      const currentTask = findTask(
+        tasksList,
+        source.droppableId,
+        draggableId
+      ) as GetBoardByIdTaskData;
+
+      const { title, order, description, userId } = currentTask;
+      const distance = source.index - destination.index;
+      console.log('distance', distance);
+      console.log('curOrder', order);
+
+      const dataForUpdateTask: RequestUpdateTask = {
+        boardId: id,
+        columnId: source.droppableId,
+        taskId: draggableId,
+        body: {
+          title: title,
+          order: order - distance,
+          description: description,
+          userId: userId,
+          boardId: id,
+          columnId: destination.droppableId,
+        },
+      };
+      console.log('updateTask', dataForUpdateTask);
+      dispatch(updateTask(dataForUpdateTask));
     }
   };
 
@@ -73,7 +128,7 @@ const Board: React.FC = () => {
         <Droppable droppableId="columns" direction="horizontal" type="column">
           {(provided) => (
             <div className={styles.list} {...provided.droppableProps} ref={provided.innerRef}>
-              {columns.map((item, index) => (
+              {columnsSorting.map((item, index) => (
                 <Column key={item.id} id={item.id} index={index} />
               ))}
               {provided.placeholder}

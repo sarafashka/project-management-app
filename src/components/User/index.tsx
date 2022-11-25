@@ -60,7 +60,11 @@ const User: React.FC<UserProps> = ({ className }) => {
   const handleCloseByDocument = (e: Event) => {
     const { target } = e;
 
-    if (isOpen && target instanceof HTMLElement && !target.closest('#userBtn')) {
+    if (
+      isOpen &&
+      (target instanceof HTMLElement || target instanceof SVGElement) &&
+      !target.closest('#userBtn')
+    ) {
       toggleModal();
     }
   };

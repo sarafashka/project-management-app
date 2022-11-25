@@ -3,14 +3,15 @@ import React from 'react';
 import Button from 'components/Button/Button';
 
 import styles from './ConfirmationModal.module.scss';
+import { OpenModalEvent } from 'types/types';
 
 const { confirmation, attributeValue, container, content, btn } = styles;
 
 type ConfirmationModalProps = {
   entity: 'user' | 'board' | 'column' | 'task';
   value?: string;
-  onCancel: () => void;
-  onConfirm: () => void;
+  onCancel: (event?: OpenModalEvent) => void;
+  onConfirm: (event?: OpenModalEvent) => void;
 };
 
 const ConfirmationModal: React.FC<ConfirmationModalProps> = ({

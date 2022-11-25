@@ -15,6 +15,8 @@ import button_ru from './ru/button.json';
 import button_en from './en/button.json';
 import board_ru from './ru/board.json';
 import board_en from './en/board.json';
+import editingForm_ru from './ru/editingForm.json';
+import editingForm_en from './en/editingForm.json';
 
 i18n
   .use(LanguageDetector)
@@ -35,6 +37,7 @@ i18n
           welcome: welcome_en,
           button: button_en,
           board: board_en,
+          editingForm: editingForm_en,
         },
       },
       ru: {
@@ -46,6 +49,7 @@ i18n
           welcome: welcome_ru,
           button: button_ru,
           board: board_ru,
+          editingForm: editingForm_ru,
         },
       },
     },

@@ -6,6 +6,7 @@ import React, { useEffect } from 'react';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import { OpenModalEvent, DataFromEditForm } from 'types/types';
 import styles from './Forms.module.scss';
+import { useTranslation } from 'react-i18next';
 
 type EditingFormProps = {
   onConfirm: (data: DataFromEditForm) => void;
@@ -30,26 +31,27 @@ const EditingForm: React.FC<EditingFormProps> = (props) => {
   });
 
   const { onCancel, onConfirm, isOpen, currentValue, operation } = props;
+  const { t } = useTranslation('translation');
 
   const titleInputParams = {
     ...register('title', {
-      required: 'Title is required',
+      required: t('editingForm.title-required') as string,
       minLength: {
         value: 2,
-        message: 'Title must be at least 2 characters',
+        message: t('editingForm.title-2-chars') as string,
       },
       maxLength: {
         value: 40,
-        message: 'Title must contain a maximum of 40 characters',
+        message: t('editingForm.title-40-chars') as string,
       },
     }),
   };
   const descriptionTextareaParams = {
     ...register('description', {
-      required: 'Description is required',
+      required: t('editingForm.description-required') as string,
       maxLength: {
         value: 200,
-        message: 'Description must contain a maximum of 200 characters',
+        message: t('editingForm.description-200-chars') as string,
       },
     }),
   };
@@ -72,21 +74,25 @@ const EditingForm: React.FC<EditingFormProps> = (props) => {
 
   return (
     <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
-      <Input className={operation} label="Title" reactHookFormProps={titleInputParams} />
+      <Input
+        className={operation}
+        label={t('editingForm.title')}
+        reactHookFormProps={titleInputParams}
+      />
       {errors.title && <ErrorMessage>{errors.title.message as string}</ErrorMessage>}
       <Textarea
         className={operation}
-        label="Description"
+        label={t('editingForm.description')}
         reactHookFormProps={descriptionTextareaParams}
       />
       {errors.description && <ErrorMessage>{errors.description.message as string}</ErrorMessage>}
 
       <div className={styles.container}>
         <Button type="button" className={styles.btn} kind="cancel" onClick={onCancel}>
-          Cancel
+          {t('button.cancel')}
         </Button>
         <Button type="submit" className={styles.btn} kind="confirm">
-          Confirm
+          {t('button.confirm')}
         </Button>
       </div>
     </form>

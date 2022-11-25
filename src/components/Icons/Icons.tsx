@@ -5,7 +5,7 @@ import { Icon } from 'types/types';
 
 import styles from './Icon.module.scss';
 
-const { icon, signOut, plus } = styles;
+const { icon, signOut, plus, signUp } = styles;
 
 export const DropDownIcon = ({ className }: Icon): JSX.Element => {
   return (
@@ -83,6 +83,66 @@ export const PlusIcon = ({ className, contentClassName }: Icon): JSX.Element => 
     >
       <path className={classNames(plus, contentClassName)} d="M11 1V19" />
       <path className={classNames(plus, contentClassName)} d="M2 10H20" />
+    </svg>
+  );
+};
+
+export const SignInIcon = ({ className, contentClassName }: Icon): JSX.Element => {
+  return (
+    <svg
+      fill="none"
+      className={classNames(icon, className)}
+      width="16px"
+      height="20px"
+      viewBox="0 0 16 20"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path className={classNames(signOut, contentClassName)} d="M15 10H8M8 10L11 13M8 10L11 7" />
+      <path
+        className={classNames(signOut, contentClassName)}
+        d="M15 4V3C15 1.89543 14.1046 1 13 1H3C1.89543 1 1 1.89543 1 3V17C1 18.1046 1.89543 19 3 19H13C14.1046 19 15 18.1046 15 17V16"
+      />
+    </svg>
+  );
+};
+
+export const SignUpIcon = ({ className, contentClassName }: Icon): JSX.Element => {
+  return (
+    <svg
+      fill="none"
+      className={classNames(icon, className)}
+      width="24px"
+      height="18px"
+      viewBox="0 0 24 18"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        className={classNames(signOut, signUp, contentClassName)}
+        d="M17 7H20M23 7H20M20 7V4M20 7V10"
+      />
+      <path
+        className={classNames(signOut, signUp, contentClassName)}
+        d="M1 17V16C1 12.134 4.13401 9 8 9C11.866 9 15 12.134 15 16V17"
+      />
+      <path
+        className={classNames(signOut, signUp, contentClassName)}
+        d="M8 9C10.2091 9 12 7.2091 12 5C12 2.79086 10.2091 1 8 1C5.79086 1 4 2.79086 4 5C4 7.2091 5.79086 9 8 9Z"
+      />
+    </svg>
+  );
+};
+
+export const ArrowRightIcon = ({ className }: Icon): JSX.Element => {
+  return (
+    <svg
+      fill="none"
+      className={classNames(icon, className)}
+      width="36px"
+      height="27px"
+      viewBox="0 0 36 27"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path d="M35.1 12.2C31 8.39999 27 4.59999 22.9 0.799988C21 -1.00001 18.2 1.89999 20.1 3.59999C22.9 6.19999 25.7 8.79999 28.5 11.4C21 11.4 13.5 11.4 5.99999 11.4C4.69999 11.4 3.39999 11.4 2.09999 11.4C-0.500006 11.4 -0.500006 15.4 2.09999 15.4C11 15.4 19.9 15.4 28.8 15.4C25.9 18 23.1 20.6 20.2 23.2C18.3 24.9 21.1 27.8 23 26C27.1 22.3 31.1 18.6 35.2 14.9C35.8 14.3 35.8 12.9 35.1 12.2Z" />
     </svg>
   );
 };

@@ -17,6 +17,7 @@ import Switcher from 'components/Switcher';
 import { PlusIcon } from 'components/Icons/Icons';
 import Modal from 'components/Modal';
 import EditingModal from 'components/Modal/EditingModal';
+import WelcomeHeaderNavigation from './WelcomeHeaderNavigation';
 
 import styles from './Header.module.scss';
 
@@ -68,6 +69,7 @@ const Header: React.FC<HeaderProps> = ({ className }) => {
                 New Board
               </Button>
             )}
+            <WelcomeHeaderNavigation />
             <Switcher optionLabels={['ru', 'en']} />
             {pathname !== AppRoutes.AUTH && authService.isUserLogged() && <User />}
           </div>

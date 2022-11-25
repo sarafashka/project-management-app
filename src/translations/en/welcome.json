@@ -2,6 +2,7 @@
 	"button": {
 		"main-page": "Go to Main Page",
 		"signIn": "Sign In",
+		"signOut": "Sign Out",
 		"signUp": "Sign Up"
 	},
 	"drag-text": "Use the Drag and Drop function to sort your projects and tasks in the most intuitive, quickest way.",

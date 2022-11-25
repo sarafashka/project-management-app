@@ -11,6 +11,7 @@ import ErrorMessage from '../ErrorMessage/ErrorMessage';
 import Loader from '../Loader';
 import { selectLoginStatus, selectUserLoadingStatus } from '../../store/selectors/selectors';
 import { useTranslation } from 'react-i18next';
+import errorsTranslate from '../../translations/errorsTranslate';
 
 const LoginForm: React.FC = () => {
   const {
@@ -20,7 +21,7 @@ const LoginForm: React.FC = () => {
     reset,
   } = useForm();
 
-  const { t } = useTranslation('translation', { keyPrefix: 'auth' });
+  const { t, i18n } = useTranslation('translation', { keyPrefix: 'auth' });
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const loginStatus = useAppSelector(selectLoginStatus);
@@ -50,7 +51,10 @@ const LoginForm: React.FC = () => {
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     dispatch(login(data as UserLogin)).then((response) => {
       if (response.meta.requestStatus === 'rejected') {
-        setErrorMessage(response.payload as string);
+        console.log(response);
+        const errMessage =
+          i18n.language === 'en' ? response.payload : errorsTranslate[response.payload as string];
+        setErrorMessage(errMessage as string);
       } else {
         navigate('/boards');
       }

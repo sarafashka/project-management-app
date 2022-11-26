@@ -47,7 +47,6 @@ const RegisterForm: React.FC = () => {
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     dispatch(registerUser(data as NewUser)).then((response) => {
       if (response.meta.requestStatus === 'rejected') {
-        console.log(response);
         setErrorMessage(response.payload as string);
       } else {
         navigate('/profile');

@@ -18,6 +18,8 @@ import {
   selectUserUpdatingStatus,
 } from '../../store/selectors/selectors';
 import { useTranslation } from 'react-i18next';
+import { loginOptions, nameOptions, passwordOptions } from './inputOptions';
+import { getErrorMessage } from '../../utils/utils';
 
 const ProfileForm = () => {
   const {
@@ -26,7 +28,7 @@ const ProfileForm = () => {
     formState: { errors },
   } = useForm();
 
-  const { t } = useTranslation('translation');
+  const { t, i18n } = useTranslation('translation');
   const user = useAppSelector(selectUser);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -34,6 +36,11 @@ const ProfileForm = () => {
   const userUpdatingStatus = useAppSelector(selectUserUpdatingStatus);
   const [errorMessage, setErrorMessage] = useState<string>();
   const [isModalOpened, setIsModalOpened] = useState<boolean>(false);
+  const [lang, setLang] = useState<string>(i18n.language);
+
+  i18n.on('languageChanged', () => {
+    setLang(i18n.language);
+  });
 
   const isLoading = userLoadingStatus === 'loading' || userUpdatingStatus === 'loading';
 
@@ -42,38 +49,6 @@ const ProfileForm = () => {
       dispatch(resetLoadingStatus());
     };
   }, []);
-
-  const nameOptions = {
-    required: t('errors.enter-your-name'),
-    pattern: {
-      value: /^[A-Za-z0-9 _]*[A-Za-z0-9][A-Za-z0-9 _]*$/,
-      message: t('errors.name-letters-numbers-only'),
-    },
-  };
-
-  const loginOptions = {
-    required: t('errors.login-required'),
-    minLength: {
-      value: 3,
-      message: t('errors.login-3-char'),
-    },
-    pattern: {
-      value: /^[A-Za-z0-9_]*[A-Za-z0-9][A-Za-z0-9_]*$/,
-      message: t('errors.login-letters-numbers-only'),
-    },
-  };
-
-  const passwordOptions = {
-    required: t('errors.password-required'),
-    minLength: {
-      value: 8,
-      message: t('errors.password-8-char'),
-    },
-    pattern: {
-      value: /^[A-Za-z0-9~\\!@#$%^&*()_+|}{:"?><=-]*$/,
-      message: t('errors.password-letters-numbers-symbols-only'),
-    },
-  };
 
   const nameInputParams = {
     ...register('name', nameOptions),
@@ -114,19 +89,25 @@ const ProfileForm = () => {
         defaultValue={user.name}
         reactHookFormProps={nameInputParams}
       />
-      {errors.name && <ErrorMessage>{errors.name.message as string}</ErrorMessage>}
+      {errors.name && (
+        <ErrorMessage>{getErrorMessage(errors.name.message as string, lang)}</ErrorMessage>
+      )}
       <Input
         label={t('auth.form.enterLogin')}
         defaultValue={user.login}
         reactHookFormProps={loginInputParams}
       />
-      {errors.login && <ErrorMessage>{errors.login.message as string}</ErrorMessage>}
+      {errors.login && (
+        <ErrorMessage>{getErrorMessage(errors.login.message as string, lang)}</ErrorMessage>
+      )}
       <Input
         label={t('auth.form.choosePassword')}
         type="password"
         reactHookFormProps={passwordInputParams}
       />
-      {errors.password && <ErrorMessage>{errors.password.message as string}</ErrorMessage>}
+      {errors.password && (
+        <ErrorMessage>{getErrorMessage(errors.password.message as string, lang)}</ErrorMessage>
+      )}
       <div className={styles.buttons}>
         <Button className={styles.sign} type="submit" disabled={isLoading}>
           {t('profile.button.update')}
@@ -152,7 +133,7 @@ const ProfileForm = () => {
       </div>
       {isLoading && <Loader />}
       {(userLoadingStatus === 'failed' || userUpdatingStatus === 'failed') && (
-        <ErrorMessage>{errorMessage}</ErrorMessage>
+        <ErrorMessage>{getErrorMessage(errorMessage, lang)}</ErrorMessage>
       )}
       {userUpdatingStatus === 'succeeded' && (
         <ErrorMessage>{t('profile.message.updated')}</ErrorMessage>

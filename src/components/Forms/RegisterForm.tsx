@@ -11,6 +11,8 @@ import ErrorMessage from '../ErrorMessage/ErrorMessage';
 import Loader from '../Loader';
 import { selectLoginStatus, selectRegisterStatus } from '../../store/selectors/selectors';
 import { useTranslation } from 'react-i18next';
+import { getErrorMessage } from '../../utils/utils';
+import { loginOptions, nameOptions, passwordOptions } from './inputOptions';
 
 const RegisterForm: React.FC = () => {
   const {
@@ -19,44 +21,17 @@ const RegisterForm: React.FC = () => {
     formState: { errors },
   } = useForm();
 
-  const { t } = useTranslation('translation', { keyPrefix: 'auth' });
+  const { t, i18n } = useTranslation('translation', { keyPrefix: 'auth' });
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const registerStatus = useAppSelector(selectRegisterStatus);
   const loginStatus = useAppSelector(selectLoginStatus);
   const [errorMessage, setErrorMessage] = useState<string>();
+  const [lang, setLang] = useState<string>(i18n.language);
 
-  const nameOptions = {
-    required: t('errors.enter-your-name'),
-    pattern: {
-      value: /^[A-Za-z0-9 _]*[A-Za-z0-9][A-Za-z0-9 _]*$/,
-      message: t('errors.name-letters-numbers-only'),
-    },
-  };
-
-  const loginOptions = {
-    required: t('errors.login-required'),
-    minLength: {
-      value: 3,
-      message: t('errors.login-3-char'),
-    },
-    pattern: {
-      value: /^[A-Za-z0-9_]*[A-Za-z0-9][A-Za-z0-9_]*$/,
-      message: t('errors.login-letters-numbers-only'),
-    },
-  };
-
-  const passwordOptions = {
-    required: t('errors.password-required'),
-    minLength: {
-      value: 8,
-      message: t('errors.password-8-char'),
-    },
-    pattern: {
-      value: /^[A-Za-z0-9~\\!@#$%^&*()_+|}{:"?><=-]*$/,
-      message: t('errors.password-letters-numbers-symbols-only'),
-    },
-  };
+  i18n.on('languageChanged', () => {
+    setLang(i18n.language);
+  });
 
   const nameInputParams = {
     ...register('name', nameOptions),
@@ -72,6 +47,7 @@ const RegisterForm: React.FC = () => {
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     dispatch(registerUser(data as NewUser)).then((response) => {
       if (response.meta.requestStatus === 'rejected') {
+        console.log(response);
         setErrorMessage(response.payload as string);
       } else {
         navigate('/profile');
@@ -82,15 +58,21 @@ const RegisterForm: React.FC = () => {
   return (
     <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
       <Input label={t('form.enterYourName')} reactHookFormProps={nameInputParams} />
-      {errors.name && <ErrorMessage>{errors.name.message as string}</ErrorMessage>}
+      {errors.name && (
+        <ErrorMessage>{getErrorMessage(errors.name.message as string, lang)}</ErrorMessage>
+      )}
       <Input label={t('form.enterLogin')} reactHookFormProps={loginInputParams} />
-      {errors.login && <ErrorMessage>{errors.login.message as string}</ErrorMessage>}
+      {errors.login && (
+        <ErrorMessage>{getErrorMessage(errors.login.message as string, lang)}</ErrorMessage>
+      )}
       <Input
         label={t('form.choosePassword')}
         type="password"
         reactHookFormProps={passwordInputParams}
       />
-      {errors.password && <ErrorMessage>{errors.password.message as string}</ErrorMessage>}
+      {errors.password && (
+        <ErrorMessage>{getErrorMessage(errors.password.message as string, lang)}</ErrorMessage>
+      )}
       <div className={styles.buttons}>
         <Button
           className={styles.back}
@@ -106,7 +88,9 @@ const RegisterForm: React.FC = () => {
         </Button>
       </div>
       {registerStatus === 'loading' && <Loader />}
-      {registerStatus === 'failed' && <ErrorMessage>{errorMessage}</ErrorMessage>}
+      {registerStatus === 'failed' && (
+        <ErrorMessage>{getErrorMessage(errorMessage, lang)}</ErrorMessage>
+      )}
       {loginStatus === 'loading' && <p className={styles.loading}>Loading...</p>}
     </form>
   );

@@ -1,4 +1,5 @@
 import { GetBoardByIdData } from 'types/types';
+import errorsTranslate from '../translations/errorsTranslate';
 
 export const findTask = (array: GetBoardByIdData, columnId: string, taskId: string) => {
   return array.columns
@@ -16,4 +17,10 @@ export const findColumn = (array: GetBoardByIdData, columnId: string) => {
 
 export const findColumnIndex = (array: GetBoardByIdData, columnId: string) => {
   return array.columns.findIndex((column) => columnId === column.id);
+};
+
+export const getErrorMessage = (errorMessage: string | undefined, lang: string) => {
+  if (errorMessage) {
+    return lang === 'en' ? errorMessage : errorsTranslate[errorMessage];
+  }
 };

@@ -11,7 +11,7 @@ import ErrorMessage from '../ErrorMessage/ErrorMessage';
 import Loader from '../Loader';
 import { selectLoginStatus, selectUserLoadingStatus } from '../../store/selectors/selectors';
 import { useTranslation } from 'react-i18next';
-import errorsTranslate from '../../translations/errorsTranslate';
+import { getErrorMessage } from '../../utils/utils';
 
 const LoginForm: React.FC = () => {
   const {
@@ -27,18 +27,21 @@ const LoginForm: React.FC = () => {
   const loginStatus = useAppSelector(selectLoginStatus);
   const userLoadingStatus = useAppSelector(selectUserLoadingStatus);
   const [errorMessage, setErrorMessage] = useState<string>();
+  const [lang, setLang] = useState<string>(i18n.language);
 
-  const loginInputErrorText = t('errors.login-required');
+  i18n.on('languageChanged', () => {
+    setLang(i18n.language);
+  });
+
   const loginInputParams = {
     ...register('login', {
-      required: loginInputErrorText,
+      required: 'Login is required',
     }),
   };
 
-  const passwordInputErrorText = t('errors.password-required');
   const passwordInputParams = {
     ...register('password', {
-      required: passwordInputErrorText,
+      required: 'Password is required',
     }),
   };
 
@@ -51,10 +54,7 @@ const LoginForm: React.FC = () => {
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     dispatch(login(data as UserLogin)).then((response) => {
       if (response.meta.requestStatus === 'rejected') {
-        console.log(response);
-        const errMessage =
-          i18n.language === 'en' ? response.payload : errorsTranslate[response.payload as string];
-        setErrorMessage(errMessage as string);
+        setErrorMessage(response.payload as string);
       } else {
         navigate('/boards');
       }
@@ -64,13 +64,17 @@ const LoginForm: React.FC = () => {
   return (
     <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
       <Input label={t('form.enterLogin')} reactHookFormProps={loginInputParams} />
-      {errors.login && <ErrorMessage>{errors.login.message as string}</ErrorMessage>}
+      {errors.login && (
+        <ErrorMessage>{getErrorMessage(errors.login.message as string, lang)}</ErrorMessage>
+      )}
       <Input
         label={t('form.enterPassword')}
         type="password"
         reactHookFormProps={passwordInputParams}
       />
-      {errors.password && <ErrorMessage>{errors.password.message as string}</ErrorMessage>}
+      {errors.password && (
+        <ErrorMessage>{getErrorMessage(errors.password.message as string, lang)}</ErrorMessage>
+      )}
       <div className={styles.buttons}>
         <Button
           className={styles.back}
@@ -87,7 +91,7 @@ const LoginForm: React.FC = () => {
       </div>
       {(loginStatus === 'loading' || userLoadingStatus === 'loading') && <Loader />}
       {(loginStatus === 'failed' || userLoadingStatus === 'failed') && (
-        <ErrorMessage>{errorMessage}</ErrorMessage>
+        <ErrorMessage>{getErrorMessage(errorMessage, lang)}</ErrorMessage>
       )}
     </form>
   );

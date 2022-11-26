@@ -11,12 +11,30 @@
   border: 2.5px solid $primary;
   overflow-y: auto;
   height: 63vh;
-  cursor: pointer;
 }
 
 .header {
   display: flex;
   justify-content: space-between;
+  gap: 0.5rem;
+}
+.actions {
+  display: flex;
+  gap: 0.5rem;
+}
+.handle {
+  width: 1.8rem;
+  height: 1.9rem;
+  background-image: url('../../assets/img/handle.png');
+  background-repeat: no-repeat;
+  background-size: 45%;
+  filter: invert(87%) sepia(0%) saturate(38%) hue-rotate(175deg) brightness(88%) contrast(81%);
+  &:hover {
+    filter: invert(41%) sepia(33%) saturate(1775%) hue-rotate(216deg) brightness(87%) contrast(88%);
+  }
+  &:active {
+    filter: invert(41%) sepia(33%) saturate(1775%) hue-rotate(216deg) brightness(87%) contrast(88%);
+  }
 }
 .count {
   color: $text;

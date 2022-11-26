@@ -60,9 +60,9 @@ const TaskCard: React.FC<Props> = (props) => {
   return (
     <>
       <Draggable draggableId={taskId} index={index}>
-        {(provided) => (
+        {(provided, snapshot) => (
           <li
-            className={styles.item}
+            className={snapshot.isDragging ? styles.drag : styles.item}
             onClick={openModal}
             {...provided.draggableProps}
             {...provided.dragHandleProps}
@@ -70,7 +70,10 @@ const TaskCard: React.FC<Props> = (props) => {
           >
             <div className={styles.header}>
               <h2 className={styles.title}>{title}</h2>
-              <TaskDelete taskId={taskId} columnId={columnId} title={title} />
+              <div className={styles.actions}>
+                <div className={styles.edit}></div>
+                <TaskDelete taskId={taskId} columnId={columnId} title={title} />
+              </div>
             </div>
             <div className={styles.description}>{currentTask?.description}</div>
             {isOwner() && <div className={styles.owner}>My task</div>}

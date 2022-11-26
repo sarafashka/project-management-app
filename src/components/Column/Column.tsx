@@ -43,16 +43,14 @@ const Column: React.FC<Props> = (column) => {
   return (
     <Draggable draggableId={id} index={index}>
       {(provided) => (
-        <div
-          className={styles.item}
-          {...provided.draggableProps}
-          {...provided.dragHandleProps}
-          ref={provided.innerRef}
-        >
+        <div className={styles.item} {...provided.draggableProps} ref={provided.innerRef}>
           <div className={styles.header}>
             <p className={styles.count}>({tasks.length})</p>
             <ColumnTitle title={title} submit={handleSubmit} />
-            <ColumnDelete columnId={id} boardId={board.id} title={title} />
+            <div className={styles.actions}>
+              <div className={styles.handle} {...provided.dragHandleProps}></div>
+              <ColumnDelete columnId={id} boardId={board.id} title={title} />
+            </div>
           </div>
           {<Task columnId={id} />}
           <ColumnAddTask boardId={board.id} columnId={id} userId={user.id} />

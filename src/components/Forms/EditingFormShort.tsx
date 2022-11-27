@@ -47,10 +47,6 @@ const EditingFormShort: React.FC<EditingFormProps> = (props) => {
   };
 
   useEffect(() => {
-    reset();
-  }, [isOpen, reset]);
-
-  useEffect(() => {
     if (currentValue?.title) {
       setValue('title', currentValue.title);
     }
@@ -59,6 +55,7 @@ const EditingFormShort: React.FC<EditingFormProps> = (props) => {
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     const dataFromEditForm = data as DataFromEditForm;
     onConfirm(dataFromEditForm);
+    reset();
   };
 
   return (

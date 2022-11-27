@@ -28,7 +28,7 @@ class ErrorBoundary extends Component<Props, State> {
       return (
         <div className={styles.errorBoundary}>
           <h1>{this.props.t('error404.oops')}</h1>
-          <a href="/">{this.props.t('error404.to-main-page')}</a>
+          <a href="/">{this.props.t('error404.to-welcome-page')}</a>
         </div>
       );
     }

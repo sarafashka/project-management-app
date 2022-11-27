@@ -12,10 +12,17 @@
 .input {
   height: 54px;
   padding: 12px 18px;
-  font-size: 20px;
+  font-size: 18px;
   border: 1px solid #c1cfff;
   border-radius: 8px;
+
+  outline: none;
+
+  &::placeholder {
+    color: $text;
+  }
 }
+
 .edit {
   font-size: 1.4rem;
   color: $text;

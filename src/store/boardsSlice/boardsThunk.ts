@@ -1,18 +1,18 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AxiosError } from 'axios';
 
-import { UpdateBoardData, CreateBoardData } from '../../types/types';
+import { UpdateBoardData, CreateBoardData, BoardsSearchQueryParams } from '../../types/types';
 
 import boardsServices from '../../api/boardsService';
 
-const { getAllBoards, deleteBoard, createBoard, updateBoard } = boardsServices;
+const { getAllBoardsWithParams, deleteBoard, createBoard, updateBoard } = boardsServices;
 
-export const getAllBoardsAction = createAsyncThunk(
-  'boards/getAllBoardsAction',
+export const getAllBoardsWithParamsAction = createAsyncThunk(
+  'boards/getAllBoardsWithParamsAction',
 
-  async (_, { rejectWithValue }) => {
+  async (query: BoardsSearchQueryParams | undefined, { rejectWithValue }) => {
     try {
-      return await getAllBoards();
+      return await getAllBoardsWithParams(query);
     } catch (error) {
       const axiosError = error as AxiosError;
       return rejectWithValue(axiosError.response?.data);

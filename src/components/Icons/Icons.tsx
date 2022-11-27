@@ -146,3 +146,18 @@ export const ArrowRightIcon = ({ className }: Icon): JSX.Element => {
     </svg>
   );
 };
+
+export const SearchIcon = ({ className }: Icon): JSX.Element => {
+  return (
+    <svg
+      fill="none"
+      className={classNames(icon, className)}
+      width="30px"
+      height="30px"
+      viewBox="0 0 12 12"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path d="M11.85 11.15L9.16 8.46C9.9 7.56 10.36 6.43 10.36 5.18C10.37 2.33 8.04 0 5.18 0C2.32 0 0 2.33 0 5.18C0 8.03 2.33 10.36 5.18 10.36C6.43 10.36 7.56 9.9 8.46 9.16L11.15 11.85C11.25 11.95 11.38 12 11.5 12C11.62 12 11.76 11.95 11.85 11.85C12.05 11.66 12.05 11.34 11.85 11.15ZM1 5.18C1 2.88 2.88 1 5.18 1C7.48 1 9.36 2.88 9.36 5.18C9.36 7.48 7.48 9.36 5.18 9.36C2.88 9.36 1 7.49 1 5.18Z" />
+    </svg>
+  );
+};

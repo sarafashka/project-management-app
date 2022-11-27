@@ -5,8 +5,12 @@ import { Link } from 'react-router-dom';
 import { BoardData, CreateBoardData, DataFromEditForm, OpenModalEvent } from 'types/types';
 import { useAppDispatch } from '../../hooks/reduxTypedHooks';
 
-import { deleteBoardAction, updateBoardAction } from 'store/boardsSlice/boardsThunk';
-import { selectBoard } from '../../store/boardsSlice/boardsSlice';
+import {
+  deleteBoardAction,
+  updateBoardAction,
+  getAllBoardsWithParamsAction,
+} from 'store/boardsSlice/boardsThunk';
+import { resetSearch, selectBoard } from '../../store/boardsSlice/boardsSlice';
 
 import { DeleteIcon, EditIcon } from 'components/Icons/Icons';
 import EditingModal from 'components/Modal/EditingModal';
@@ -46,6 +50,8 @@ const BoardCard: React.FC<BoardCardProps> = ({ className, boardData }) => {
         body: { ...(formData as CreateBoardData) },
       })
     );
+    dispatch(resetSearch());
+    dispatch(getAllBoardsWithParamsAction());
     closeModal();
   };
 

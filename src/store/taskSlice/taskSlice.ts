@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AxiosErrorData, GetBoardByIdTaskData, Task, TaskState } from 'types/types';
 import { findColumnIndex, findColumnTasks, findTaskIndex } from 'utils/utils';
 import { createColumn, deleteColumn, updateColumn } from './columnThunk';
-import { createTask, deleteTask, getAllTasks, updateTask } from './taskThunk';
+import { createTask, deleteTask, getAllTasks, updateOrderTask, updateTask } from './taskThunk';
 
 const defaultTasksList = {
   id: '',
@@ -32,7 +32,7 @@ const taskSlice = createSlice({
         state.error = null;
       })
       .addCase(getAllTasks.fulfilled, (state, action) => {
-        console.log(2);
+        console.log(1);
         state.isLoading = false;
         state.tasksList = action.payload;
       })
@@ -41,6 +41,7 @@ const taskSlice = createSlice({
         state.error = null;
       })
       .addCase(createColumn.fulfilled, (state, action) => {
+        console.log(2);
         state.isLoading = false;
         const { id, title, order } = action.payload;
         const newColumn = {
@@ -56,6 +57,7 @@ const taskSlice = createSlice({
         state.error = null;
       })
       .addCase(deleteColumn.fulfilled, (state, action) => {
+        console.log(3);
         state.isLoading = false;
         state.tasksList.columns = state.tasksList.columns.filter(
           (column) => column.id !== action.payload
@@ -66,7 +68,7 @@ const taskSlice = createSlice({
         state.error = null;
       })
       .addCase(updateColumn.fulfilled, (state, action) => {
-        console.log(1);
+        console.log(4);
         state.isLoading = false;
         const { id, title, order } = action.payload;
         const index = findColumnIndex(state.tasksList, id);
@@ -78,6 +80,7 @@ const taskSlice = createSlice({
         state.error = null;
       })
       .addCase(createTask.fulfilled, (state, action) => {
+        console.log(5);
         state.isLoading = false;
         const { id, userId, title, description, order, columnId } = action.payload;
         const task = {
@@ -94,6 +97,7 @@ const taskSlice = createSlice({
         state.error = null;
       })
       .addCase(deleteTask.fulfilled, (state, action) => {
+        console.log(6);
         state.isLoading = false;
         const { columnId, taskId } = action.payload;
         const columns = state.tasksList.columns;
@@ -107,6 +111,7 @@ const taskSlice = createSlice({
         state.error = null;
       })
       .addCase(updateTask.fulfilled, (state, action) => {
+        console.log(7);
         state.isLoading = false;
         const { id, columnId, description, order, title, userId } = action.payload;
         const indexTask = findTaskIndex(state.tasksList, columnId, id);
@@ -122,6 +127,14 @@ const taskSlice = createSlice({
         if (indexTask !== undefined && indexTask >= 0) {
           state.tasksList.columns[indexColumn].tasks.splice(indexTask, 1, taskUpdating);
         }
+      })
+      .addCase(updateOrderTask.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(updateOrderTask.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.tasksList = action.payload;
       })
 
       .addMatcher(isError, (state, action: PayloadAction<AxiosErrorData>) => {

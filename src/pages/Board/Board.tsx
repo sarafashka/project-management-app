@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import styles from './Board.module.scss';
+import React, { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from 'hooks/reduxTypedHooks';
 import Column from 'components/Column';
 import { selectBoard } from 'store/selectors/selectors';
 import Button from 'components/Button/Button';
-import styles from './Board.module.scss';
-import { getAllTasks, updateTask } from 'store/taskSlice/taskThunk';
+import { getAllTasks, updateOrderTask } from 'store/taskSlice/taskThunk';
 import Loader from 'components/Loader';
 import { resetTasksList } from 'store/taskSlice/taskSlice';
 import CreateColumn from './BoardCreateColumn';
@@ -17,7 +17,7 @@ import {
   RequestUpdateTask,
 } from 'types/types';
 import { findColumn, findTask } from 'utils/utils';
-import { updateColumn } from 'store/taskSlice/columnThunk';
+import { updateOrderColumn } from 'store/taskSlice/columnThunk';
 
 const Board: React.FC = () => {
   const navigate = useNavigate();
@@ -56,7 +56,6 @@ const Board: React.FC = () => {
     if (type === 'column') {
       const currentColumn = findColumn(tasksList, draggableId) as GetBoardByIdColumnData;
 
-      console.log('hello');
       columnsSorting.splice(source.index, 1);
       columnsSorting.splice(destination.index, 0, currentColumn);
 
@@ -71,8 +70,7 @@ const Board: React.FC = () => {
           order: order - distance,
         },
       };
-      await dispatch(updateColumn(dataForUpdateColumn));
-      await dispatch(getAllTasks(id));
+      await dispatch(updateOrderColumn(dataForUpdateColumn));
     }
     if (type === 'task') {
       const currentTask = findTask(
@@ -97,8 +95,7 @@ const Board: React.FC = () => {
           columnId: destination.droppableId,
         },
       };
-      await dispatch(updateTask(dataForUpdateTask));
-      await dispatch(getAllTasks(id));
+      await dispatch(updateOrderTask(dataForUpdateTask));
     }
   };
 
@@ -112,7 +109,6 @@ const Board: React.FC = () => {
       )}
 
       <div className={styles.header}>
-        {console.log('render', columnsSorting)}
         <h2 className={styles.title}>{title}</h2>
         <CreateColumn boardId={id} />
       </div>

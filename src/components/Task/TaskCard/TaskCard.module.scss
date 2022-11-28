@@ -2,6 +2,7 @@
 .item {
   height: 11rem;
   padding: 1.5rem;
+  word-wrap: break-word;
   border-radius: 0.5rem;
   background-color: #ffffff;
   cursor: pointer;
@@ -17,7 +18,22 @@
 .title {
   width: 90%;
 }
-
+.actions {
+  display: flex;
+  gap: 0.5rem;
+}
+.edit {
+  width: 1.6rem;
+  height: 1.6rem;
+  background-image: url('../../../assets/img/edit.png');
+  background-repeat: no-repeat;
+  background-size: 55%;
+  background-position: center;
+  filter: invert(87%) sepia(0%) saturate(38%) hue-rotate(175deg) brightness(88%) contrast(81%);
+  &:hover {
+    filter: invert(41%) sepia(33%) saturate(1775%) hue-rotate(216deg) brightness(87%) contrast(88%);
+  }
+}
 .description {
   color: $text;
 }

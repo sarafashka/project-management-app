@@ -63,7 +63,6 @@ const TaskCard: React.FC<Props> = (props) => {
         {(provided, snapshot) => (
           <li
             className={snapshot.isDragging ? styles.drag : styles.item}
-            onClick={openModal}
             {...provided.draggableProps}
             {...provided.dragHandleProps}
             ref={provided.innerRef}
@@ -71,7 +70,7 @@ const TaskCard: React.FC<Props> = (props) => {
             <div className={styles.header}>
               <h2 className={styles.title}>{title}</h2>
               <div className={styles.actions}>
-                <div className={styles.edit}></div>
+                <div className={styles.edit} onClick={openModal}></div>
                 <TaskDelete taskId={taskId} columnId={columnId} title={title} />
               </div>
             </div>

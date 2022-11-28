@@ -78,3 +78,23 @@ export const updateTask = createAsyncThunk<Task, RequestUpdateTask, { rejectValu
     }
   }
 );
+
+export const updateOrderTask = createAsyncThunk<
+  GetBoardByIdData,
+  RequestUpdateTask,
+  { rejectValue: unknown }
+>('task/updateOrderTask', async function (data, { rejectWithValue }) {
+  try {
+    await taskService.updateTask(data);
+    try {
+      const response = await boardsService.getBoardById(data.boardId);
+      return response;
+    } catch (error) {
+      const axiosError = <AxiosError>error;
+      return rejectWithValue(axiosError.response?.data);
+    }
+  } catch (error) {
+    const axiosError = <AxiosError>error;
+    return rejectWithValue(axiosError.response?.data);
+  }
+});

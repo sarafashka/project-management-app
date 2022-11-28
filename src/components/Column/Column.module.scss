@@ -10,7 +10,8 @@
   background-color: $main-background;
   border: 2.5px solid $primary;
   overflow-y: auto;
-  height: 63vh;
+  max-height: 63vh;
+  height: 100%;
 }
 
 .header {

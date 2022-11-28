@@ -90,7 +90,6 @@ const Board: React.FC = () => {
           value={title}
           onConfirm={handleClick}
           onCancel={closeModal}
-          isOpen={isOpen}
         />
       </Modal>
     </div>

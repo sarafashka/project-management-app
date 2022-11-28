@@ -65,7 +65,6 @@ const TaskCard: React.FC<Props> = (props) => {
           onConfirm={handleClick}
           onCancel={closeModal}
           operation={'edit'}
-          isOpen={false}
           currentValue={{ title: 'task', description: 'smth' }}
         />
       </Modal>

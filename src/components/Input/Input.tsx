@@ -3,7 +3,7 @@ import styles from './Input.module.scss';
 import cn from 'classnames';
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
-  label?: string;
+  label?: string | null;
   reactHookFormProps?: Record<string, unknown>;
   className?: string;
   inputClassName?: string;

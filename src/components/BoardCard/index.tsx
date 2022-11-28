@@ -84,7 +84,6 @@ const BoardCard: React.FC<BoardCardProps> = ({ className, boardData }) => {
             onConfirm={handleUpdateClick}
             onCancel={closeModal}
             operation={'edit'}
-            isOpen={false}
             currentValue={{ title, description }}
           />
         )}

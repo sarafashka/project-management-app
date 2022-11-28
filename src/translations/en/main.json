@@ -1,0 +1,9 @@
+{
+	"searchPlaceholder": "Search by board title or description…",
+  "messages": {
+    "invalidSearchTitle": "Sorry!",
+    "invalidSearchContent": "Nothing was found for your query. Try to search another term.",
+    "emptyBoardsListTitle": "Ooops!",
+    "emptyBoardsListContent": "There is no boards yet. For beginning, create one with 'New board' button!"
+  }
+}

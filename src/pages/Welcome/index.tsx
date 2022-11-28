@@ -1,14 +1,17 @@
 import React from 'react';
-
-import Button from '../../components/Button/Button';
 import { useNavigate } from 'react-router-dom';
-import tryImg from '../../assets/img/welcome-try.png';
-import TeamMemberCard from '../../components/TeamMemberCard/TeamMemberCard';
-import dndimg from '../../assets/img/DnDtemp.png';
-import { authService } from '../../api/authService';
 import { useTranslation } from 'react-i18next';
-import { resetSearch } from 'store/boardsSlice/boardsSlice';
+
 import { useAppDispatch } from 'hooks/reduxTypedHooks';
+
+import { authService } from '../../api/authService';
+import { resetSearch } from 'store/boardsSlice/boardsSlice';
+
+import tryImg from '../../assets/img/welcome-try.png';
+import dndimg from '../../assets/img/DnDtemp.png';
+
+import TeamMemberCard from '../../components/TeamMemberCard/TeamMemberCard';
+import Button from '../../components/Button/Button';
 
 import styles from './Welcome.module.scss';
 

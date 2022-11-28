@@ -85,7 +85,6 @@ const Header: React.FC<HeaderProps> = ({ className }) => {
           onConfirm={handleCreateClick}
           onCancel={toggleModal}
           operation={'create'}
-          isOpen={false}
         />
       </Modal>
     </>

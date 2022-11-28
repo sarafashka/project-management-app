@@ -21,39 +21,31 @@ type HeaderProps = {
 
 const WelcomeHeaderNavigation: React.FC<HeaderProps> = ({ className }) => {
   const { pathname } = useLocation();
+  const dispatch = useAppDispatch();
   const { t } = useTranslation('translation', { keyPrefix: 'welcome' });
 
-  const WelcomeHeaderNavigation: React.FC<HeaderProps> = ({ className }) => {
-  const { pathname } = useLocation();
-  const dispatch = useAppDispatch();
-
   const buttons = {
-      false: [
-        {
-          link: { to: AppRoutes.AUTH },
-          btn: { name: t('button.signIn'), icon: <SignInIcon contentClassName={iconContent} /> },
-        },
-        {
-          link: { to: AppRoutes.AUTH, state: 'reg' },
-          btn: { name: t('button.signUp'), icon: <SignUpIcon contentClassName={iconContent} /> },
-        },
-      ],
-      true: [
-        {
-          link: { to: AppRoutes.BOARDS, onClick: () => dispatch(resetSearch()) },
-          btn: {
-            name: t('button.main-page'),
-            icon: <ArrowRightIcon className={icon} />,
-            iconClassName: mainIcon,
-        },
+    false: [
+      {
+        link: { to: AppRoutes.AUTH },
+        btn: { name: t('button.signIn'), icon: <SignInIcon contentClassName={iconContent} /> },
+      },
+      {
+        link: { to: AppRoutes.AUTH, state: 'reg' },
+        btn: { name: t('button.signUp'), icon: <SignUpIcon contentClassName={iconContent} /> },
+      },
+    ],
+    true: [
+      {
+        link: { to: AppRoutes.BOARDS, onClick: () => dispatch(resetSearch()) },
+        btn: {
+          name: t('button.main-page'),
+          icon: <ArrowRightIcon className={icon} />,
+          iconClassName: mainIcon,
         },
       },
-    },
-  ],
-};
-
-const WelcomeHeaderNavigation: React.FC<HeaderProps> = ({ className }) => {
-  const { pathname } = useLocation();
+    ],
+  };
 
   return (
     <div className={classNames(container, className)}>

@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { Outlet, useMatch } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 import { useAppSelector, useAppDispatch } from '../../hooks/reduxTypedHooks';
 
@@ -22,20 +23,19 @@ import styles from './Main.module.scss';
 
 const { container, list, item, searchBar } = styles;
 
-const messages = {
-  true: {
-    title: 'Sorry!',
-    message: <>Nothing was found for your query. Try to search another term.</>,
-  },
-  false: {
-    title: 'Ooops!',
-    message: (
-      <>There is no boards yet. For beginning, create one with &apos;New board&apos; button!</>
-    ),
-  },
-};
-
 const Main: React.FC = () => {
+  const { t } = useTranslation('translation', { keyPrefix: 'main' });
+  const messages = {
+    true: {
+      title: t('messages.invalidSearchTitle'),
+      message: <>{t('messages.invalidSearchContent')}</>,
+    },
+    false: {
+      title: t('messages.emptyBoardsListTitle'),
+      message: <>{t('messages.emptyBoardsListContent')}</>,
+    },
+  };
+
   const { boards, isLoaded, error, searchValue, queryParam } = useAppSelector(selectBoards);
   const dispatch = useAppDispatch();
 
@@ -67,7 +67,7 @@ const Main: React.FC = () => {
       <SearchBar
         onSubmit={handleSearchSubmit}
         className={searchBar}
-        placeholder="Search by board title or description…"
+        placeholder={t('searchPlaceholder') || ''}
         value={searchValue}
         saveSearchValue={handleSearchSave}
         resetSearch={handleResetSearch}

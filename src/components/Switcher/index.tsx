@@ -21,7 +21,7 @@ const Switcher: React.FC<SwitcherProps> = ({
   ...otherAttrs
 }) => {
   const { i18n } = useTranslation();
-  const [lang, setLang] = useState(i18n.language);
+  const [lang, setLang] = useState(i18n.language.slice(0, 2));
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     onValueChange && onValueChange(e);

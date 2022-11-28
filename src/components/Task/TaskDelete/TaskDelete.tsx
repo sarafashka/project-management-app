@@ -48,7 +48,7 @@ const TaskDelete: React.FC<Props> = (props) => {
 
       <Modal kind="confirmation" onClose={closeModal} isOpen={isOpen}>
         <ConfirmationModal
-          entity="column"
+          entity="task"
           value={title}
           onConfirm={handleClick}
           onCancel={closeModal}

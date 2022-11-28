@@ -4,14 +4,15 @@ import Button from 'components/Button/Button';
 
 import styles from './ConfirmationModal.module.scss';
 import { OpenModalEvent } from 'types/types';
+import { useTranslation } from 'react-i18next';
 
 const { confirmation, attributeValue, container, content, btn } = styles;
 
 type ConfirmationModalProps = {
   entity: 'user' | 'board' | 'column' | 'task';
   value?: string;
-  onCancel: (event: OpenModalEvent) => void;
-  onConfirm: () => void;
+  onCancel: (event?: OpenModalEvent) => void;
+  onConfirm: (event?: OpenModalEvent) => void;
 };
 
 const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
@@ -20,24 +21,29 @@ const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
   onCancel,
   onConfirm,
 }) => {
+  const { t } = useTranslation('translation');
+
   const text =
     entity === 'user' ? (
-      'your account'
+      t('editingModal.your-account')
     ) : (
       <>
-        {entity} with title <span className={attributeValue}>{value}</span>
+        {t(`editingModal.${entity}`)} {t('editingModal.with-title')}{' '}
+        <span className={attributeValue}>{value}</span>?
       </>
     );
 
   return (
     <div className={confirmation}>
-      <p className={content}>Confirm delete {text}</p>
+      <p className={content}>
+        {t('editingModal.confirm-delete')} {text}
+      </p>
       <div className={container}>
         <Button kind="cancel" className={btn} onClick={onCancel}>
-          Cancel
+          {t('button.cancel')}
         </Button>
         <Button kind="confirm" className={btn} onClick={onConfirm}>
-          Confirm
+          {t('button.confirm')}
         </Button>
       </div>
     </div>

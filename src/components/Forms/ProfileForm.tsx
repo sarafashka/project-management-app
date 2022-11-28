@@ -4,7 +4,6 @@ import Input from '../Input/Input';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
 import Button from '../Button/Button';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
-import { loginOptions, nameOptions, passwordOptions } from './formInputOptions';
 import { useAppDispatch, useAppSelector } from '../../hooks/reduxTypedHooks';
 import { deleteUser, logout, resetLoadingStatus, updateUser } from '../../store/userSlice';
 import { SignUpResponse } from '../../types/types';
@@ -18,6 +17,9 @@ import {
   selectUserLoadingStatus,
   selectUserUpdatingStatus,
 } from '../../store/selectors/selectors';
+import { useTranslation } from 'react-i18next';
+import { loginOptions, nameOptions, passwordOptions } from './inputOptions';
+import { getErrorMessage } from '../../utils/utils';
 
 const ProfileForm = () => {
   const {
@@ -26,6 +28,7 @@ const ProfileForm = () => {
     formState: { errors },
   } = useForm();
 
+  const { t, i18n } = useTranslation('translation');
   const user = useAppSelector(selectUser);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -33,6 +36,11 @@ const ProfileForm = () => {
   const userUpdatingStatus = useAppSelector(selectUserUpdatingStatus);
   const [errorMessage, setErrorMessage] = useState<string>();
   const [isModalOpened, setIsModalOpened] = useState<boolean>(false);
+  const [lang, setLang] = useState<string>(i18n.language);
+
+  i18n.on('languageChanged', () => {
+    setLang(i18n.language);
+  });
 
   const isLoading = userLoadingStatus === 'loading' || userUpdatingStatus === 'loading';
 
@@ -77,22 +85,32 @@ const ProfileForm = () => {
   return (
     <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
       <Input
-        label="Enter your name:"
+        label={t('auth.form.enterYourName')}
         defaultValue={user.name}
         reactHookFormProps={nameInputParams}
       />
-      {errors.name && <ErrorMessage>{errors.name.message as string}</ErrorMessage>}
+      {errors.name && (
+        <ErrorMessage>{getErrorMessage(errors.name.message as string, lang)}</ErrorMessage>
+      )}
       <Input
-        label="Enter your login:"
+        label={t('auth.form.enterLogin')}
         defaultValue={user.login}
         reactHookFormProps={loginInputParams}
       />
-      {errors.login && <ErrorMessage>{errors.login.message as string}</ErrorMessage>}
-      <Input label="Choose password:" type="password" reactHookFormProps={passwordInputParams} />
-      {errors.password && <ErrorMessage>{errors.password.message as string}</ErrorMessage>}
+      {errors.login && (
+        <ErrorMessage>{getErrorMessage(errors.login.message as string, lang)}</ErrorMessage>
+      )}
+      <Input
+        label={t('auth.form.choosePassword')}
+        type="password"
+        reactHookFormProps={passwordInputParams}
+      />
+      {errors.password && (
+        <ErrorMessage>{getErrorMessage(errors.password.message as string, lang)}</ErrorMessage>
+      )}
       <div className={styles.buttons}>
         <Button className={styles.sign} type="submit" disabled={isLoading}>
-          Update profile
+          {t('profile.button.update')}
         </Button>
         <Button
           className={styles.back}
@@ -100,7 +118,7 @@ const ProfileForm = () => {
           onClick={handleLogoutClick}
           disabled={isLoading}
         >
-          Logout
+          {t('profile.button.logout')}
         </Button>
         <Button
           className={styles.delete}
@@ -110,14 +128,16 @@ const ProfileForm = () => {
           }}
           disabled={isLoading}
         >
-          Delete user
+          {t('profile.button.delete')}
         </Button>
       </div>
       {isLoading && <Loader />}
       {(userLoadingStatus === 'failed' || userUpdatingStatus === 'failed') && (
-        <ErrorMessage>{errorMessage}</ErrorMessage>
+        <ErrorMessage>{getErrorMessage(errorMessage, lang)}</ErrorMessage>
       )}
-      {userUpdatingStatus === 'succeeded' && <ErrorMessage>User data updated</ErrorMessage>}
+      {userUpdatingStatus === 'succeeded' && (
+        <ErrorMessage>{t('profile.message.updated')}</ErrorMessage>
+      )}
       <Modal
         kind={'confirmation'}
         onClose={() => {
@@ -125,7 +145,7 @@ const ProfileForm = () => {
         }}
         isOpen={isModalOpened}
       >
-        <p className={modalStyles.content}>WARNING! Your profile will be permanently deleted!</p>
+        <p className={modalStyles.content}>{t('profile.message.warning')}</p>
         <ConfirmationModal
           entity="user"
           onCancel={() => {

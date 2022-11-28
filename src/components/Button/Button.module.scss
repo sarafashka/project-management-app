@@ -144,10 +144,24 @@
   }
 }
 
-.btnIcon {
+.wrapperIcon {
   display: flex;
   align-items: center;
   justify-content: flex-end;
   max-width: 16px;
   max-height: 16px;
+}
+
+
+.deleteBtn, 
+.edit {
+  display: block;
+  padding: 0;
+  width: max-content;
+
+  & .wrapperIcon {
+    max-width: max-content;
+    max-height: 20px;
+    height: 20px;
+  }
 }

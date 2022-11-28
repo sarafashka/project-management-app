@@ -1,0 +1,24 @@
+{
+	"button": {
+		"main-page": "Go to Main Page",
+		"signIn": "Sign In",
+		"signOut": "Sign Out",
+		"signUp": "Sign Up"
+	},
+	"drag-text": "Use the Drag and Drop function to sort your projects and tasks in the most intuitive, quickest way.",
+	"drag-title": "Drag and Drop management",
+	"evgeniia": "Header and footer development. Main page. Modal windows. Creating boards. Search",
+	"hero-text": "Monitoring your personal and all team task more easily with us. Collaborate, manage projects, and reach new productivity peaks.",
+	"hero-title": "RSSchool",
+	"hero-title (2)": "Project Management",
+	"hero-title (3)": "System",
+	"ivan": "Environment setup. Routing. Authorization. Profile editing. Welcome page. Localization",
+	"nataly": "Project Management. Design selection. Development of boards, columns, tasks. Drag-n-drop.",
+	"team": "Our team",
+	"try-item1": "Collaborate, manage projects, and reach new productivity peaks",
+	"try-item2": "Manage your boards using Drag-n-Drop",
+	"try-item3": "You can specify additional info in task description",
+	"try-item4": "Convenient search among the list of all your projects",
+	"try-item5": "Unlimited boards, columns and tasks for all registered users",
+	"try-title": "Try Project Management App Now!"
+}

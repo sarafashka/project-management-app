@@ -2,6 +2,7 @@
 @import '../../styles/mixins';
 
 .card {
+  position: relative;
   width: 100%;
   height: 320px;
   padding: 3.28%;
@@ -96,10 +97,10 @@
   }
 }
 
-.deleteBtn {
-  width: max-content;
-  flex-grow: 0;
-  padding: 10px;
-  background-color: $primary;
-  color: $btn-text;
+.btnContainer {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  display: flex;
+  gap: 12px;
 }

@@ -2,6 +2,7 @@ import Button from 'components/Button/Button';
 import React from 'react';
 import { useState } from 'react';
 import styles from './ColumnTitle.module.scss';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
   title: string;
@@ -11,6 +12,7 @@ type Props = {
 const ColumnTitle: React.FC<Props> = (columnTitle) => {
   const [title, setTitle] = useState(columnTitle.title);
   const [isEdited, setIsEdited] = useState(false);
+  const { t } = useTranslation('translation');
 
   const clickSubmit = () => {
     columnTitle.submit(title);
@@ -43,10 +45,10 @@ const ColumnTitle: React.FC<Props> = (columnTitle) => {
       {isEdited && (
         <div className={styles.buttons}>
           <Button type="button" className={styles.cancel} onClick={() => clickCancel()}>
-            cancel
+            {t('button.cancel')}
           </Button>
           <Button type="submit" className={styles.submit} onClick={() => clickSubmit()}>
-            submit
+            {t('button.submit')}
           </Button>
         </div>
       )}

@@ -1,5 +1,5 @@
 import Endpoint from 'constants/endpoints';
-import { BoardData, CreateBoardData, GetBoardByIdData } from 'types/types';
+import { BoardData, UpdateBoardData, CreateBoardData, GetBoardByIdData } from 'types/types';
 
 import axiosApiInstance from './axiosApiInstance';
 
@@ -28,8 +28,8 @@ const boardsService = {
     return data;
   },
 
-  async updateBoard({ id, ...boardData }: BoardData): Promise<BoardData> {
-    const { data } = await axiosApiInstance.put(`${BOARDS}/${id}`, boardData);
+  async updateBoard({ id, body }: UpdateBoardData): Promise<BoardData> {
+    const { data } = await axiosApiInstance.put(`${BOARDS}/${id}`, body);
 
     return data;
   },

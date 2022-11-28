@@ -159,13 +159,19 @@ export type TaskCreated = Omit<Task, 'order' | 'boardId' | 'columnId'>;
 export type TasksInColumn = Omit<Task, 'boardId' | 'columnId'>;
 export type OpenModalEvent = React.MouseEvent<HTMLButtonElement | HTMLDivElement>;
 
-export interface BoardData {
+export interface BoardData extends CreateBoardData {
   id: string;
-  title: string;
-  description: string;
 }
 
-export type CreateBoardData = Omit<BoardData, 'id'>;
+export interface UpdateBoardData {
+  id: string;
+  body: CreateBoardData;
+}
+
+export type CreateBoardData = {
+  title: string;
+  description: string;
+};
 
 export interface FileData {
   filename: string;

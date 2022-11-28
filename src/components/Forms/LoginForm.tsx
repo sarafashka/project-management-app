@@ -10,6 +10,8 @@ import { useNavigate } from 'react-router-dom';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
 import Loader from '../Loader';
 import { selectLoginStatus, selectUserLoadingStatus } from '../../store/selectors/selectors';
+import { useTranslation } from 'react-i18next';
+import { getErrorMessage } from '../../utils/utils';
 
 const LoginForm: React.FC = () => {
   const {
@@ -19,17 +21,24 @@ const LoginForm: React.FC = () => {
     reset,
   } = useForm();
 
+  const { t, i18n } = useTranslation('translation', { keyPrefix: 'auth' });
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const loginStatus = useAppSelector(selectLoginStatus);
   const userLoadingStatus = useAppSelector(selectUserLoadingStatus);
   const [errorMessage, setErrorMessage] = useState<string>();
+  const [lang, setLang] = useState<string>(i18n.language);
+
+  i18n.on('languageChanged', () => {
+    setLang(i18n.language);
+  });
 
   const loginInputParams = {
     ...register('login', {
       required: 'Login is required',
     }),
   };
+
   const passwordInputParams = {
     ...register('password', {
       required: 'Password is required',
@@ -54,10 +63,18 @@ const LoginForm: React.FC = () => {
 
   return (
     <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
-      <Input label="Enter login:" reactHookFormProps={loginInputParams} />
-      {errors.login && <ErrorMessage>{errors.login.message as string}</ErrorMessage>}
-      <Input label="Enter password:" type="password" reactHookFormProps={passwordInputParams} />
-      {errors.password && <ErrorMessage>{errors.password.message as string}</ErrorMessage>}
+      <Input label={t('form.enterLogin')} reactHookFormProps={loginInputParams} />
+      {errors.login && (
+        <ErrorMessage>{getErrorMessage(errors.login.message as string, lang)}</ErrorMessage>
+      )}
+      <Input
+        label={t('form.enterPassword')}
+        type="password"
+        reactHookFormProps={passwordInputParams}
+      />
+      {errors.password && (
+        <ErrorMessage>{getErrorMessage(errors.password.message as string, lang)}</ErrorMessage>
+      )}
       <div className={styles.buttons}>
         <Button
           className={styles.back}
@@ -66,15 +83,15 @@ const LoginForm: React.FC = () => {
             navigate('/');
           }}
         >
-          Back to Main
+          {t('button.back-to-main')}
         </Button>
         <Button className={styles.sign} type="submit">
-          Sign In
+          {t('button.signIn')}
         </Button>
       </div>
       {(loginStatus === 'loading' || userLoadingStatus === 'loading') && <Loader />}
       {(loginStatus === 'failed' || userLoadingStatus === 'failed') && (
-        <ErrorMessage>{errorMessage}</ErrorMessage>
+        <ErrorMessage>{getErrorMessage(errorMessage, lang)}</ErrorMessage>
       )}
     </form>
   );

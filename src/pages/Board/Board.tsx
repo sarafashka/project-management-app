@@ -18,10 +18,13 @@ import {
 } from 'types/types';
 import { findColumn, findTask } from 'utils/utils';
 import { updateOrderColumn } from 'store/taskSlice/columnThunk';
+import { useTranslation } from 'react-i18next';
 
 const Board: React.FC = () => {
   const navigate = useNavigate();
   const params = useParams();
+  const { t } = useTranslation('translation', { keyPrefix: 'board' });
+
   const dispatch = useAppDispatch();
 
   const boardId = params.boardId as string;
@@ -113,9 +116,9 @@ const Board: React.FC = () => {
         <CreateColumn boardId={id} />
       </div>
       <Button className={styles.allBoards} onClick={goToBoards}>
-        &#8592; All boards
+        &#8592; {t('all-boards')}
       </Button>
-      <div>{columns.length === 0 && 'Add new column'}</div>
+      <div>{columns.length === 0 && t('add-column')}</div>
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId="columns" direction="horizontal" type="column">
           {(provided) => (

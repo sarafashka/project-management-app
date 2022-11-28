@@ -6,6 +6,7 @@ import { DataFromEditForm, OpenModalEvent } from 'types/types';
 import Modal from 'components/Modal';
 import EditingModal from 'components/Modal/EditingModal';
 import { createTask } from 'store/taskSlice/taskThunk';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
   columnId: string;
@@ -16,6 +17,7 @@ type Props = {
 const ColumnAddTask: React.FC<Props> = (column) => {
   const [isOpen, setIsOpen] = useState(false);
   const { columnId, userId, boardId } = column;
+  const { t } = useTranslation('translation', { keyPrefix: 'board' });
   const dispatch = useAppDispatch();
 
   const handleClick = (formData: DataFromEditForm) => {
@@ -45,7 +47,7 @@ const ColumnAddTask: React.FC<Props> = (column) => {
   return (
     <>
       <Button className={styles.newTask} onClick={openModal}>
-        + Add a task
+        + {t('add-task')}
       </Button>
 
       <Modal kind="confirmation" onClose={closeModal} isOpen={isOpen}>

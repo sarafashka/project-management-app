@@ -8,9 +8,11 @@ import { registerUser } from '../../store/authSlice';
 import { NewUser } from '../../types/types';
 import { useNavigate } from 'react-router-dom';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
-import { loginOptions, nameOptions, passwordOptions } from './formInputOptions';
 import Loader from '../Loader';
 import { selectLoginStatus, selectRegisterStatus } from '../../store/selectors/selectors';
+import { useTranslation } from 'react-i18next';
+import { getErrorMessage } from '../../utils/utils';
+import { loginOptions, nameOptions, passwordOptions } from './inputOptions';
 
 const RegisterForm: React.FC = () => {
   const {
@@ -19,15 +21,22 @@ const RegisterForm: React.FC = () => {
     formState: { errors },
   } = useForm();
 
+  const { t, i18n } = useTranslation('translation', { keyPrefix: 'auth' });
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const registerStatus = useAppSelector(selectRegisterStatus);
   const loginStatus = useAppSelector(selectLoginStatus);
   const [errorMessage, setErrorMessage] = useState<string>();
+  const [lang, setLang] = useState<string>(i18n.language);
+
+  i18n.on('languageChanged', () => {
+    setLang(i18n.language);
+  });
 
   const nameInputParams = {
     ...register('name', nameOptions),
   };
+
   const loginInputParams = {
     ...register('login', loginOptions),
   };
@@ -47,12 +56,22 @@ const RegisterForm: React.FC = () => {
 
   return (
     <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
-      <Input label="Enter your name:" reactHookFormProps={nameInputParams} />
-      {errors.name && <ErrorMessage>{errors.name.message as string}</ErrorMessage>}
-      <Input label="Enter your login:" reactHookFormProps={loginInputParams} />
-      {errors.login && <ErrorMessage>{errors.login.message as string}</ErrorMessage>}
-      <Input label="Choose password:" type="password" reactHookFormProps={passwordInputParams} />
-      {errors.password && <ErrorMessage>{errors.password.message as string}</ErrorMessage>}
+      <Input label={t('form.enterYourName')} reactHookFormProps={nameInputParams} />
+      {errors.name && (
+        <ErrorMessage>{getErrorMessage(errors.name.message as string, lang)}</ErrorMessage>
+      )}
+      <Input label={t('form.enterLogin')} reactHookFormProps={loginInputParams} />
+      {errors.login && (
+        <ErrorMessage>{getErrorMessage(errors.login.message as string, lang)}</ErrorMessage>
+      )}
+      <Input
+        label={t('form.choosePassword')}
+        type="password"
+        reactHookFormProps={passwordInputParams}
+      />
+      {errors.password && (
+        <ErrorMessage>{getErrorMessage(errors.password.message as string, lang)}</ErrorMessage>
+      )}
       <div className={styles.buttons}>
         <Button
           className={styles.back}
@@ -61,14 +80,16 @@ const RegisterForm: React.FC = () => {
             navigate('/');
           }}
         >
-          Back to Main
+          {t('button.back-to-main')}
         </Button>
         <Button className={styles.sign} type="submit">
-          Sign Up
+          {t('button.signUp')}
         </Button>
       </div>
       {registerStatus === 'loading' && <Loader />}
-      {registerStatus === 'failed' && <ErrorMessage>{errorMessage}</ErrorMessage>}
+      {registerStatus === 'failed' && (
+        <ErrorMessage>{getErrorMessage(errorMessage, lang)}</ErrorMessage>
+      )}
       {loginStatus === 'loading' && <p className={styles.loading}>Loading...</p>}
     </form>
   );

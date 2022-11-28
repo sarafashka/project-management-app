@@ -1,7 +1,8 @@
 import React, { Component, ErrorInfo, ReactNode } from 'react';
 import styles from './ErrorBoundary.module.scss';
+import { withTranslation, WithTranslation } from 'react-i18next';
 
-interface Props {
+interface Props extends WithTranslation {
   children?: ReactNode;
 }
 
@@ -26,8 +27,8 @@ class ErrorBoundary extends Component<Props, State> {
     if (this.state.hasError) {
       return (
         <div className={styles.errorBoundary}>
-          <h1>Oops... Something went wrong :(</h1>
-          <a href="/">To main page</a>
+          <h1>{this.props.t('error404.oops')}</h1>
+          <a href="/">{this.props.t('error404.to-welcome-page')}</a>
         </div>
       );
     }
@@ -36,4 +37,4 @@ class ErrorBoundary extends Component<Props, State> {
   }
 }
 
-export default ErrorBoundary;
+export default withTranslation()(ErrorBoundary);

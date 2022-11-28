@@ -5,6 +5,7 @@ import classNames from 'classnames';
 import Button from 'components/Button/Button';
 
 import styles from './Modal.module.scss';
+import { OpenModalEvent } from 'types/types';
 
 const { overlay, popup, closeBtn, container, openModal, closeModal } = styles;
 
@@ -14,7 +15,7 @@ type ModalProps = {
   className?: string;
   children?: React.ReactNode;
   kind?: 'form' | 'confirmation' | 'dropDown' | 'editing';
-  onClose?: () => void;
+  onClose?: (e: OpenModalEvent) => void;
   onCloseByScroll?: () => void;
   onCloseByDocument?: (e: Event) => void;
   isOpen: boolean;
@@ -54,11 +55,11 @@ const Modal: React.FC<ModalProps> = ({
   }, [current, isOpen]);
 
   useEffect(() => {
-    const handleCloseByScroll = () => {
-      isOpen && window.scrollY > 0 && onCloseByScroll?.();
-    };
-
     if (kind === 'dropDown') {
+      const handleCloseByScroll = () => {
+        isOpen && window.scrollY > 0 && onCloseByScroll?.();
+      };
+
       window.addEventListener('scroll', handleCloseByScroll);
       onCloseByDocument && document.body.addEventListener('click', onCloseByDocument);
 

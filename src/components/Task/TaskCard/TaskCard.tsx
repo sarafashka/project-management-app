@@ -10,6 +10,7 @@ import Modal from 'components/Modal';
 import TaskDelete from '../TaskDelete';
 import EditingModal from 'components/Modal/EditingModal';
 import { Draggable } from 'react-beautiful-dnd';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
   taskId: string;
@@ -20,6 +21,7 @@ type Props = {
 const TaskCard: React.FC<Props> = (props) => {
   const { taskId, columnId, index } = props;
   const [isOpen, setIsOpen] = useState(false);
+  const { t } = useTranslation('translation', { keyPrefix: 'board' });
 
   const dispatch = useAppDispatch();
   const user = useAppSelector(selectUser);
@@ -75,7 +77,7 @@ const TaskCard: React.FC<Props> = (props) => {
               </div>
             </div>
             <div className={styles.description}>{currentTask?.description}</div>
-            {isOwner() && <div className={styles.owner}>My task</div>}
+            {isOwner() && <div className={styles.owner}>{t('my-task')}</div>}
           </li>
         )}
       </Draggable>

@@ -10,11 +10,25 @@ import { resetBoards, setSearchValue, setQueryParam } from 'store/boardsSlice/bo
 import SearchBar from 'components/SearchBar';
 import BoardCard from 'components/BoardCard';
 import Loader from 'components/Loader';
+import Message from 'components/Message';
 import { getAllBoardsWithParamsAction } from 'store/boardsSlice/boardsThunk';
 
 import styles from './Main.module.scss';
 
 const { container, list, item, searchBar } = styles;
+
+const messages = {
+  true: {
+    title: 'Sorry!',
+    message: <>Nothing was found for your query. Try to search another term.</>,
+  },
+  false: {
+    title: 'Ooops!',
+    message: (
+      <>There is no boards yet. For beginning, create one with &apos;New board&apos; button!</>
+    ),
+  },
+};
 
 const Main: React.FC = () => {
   const { boards, isLoaded, error, searchValue, queryParam } = useAppSelector(selectBoards);
@@ -44,7 +58,7 @@ const Main: React.FC = () => {
       <SearchBar
         onSubmit={handleSearchSubmit}
         className={searchBar}
-        placeholder="Search by board title or description"
+        placeholder="Search by board title or description…"
         value={searchValue}
         saveSearchValue={handleSearchSave}
       />
@@ -62,6 +76,11 @@ const Main: React.FC = () => {
             </li>
           ))}
         </ul>
+      )}
+      {boards.length === 0 && !error && !isLoaded && (
+        <Message title={messages[`${!!queryParam}`].title}>
+          {messages[`${!!queryParam}`].message}
+        </Message>
       )}
     </div>
   ) : (

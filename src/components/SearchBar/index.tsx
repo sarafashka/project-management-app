@@ -18,6 +18,7 @@ type SearchBarProps = {
   onSubmit: (data: string) => void;
   value: string;
   saveSearchValue: (value: string) => void;
+  resetSearch: () => void;
 };
 
 const SearchBar: React.FC<SearchBarProps> = ({
@@ -26,6 +27,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
   onSubmit,
   value,
   saveSearchValue,
+  resetSearch,
 }) => {
   const { register, handleSubmit, watch, setValue, setFocus, getValues } = useForm<SearchData>({
     defaultValues: { search: value },
@@ -37,8 +39,8 @@ const SearchBar: React.FC<SearchBarProps> = ({
   };
 
   const handleClear = () => {
-    setValue('search', '');
     setFocus('search', { shouldSelect: true });
+    resetSearch();
   };
 
   const submit = ({ search }: SearchData) => {

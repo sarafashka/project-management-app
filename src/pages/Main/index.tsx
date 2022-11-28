@@ -5,7 +5,12 @@ import { useAppSelector, useAppDispatch } from '../../hooks/reduxTypedHooks';
 
 import AppRoutes from '../../constants/routes';
 import { selectBoards } from '../../store/selectors/selectors';
-import { resetBoards, setSearchValue, setQueryParam } from 'store/boardsSlice/boardsSlice';
+import {
+  resetBoards,
+  setSearchValue,
+  setQueryParam,
+  resetSearch,
+} from 'store/boardsSlice/boardsSlice';
 
 import SearchBar from 'components/SearchBar';
 import BoardCard from 'components/BoardCard';
@@ -43,6 +48,10 @@ const Main: React.FC = () => {
     dispatch(setSearchValue(value));
   };
 
+  const handleResetSearch = () => {
+    dispatch(resetSearch());
+  };
+
   useEffect(() => {
     dispatch(
       getAllBoardsWithParamsAction(queryParam ? { titleOrDescriptionParam: queryParam } : undefined)
@@ -61,6 +70,7 @@ const Main: React.FC = () => {
         placeholder="Search by board title or description…"
         value={searchValue}
         saveSearchValue={handleSearchSave}
+        resetSearch={handleResetSearch}
       />
       {isLoaded && <Loader />}
       {error && (

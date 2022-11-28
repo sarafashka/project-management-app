@@ -9,6 +9,7 @@ import { OpenModalEvent, DataFromEditForm, RequestCreateColumn } from 'types/typ
 import styles from './Board.module.scss';
 import { getAllTasks } from 'store/taskSlice/taskThunk';
 import Loader from 'components/Loader';
+import { resetSearch } from 'store/boardsSlice/boardsSlice';
 import { resetTasksList } from 'store/taskSlice/taskSlice';
 import EditingModal from 'components/Modal/EditingModal';
 import Modal from 'components/Modal';
@@ -30,6 +31,7 @@ const Board: React.FC = () => {
   const goToBoards = () => {
     navigate('/boards/');
     dispatch(resetTasksList());
+    dispatch(resetSearch());
   };
 
   useEffect(() => {

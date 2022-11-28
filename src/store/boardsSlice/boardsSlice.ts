@@ -14,6 +14,7 @@ interface BoardsState {
   isLoaded: boolean;
   error: AxiosErrorData | null;
   currentBoardId: string;
+  queryParam: string;
   searchValue: string;
 }
 
@@ -22,6 +23,7 @@ const initialState: BoardsState = {
   isLoaded: false,
   error: null,
   currentBoardId: '',
+  queryParam: '',
   searchValue: '',
 };
 
@@ -43,8 +45,12 @@ export const boardsSlice = createSlice({
     setSearchValue: (state, { payload }: PayloadAction<string>) => {
       state.searchValue = payload;
     },
+    setQueryParam: (state, { payload }: PayloadAction<string>) => {
+      state.queryParam = payload;
+    },
     resetSearch: (state) => {
       state.searchValue = '';
+      state.queryParam = '';
     },
     resetBoards: (state) => {
       state.boards = [];
@@ -79,6 +85,7 @@ export const boardsSlice = createSlice({
   },
 });
 
-export const { selectBoard, resetBoards, setSearchValue, resetSearch } = boardsSlice.actions;
+export const { selectBoard, resetBoards, setSearchValue, resetSearch, setQueryParam } =
+  boardsSlice.actions;
 
 export default boardsSlice.reducer;

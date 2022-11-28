@@ -5,7 +5,7 @@ import { useAppSelector, useAppDispatch } from '../../hooks/reduxTypedHooks';
 
 import AppRoutes from '../../constants/routes';
 import { selectBoards } from '../../store/selectors/selectors';
-import { resetBoards, setSearchValue } from 'store/boardsSlice/boardsSlice';
+import { resetBoards, setSearchValue, setQueryParam } from 'store/boardsSlice/boardsSlice';
 
 import SearchBar from 'components/SearchBar';
 import BoardCard from 'components/BoardCard';
@@ -17,25 +17,27 @@ import styles from './Main.module.scss';
 const { container, list, item, searchBar } = styles;
 
 const Main: React.FC = () => {
-  const { boards, isLoaded, error, searchValue } = useAppSelector(selectBoards);
+  const { boards, isLoaded, error, searchValue, queryParam } = useAppSelector(selectBoards);
   const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    dispatch(getAllBoardsWithParamsAction());
-
-    return () => {
-      dispatch(resetBoards());
-    };
-  }, [dispatch]);
 
   const handleSearchSubmit = (query: string) => {
     const queryParams = query.trim();
-    dispatch(getAllBoardsWithParamsAction({ titleOrDescriptionParam: queryParams }));
+    dispatch(setQueryParam(queryParams));
   };
 
   const handleSearchSave = (value: string) => {
     dispatch(setSearchValue(value));
   };
+
+  useEffect(() => {
+    dispatch(
+      getAllBoardsWithParamsAction(queryParam ? { titleOrDescriptionParam: queryParam } : undefined)
+    );
+
+    return () => {
+      dispatch(resetBoards());
+    };
+  }, [dispatch, queryParam]);
 
   return useMatch(AppRoutes.BOARDS) ? (
     <div className={container}>

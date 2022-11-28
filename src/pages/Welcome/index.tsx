@@ -1,6 +1,5 @@
 import React from 'react';
 
-import styles from './Welcome.module.scss';
 import Button from '../../components/Button/Button';
 import { useNavigate } from 'react-router-dom';
 import tryImg from '../../assets/img/welcome-try.png';
@@ -8,6 +7,10 @@ import TeamMemberCard from '../../components/TeamMemberCard/TeamMemberCard';
 import dndimg from '../../assets/img/DnDtemp.png';
 import { authService } from '../../api/authService';
 import { useTranslation } from 'react-i18next';
+import { resetSearch } from 'store/boardsSlice/boardsSlice';
+import { useAppDispatch } from 'hooks/reduxTypedHooks';
+
+import styles from './Welcome.module.scss';
 
 const Welcome: React.FC = () => {
   const navigate = useNavigate();
@@ -36,6 +39,7 @@ const Welcome: React.FC = () => {
       role: 'Software Developer',
     },
   ];
+  const dispatch = useAppDispatch();
 
   return (
     <div className={styles.welcome}>
@@ -90,6 +94,7 @@ const Welcome: React.FC = () => {
                   className={styles.tryButton}
                   onClick={() => {
                     navigate('/boards');
+                    dispatch(resetSearch());
                   }}
                 >
                   {t('button.main-page')}

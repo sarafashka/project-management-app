@@ -7,7 +7,7 @@ import { CreateBoardData, DataFromEditForm } from 'types/types';
 import { useAppDispatch } from 'hooks/reduxTypedHooks';
 
 import { resetSearch } from 'store/boardsSlice/boardsSlice';
-import { createBoardAction, getAllBoardsWithParamsAction } from 'store/boardsSlice/boardsThunk';
+import { createBoardAction } from 'store/boardsSlice/boardsThunk';
 import { authService } from 'api/authService';
 import AppRoutes, { publicRoutes } from 'constants/routes';
 
@@ -49,7 +49,6 @@ const Header: React.FC<HeaderProps> = ({ className }) => {
       })
     );
     dispatch(resetSearch());
-    dispatch(getAllBoardsWithParamsAction());
     toggleModal();
   };
 

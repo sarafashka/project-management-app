@@ -8,6 +8,7 @@ import RSShoolIcon from 'components/Icons/RSSchoolIcon';
 import GitHubLinks from './GitHubLinks';
 
 import styles from './Footer.module.scss';
+import { useTranslation } from 'react-i18next';
 
 const { footer, container, column, icon } = styles;
 
@@ -16,6 +17,8 @@ type FooterProps = {
 };
 
 const Footer: React.FC<FooterProps> = ({ className }) => {
+  const { t } = useTranslation('translation', { keyPrefix: 'footer' });
+
   return (
     <footer className={classNames(footer, className)}>
       <div className={container}>
@@ -23,7 +26,7 @@ const Footer: React.FC<FooterProps> = ({ className }) => {
           <RSShoolIcon className={icon} />
         </a>
         <span className={column}>
-          Project
+          {t('project')}
           <a
             target="_blank"
             rel="noopener noreferrer"
@@ -33,7 +36,7 @@ const Footer: React.FC<FooterProps> = ({ className }) => {
           </a>
         </span>
         <span className={column}>
-          Developers
+          {t('developers')}
           <GitHubLinks contacts={ABOUT} />
         </span>
         © 2022

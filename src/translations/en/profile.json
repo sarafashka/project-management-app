@@ -1,0 +1,13 @@
+{
+	"button": {
+		"delete": "Delete user",
+		"logout": "Logout",
+		"update": "Update profile"
+	},
+	"edit-profile": "Edit your profile",
+	"hello": "Hello",
+	"message": {
+		"updated": "User data updated",
+		"warning": "WARNING! Your profile will be permanently deleted!"
+	}
+}

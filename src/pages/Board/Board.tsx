@@ -12,11 +12,13 @@ import Loader from 'components/Loader';
 import { resetTasksList } from 'store/taskSlice/taskSlice';
 import EditingModal from 'components/Modal/EditingModal';
 import Modal from 'components/Modal';
+import { useTranslation } from 'react-i18next';
 
 const Board: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
   const params = useParams();
+  const { t } = useTranslation('translation', { keyPrefix: 'board' });
 
   const dispatch = useAppDispatch();
   const board = useAppSelector(selectBoard);
@@ -69,9 +71,9 @@ const Board: React.FC = () => {
         <Button className={styles.button} type="button" onClick={openModal} kind="boardBtn" />
       </div>
       <Button className={styles.allBoards} onClick={goToBoards}>
-        &#8592; All boards
+        &#8592; {t('all-boards')}
       </Button>
-      <div>{columns.length === 0 && 'Add new column'}</div>
+      <div>{columns.length === 0 && t('add-column')}</div>
 
       <div className={styles.list}>
         {columns.map((item) => (

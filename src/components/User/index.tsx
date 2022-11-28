@@ -14,6 +14,7 @@ import { DropDownIcon, SignOutIcon, EditIcon } from 'components/Icons/Icons';
 import UserActions from './UserActions';
 
 import styles from './User.module.scss';
+import { useTranslation } from 'react-i18next';
 
 const { avatar, btn, img, dropDownBtn, open, btnIcon } = styles;
 
@@ -27,6 +28,8 @@ const User: React.FC<UserProps> = ({ className }) => {
 
   const [isOpen, setIsOpen] = useState(false);
   const [coords, setCoords] = useState({ top: 0, right: 0 });
+
+  const { t } = useTranslation('translation');
 
   const updateCoords = (btn: HTMLDivElement | null) => {
     if (btn) {
@@ -71,16 +74,16 @@ const User: React.FC<UserProps> = ({ className }) => {
 
   const userActions = [
     {
-      name: 'Edit profile',
+      name: t('profile.edit-profile'),
       Icon: EditIcon,
       onClick: toggleModal,
       path: AppRoutes.PROFILE,
     },
     {
-      name: 'Sign Out',
+      name: t('welcome.button.signOut'),
       Icon: SignOutIcon,
       onClick: handleSignOut,
-      path: AppRoutes.AUTH,
+      path: AppRoutes.WELCOME,
     },
   ];
 

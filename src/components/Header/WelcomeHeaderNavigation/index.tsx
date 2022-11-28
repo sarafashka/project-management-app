@@ -9,6 +9,7 @@ import Button from 'components/Button/Button';
 import { ArrowRightIcon, SignInIcon, SignUpIcon } from 'components/Icons/Icons';
 
 import styles from './WelcomeHeaderNavigation.module.scss';
+import { useTranslation } from 'react-i18next';
 
 const { container, icon, iconContent, linkBtn, mainIcon } = styles;
 
@@ -16,31 +17,32 @@ type HeaderProps = {
   className?: string;
 };
 
-const buttons = {
-  false: [
-    {
-      link: { to: AppRoutes.AUTH },
-      btn: { name: 'Sign In', icon: <SignInIcon contentClassName={iconContent} /> },
-    },
-    {
-      link: { to: AppRoutes.AUTH, state: 'reg' },
-      btn: { name: 'Sign Up', icon: <SignUpIcon contentClassName={iconContent} /> },
-    },
-  ],
-  true: [
-    {
-      link: { to: AppRoutes.BOARDS },
-      btn: {
-        name: 'Go to Main Page',
-        icon: <ArrowRightIcon className={icon} />,
-        iconClassName: mainIcon,
-      },
-    },
-  ],
-};
-
 const WelcomeHeaderNavigation: React.FC<HeaderProps> = ({ className }) => {
   const { pathname } = useLocation();
+  const { t } = useTranslation('translation', { keyPrefix: 'welcome' });
+
+  const buttons = {
+    false: [
+      {
+        link: { to: AppRoutes.AUTH },
+        btn: { name: t('button.signIn'), icon: <SignInIcon contentClassName={iconContent} /> },
+      },
+      {
+        link: { to: AppRoutes.AUTH, state: 'reg' },
+        btn: { name: t('button.signUp'), icon: <SignUpIcon contentClassName={iconContent} /> },
+      },
+    ],
+    true: [
+      {
+        link: { to: AppRoutes.BOARDS },
+        btn: {
+          name: t('button.main-page'),
+          icon: <ArrowRightIcon className={icon} />,
+          iconClassName: mainIcon,
+        },
+      },
+    ],
+  };
 
   return (
     <div className={classNames(container, className)}>

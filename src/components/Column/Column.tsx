@@ -11,6 +11,7 @@ import { selectUser } from 'store/selectors/selectors';
 import { selectTasksList } from 'store/selectors/selectors';
 import { findColumn } from 'utils/utils';
 import ColumnDelete from './ColumnDelete';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
   id: string;
@@ -23,6 +24,7 @@ const Column: React.FC<Props> = (column) => {
   const board = useAppSelector(selectTasksList);
   const currentColumn = findColumn(board, id) as GetBoardByIdColumnData;
   const { title, tasks } = currentColumn;
+  const { t } = useTranslation('translation', { keyPrefix: 'board' });
 
   const handleSubmit = (title: string) => {
     if (title) {
@@ -58,7 +60,7 @@ const Column: React.FC<Props> = (column) => {
       </div>
       {<Task columnId={id} />}
       <Button className={styles.newTask} onClick={() => dispatch(createTask(dataForCreateTask))}>
-        + Add a task
+        + {t('add-task')}
       </Button>
     </div>
   );

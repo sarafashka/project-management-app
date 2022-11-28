@@ -5,6 +5,7 @@ import { OpenModalEvent, DataFromEditForm } from 'types/types';
 import styles from './EditingModal.module.scss';
 import EditingForm from 'components/Forms/EditingForm';
 import EditingFormShort from 'components/Forms/EditingFormShort';
+import { useTranslation } from 'react-i18next';
 
 const { Editing, content } = styles;
 
@@ -33,10 +34,13 @@ const EditingModal: React.FC<EditingModalProps> = ({
     currentValue,
     operation,
   };
+
+  const { t } = useTranslation('translation', { keyPrefix: 'editingModal' });
+
   return (
     <div className={Editing}>
       <p className={content}>
-        {operation} {entity}
+        {t(`${operation}`)} {t(`${entity}`)}
       </p>
       {entity === 'column' ? <EditingFormShort {...props} /> : <EditingForm {...props} />}
     </div>

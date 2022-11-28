@@ -15,7 +15,6 @@ type EditingModalProps = {
   value?: string;
   onCancel: (event?: OpenModalEvent) => void;
   onConfirm: (data: DataFromEditForm) => void;
-  isOpen: boolean;
   currentValue?: DataFromEditForm;
 };
 
@@ -24,13 +23,11 @@ const EditingModal: React.FC<EditingModalProps> = ({
   operation,
   onCancel,
   onConfirm,
-  isOpen,
   currentValue,
 }) => {
   const props = {
     onConfirm,
     onCancel,
-    isOpen,
     currentValue,
     operation,
   };

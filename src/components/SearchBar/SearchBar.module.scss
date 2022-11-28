@@ -1,0 +1,67 @@
+@import '../../styles/constants';
+@import '../../styles/mixins';
+
+.form {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 450px;
+  margin: 0 auto;
+}
+
+.inputWrapper {
+  width: 100%;
+}
+
+.input {
+  padding-right: 68px;
+  background-color: transparent;
+  border: 2px solid $text;
+
+  &:focus {
+    border-color: $primary;
+  }
+}
+
+.btn {
+  position: absolute;
+  right: 1.5px;
+  height: calc(100% - 4px);
+
+  background: $hover-user-actions;
+
+  &:hover {
+    & .icon {
+      fill: $primary;
+    }
+  }
+}
+
+.iconContainer {
+  max-width: 20px;
+  max-height: 20px;
+}
+
+.clear {
+  position: absolute;
+  right: 60px;
+  height: 21px;
+  width: 21px;
+  
+  @include big-tablet {
+    min-width: 21px;
+    min-height: 21px;
+  }
+
+  &::after,
+  &::before {
+    height: 10%;
+    background-color: $text;
+  }
+
+  &:hover::before,
+  &:hover::after {
+    background: $primary;
+  }
+}

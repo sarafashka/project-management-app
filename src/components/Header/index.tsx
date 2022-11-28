@@ -6,6 +6,7 @@ import { CreateBoardData, DataFromEditForm } from 'types/types';
 
 import { useAppDispatch } from 'hooks/reduxTypedHooks';
 
+import { resetSearch } from 'store/boardsSlice/boardsSlice';
 import { createBoardAction } from 'store/boardsSlice/boardsThunk';
 import { authService } from 'api/authService';
 import AppRoutes, { publicRoutes } from 'constants/routes';
@@ -47,6 +48,7 @@ const Header: React.FC<HeaderProps> = ({ className }) => {
         ...(formData as CreateBoardData),
       })
     );
+    dispatch(resetSearch());
     toggleModal();
   };
 
@@ -83,7 +85,6 @@ const Header: React.FC<HeaderProps> = ({ className }) => {
           onConfirm={handleCreateClick}
           onCancel={toggleModal}
           operation={'create'}
-          isOpen={false}
         />
       </Modal>
     </>

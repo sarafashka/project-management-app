@@ -1,34 +1,77 @@
 import React, { useEffect } from 'react';
+import { Outlet, useMatch } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 import { useAppSelector, useAppDispatch } from '../../hooks/reduxTypedHooks';
 
+import AppRoutes from '../../constants/routes';
 import { selectBoards } from '../../store/selectors/selectors';
-import { resetBoards } from 'store/boardsSlice/boardsSlice';
+import {
+  resetBoards,
+  setSearchValue,
+  setQueryParam,
+  resetSearch,
+} from 'store/boardsSlice/boardsSlice';
 
+import SearchBar from 'components/SearchBar';
 import BoardCard from 'components/BoardCard';
 import Loader from 'components/Loader';
-import { getAllBoardsAction } from 'store/boardsSlice/boardsThunk';
+import Message from 'components/Message';
+import { getAllBoardsWithParamsAction } from 'store/boardsSlice/boardsThunk';
 
 import styles from './Main.module.scss';
-import { Outlet, useMatch } from 'react-router-dom';
-import AppRoutes from '../../constants/routes';
 
-const { container, list, item } = styles;
+const { container, list, item, searchBar } = styles;
 
 const Main: React.FC = () => {
-  const { boards, isLoaded, error } = useAppSelector(selectBoards);
+  const { t } = useTranslation('translation', { keyPrefix: 'main' });
+  const messages = {
+    true: {
+      title: t('messages.invalidSearchTitle'),
+      message: <>{t('messages.invalidSearchContent')}</>,
+    },
+    false: {
+      title: t('messages.emptyBoardsListTitle'),
+      message: <>{t('messages.emptyBoardsListContent')}</>,
+    },
+  };
+
+  const { boards, isLoaded, error, searchValue, queryParam } = useAppSelector(selectBoards);
   const dispatch = useAppDispatch();
 
+  const handleSearchSubmit = (query: string) => {
+    const queryParams = query.trim();
+    dispatch(setQueryParam(queryParams));
+  };
+
+  const handleSearchSave = (value: string) => {
+    dispatch(setSearchValue(value));
+  };
+
+  const handleResetSearch = () => {
+    dispatch(resetSearch());
+  };
+
   useEffect(() => {
-    dispatch(getAllBoardsAction());
+    dispatch(
+      getAllBoardsWithParamsAction(queryParam ? { titleOrDescriptionParam: queryParam } : undefined)
+    );
 
     return () => {
       dispatch(resetBoards());
     };
-  }, [dispatch]);
+  }, [dispatch, queryParam]);
 
   return useMatch(AppRoutes.BOARDS) ? (
     <div className={container}>
+      <SearchBar
+        onSubmit={handleSearchSubmit}
+        className={searchBar}
+        placeholder={t('searchPlaceholder') || ''}
+        value={searchValue}
+        saveSearchValue={handleSearchSave}
+        resetSearch={handleResetSearch}
+      />
       {isLoaded && <Loader />}
       {error && (
         <div>
@@ -43,6 +86,11 @@ const Main: React.FC = () => {
             </li>
           ))}
         </ul>
+      )}
+      {boards.length === 0 && !error && !isLoaded && (
+        <Message title={messages[`${!!queryParam}`].title}>
+          {messages[`${!!queryParam}`].message}
+        </Message>
       )}
     </div>
   ) : (

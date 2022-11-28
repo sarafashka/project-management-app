@@ -58,10 +58,6 @@ const Board: React.FC = () => {
     }
     if (type === 'column') {
       const currentColumn = findColumn(tasksList, draggableId) as GetBoardByIdColumnData;
-
-      columnsSorting.splice(source.index, 1);
-      columnsSorting.splice(destination.index, 0, currentColumn);
-
       const { order, title } = currentColumn;
       const distance = source.index - destination.index;
 

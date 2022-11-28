@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AxiosErrorData, GetBoardByIdTaskData, Task, TaskState } from 'types/types';
 import { findColumnIndex, findColumnTasks, findTaskIndex } from 'utils/utils';
-import { createColumn, deleteColumn, updateColumn } from './columnThunk';
+import { createColumn, deleteColumn, updateColumn, updateOrderColumn } from './columnThunk';
 import { createTask, deleteTask, getAllTasks, updateOrderTask, updateTask } from './taskThunk';
 
 const defaultTasksList = {
@@ -133,6 +133,14 @@ const taskSlice = createSlice({
         state.error = null;
       })
       .addCase(updateOrderTask.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.tasksList = action.payload;
+      })
+      .addCase(updateOrderColumn.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(updateOrderColumn.fulfilled, (state, action) => {
         state.isLoading = false;
         state.tasksList = action.payload;
       })

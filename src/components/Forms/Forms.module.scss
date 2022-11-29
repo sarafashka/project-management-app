@@ -11,6 +11,12 @@
   display: flex;
   justify-content: space-between;
   margin-top: 16px;
+
+  @include small-tablet {
+    gap: 15px 30px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
 }
 
 .sign,

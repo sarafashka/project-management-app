@@ -1,8 +1,10 @@
+@import '../../styles/mixins';
+
 .page {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 100vh;
+  min-height: 83vh;
 }
 
 .frame {
@@ -15,6 +17,11 @@
   background: #ffffff;
   box-shadow: 0 4.69041px 150.093px rgba(0, 0, 0, 0.16);
   gap: 48px;
+  margin: 20px;
+
+  @include small-tablet {
+    gap: 25px;
+  }
 }
 
 .buttons {
@@ -36,6 +43,10 @@
   border: 0;
   background: transparent;
   transition: 0.3s;
+
+  @include small-tablet {
+    font-size: 18px;
+  }
 }
 
 .deactivated {

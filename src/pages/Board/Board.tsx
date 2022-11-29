@@ -19,6 +19,7 @@ import {
 import { findColumn, findTask } from 'utils/utils';
 import { updateOrderColumn } from 'store/taskSlice/columnThunk';
 import { useTranslation } from 'react-i18next';
+import MemoizedColumn from 'components/Column';
 
 const Board: React.FC = () => {
   const navigate = useNavigate();
@@ -120,7 +121,7 @@ const Board: React.FC = () => {
           {(provided) => (
             <div className={styles.list} {...provided.droppableProps} ref={provided.innerRef}>
               {columnsSorting.map((item, index) => (
-                <Column key={item.id} id={item.id} index={index} />
+                <MemoizedColumn key={item.id} id={item.id} index={index} />
               ))}
               {provided.placeholder}
             </div>

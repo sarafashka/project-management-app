@@ -60,4 +60,5 @@ const Column: React.FC<Props> = (column) => {
   );
 };
 
-export default Column;
+const MemoizedColumn = React.memo(Column);
+export default MemoizedColumn;

@@ -2,7 +2,6 @@ import styles from './Board.module.scss';
 import React, { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from 'hooks/reduxTypedHooks';
-import Column from 'components/Column';
 import { selectBoard } from 'store/selectors/selectors';
 import Button from 'components/Button/Button';
 import { getAllTasks, updateOrderTask } from 'store/taskSlice/taskThunk';

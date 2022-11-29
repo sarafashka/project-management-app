@@ -1,13 +1,22 @@
 import Endpoint from 'constants/endpoints';
-import { BoardData, UpdateBoardData, CreateBoardData, GetBoardByIdData } from 'types/types';
+import {
+  BoardData,
+  UpdateBoardData,
+  CreateBoardData,
+  GetBoardByIdData,
+  BoardsSearchQueryParams,
+} from 'types/types';
+import { makeUrl } from 'utils/utils';
 
 import axiosApiInstance from './axiosApiInstance';
 
-const { BOARDS } = Endpoint;
+const { BOARDS, BOARDS_SEARCH } = Endpoint;
 
 const boardsService = {
-  async getAllBoards(): Promise<BoardData[]> {
-    const { status, data } = await axiosApiInstance.get(BOARDS);
+  async getAllBoardsWithParams(params?: BoardsSearchQueryParams): Promise<BoardData[]> {
+    const queryParams = params ? makeUrl(params) : '';
+
+    const { status, data } = await axiosApiInstance.get(`${BOARDS}${BOARDS_SEARCH}${queryParams}`);
 
     if (status === 200) {
       return data;

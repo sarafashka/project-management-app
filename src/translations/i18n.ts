@@ -21,6 +21,8 @@ import header_ru from './ru/header.json';
 import header_en from './en/header.json';
 import editingModal_ru from './ru/editingModal.json';
 import editingModal_en from './en/editingModal.json';
+import main_ru from './ru/main.json';
+import main_en from './en/main.json';
 
 i18n
   .use(LanguageDetector)
@@ -44,6 +46,7 @@ i18n
           editingForm: editingForm_en,
           header: header_en,
           editingModal: editingModal_en,
+          main: main_en,
         },
       },
       ru: {
@@ -58,6 +61,7 @@ i18n
           editingForm: editingForm_ru,
           header: header_ru,
           editingModal: editingModal_ru,
+          main: main_ru,
         },
       },
     },

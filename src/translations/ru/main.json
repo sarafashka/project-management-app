@@ -1,0 +1,9 @@
+{
+	"searchPlaceholder": "Поиск по названию или описанию доски…",
+  "messages": {
+    "invalidSearchTitle": "",
+    "invalidSearchContent": "По Вашему запросу ничего не найдено. Попробуйте ввести другое значение",
+    "emptyBoardsListTitle": "Упс!",
+    "emptyBoardsListContent": "Еще не создано ни одной доски. Для начала работы создайте доску с помощью кнопки 'Новая доска'!"
+  }
+}

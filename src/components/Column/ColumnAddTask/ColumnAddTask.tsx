@@ -56,7 +56,6 @@ const ColumnAddTask: React.FC<Props> = (column) => {
           onConfirm={handleClick}
           onCancel={closeModal}
           operation={'create'}
-          isOpen={isOpen}
         />
       </Modal>
     </>

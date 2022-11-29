@@ -1,4 +1,4 @@
-import { GetBoardByIdData } from 'types/types';
+import { BoardsSearchQueryParams, GetBoardByIdData } from 'types/types';
 import errorsTranslate from '../translations/errorsTranslate';
 
 export const findTask = (array: GetBoardByIdData, columnId: string, taskId: string) => {
@@ -29,4 +29,13 @@ export const getErrorMessage = (errorMessage: string | undefined, lang: string) 
   if (errorMessage) {
     return lang === 'en' ? errorMessage : errorsTranslate[errorMessage];
   }
+};
+
+export const makeUrl = (options: BoardsSearchQueryParams): string => {
+  const params = Object.entries(options).reduce(
+    (prev, [key, value]) => `${prev}${key}=${value}&`,
+    '?'
+  );
+
+  return params.slice(0, -1);
 };

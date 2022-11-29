@@ -201,3 +201,11 @@ export type DataFromEditForm = {
   title: string;
   description?: string;
 };
+
+export type SearchData = {
+  search: string;
+};
+
+export type BoardsSearchQueryParams = {
+  titleOrDescriptionParam: string;
+};

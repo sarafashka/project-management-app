@@ -1,10 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { type } from 'os';
 
 import { BoardData, AxiosErrorData } from '../../types/types';
 
 import {
-  getAllBoardsAction,
+  getAllBoardsWithParamsAction,
   createBoardAction,
   deleteBoardAction,
   updateBoardAction,
@@ -15,6 +14,8 @@ interface BoardsState {
   isLoaded: boolean;
   error: AxiosErrorData | null;
   currentBoardId: string;
+  queryParam: string;
+  searchValue: string;
 }
 
 const initialState: BoardsState = {
@@ -22,6 +23,8 @@ const initialState: BoardsState = {
   isLoaded: false,
   error: null,
   currentBoardId: '',
+  queryParam: '',
+  searchValue: '',
 };
 
 const isPending = (action: { type: string }) => {
@@ -39,13 +42,23 @@ export const boardsSlice = createSlice({
     selectBoard: (state, { payload }: PayloadAction<string>) => {
       state.currentBoardId = payload;
     },
+    setSearchValue: (state, { payload }: PayloadAction<string>) => {
+      state.searchValue = payload;
+    },
+    setQueryParam: (state, { payload }: PayloadAction<string>) => {
+      state.queryParam = payload;
+    },
+    resetSearch: (state) => {
+      state.searchValue = '';
+      state.queryParam = '';
+    },
     resetBoards: (state) => {
       state.boards = [];
     },
   },
   extraReducers: (builder) => {
     builder
-      .addCase(getAllBoardsAction.fulfilled, (state, { payload }) => {
+      .addCase(getAllBoardsWithParamsAction.fulfilled, (state, { payload }) => {
         state.isLoaded = false;
         state.boards = payload;
       })
@@ -72,6 +85,7 @@ export const boardsSlice = createSlice({
   },
 });
 
-export const { selectBoard, resetBoards } = boardsSlice.actions;
+export const { selectBoard, resetBoards, setSearchValue, resetSearch, setQueryParam } =
+  boardsSlice.actions;
 
 export default boardsSlice.reducer;

@@ -10,7 +10,6 @@ import { useTranslation } from 'react-i18next';
 type EditingFormProps = {
   onConfirm: (data: DataFromEditForm) => void;
   onCancel: (event: OpenModalEvent) => void;
-  isOpen: boolean;
   currentValue?: DataFromEditForm;
   operation: 'edit' | 'create';
 };
@@ -30,7 +29,7 @@ const EditingFormShort: React.FC<EditingFormProps> = (props) => {
 
   const { t } = useTranslation('translation');
 
-  const { onCancel, onConfirm, isOpen, currentValue, operation } = props;
+  const { onCancel, onConfirm, currentValue, operation } = props;
 
   const titleInputParams = {
     ...register('title', {
@@ -47,10 +46,6 @@ const EditingFormShort: React.FC<EditingFormProps> = (props) => {
   };
 
   useEffect(() => {
-    reset();
-  }, [isOpen, reset]);
-
-  useEffect(() => {
     if (currentValue?.title) {
       setValue('title', currentValue.title);
     }
@@ -59,6 +54,7 @@ const EditingFormShort: React.FC<EditingFormProps> = (props) => {
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     const dataFromEditForm = data as DataFromEditForm;
     onConfirm(dataFromEditForm);
+    reset();
   };
 
   return (

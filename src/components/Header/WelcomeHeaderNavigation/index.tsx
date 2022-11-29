@@ -10,6 +10,8 @@ import { ArrowRightIcon, SignInIcon, SignUpIcon } from 'components/Icons/Icons';
 
 import styles from './WelcomeHeaderNavigation.module.scss';
 import { useTranslation } from 'react-i18next';
+import { resetSearch } from 'store/boardsSlice/boardsSlice';
+import { useAppDispatch } from 'hooks/reduxTypedHooks';
 
 const { container, icon, iconContent, linkBtn, mainIcon } = styles;
 
@@ -19,6 +21,7 @@ type HeaderProps = {
 
 const WelcomeHeaderNavigation: React.FC<HeaderProps> = ({ className }) => {
   const { pathname } = useLocation();
+  const dispatch = useAppDispatch();
   const { t } = useTranslation('translation', { keyPrefix: 'welcome' });
 
   const buttons = {
@@ -34,7 +37,7 @@ const WelcomeHeaderNavigation: React.FC<HeaderProps> = ({ className }) => {
     ],
     true: [
       {
-        link: { to: AppRoutes.BOARDS },
+        link: { to: AppRoutes.BOARDS, onClick: () => dispatch(resetSearch()) },
         btn: {
           name: t('button.main-page'),
           icon: <ArrowRightIcon className={icon} />,

@@ -46,7 +46,6 @@ const BoardCreateColumn: React.FC<Props> = (props) => {
           operation="create"
           onConfirm={handleClick}
           onCancel={closeModal}
-          isOpen={isOpen}
         />
       </Modal>
     </>

@@ -11,7 +11,7 @@ const Profile: React.FC = () => {
 
   return (
     <div className={styles.page}>
-      <h1>
+      <h1 className={styles.profileTitle}>
         {t('hello')}, {user.name}!
       </h1>
       <div className={styles.frame}>

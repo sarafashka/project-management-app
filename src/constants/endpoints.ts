@@ -1,5 +1,5 @@
 enum Endpoint {
-  BASE_URL = 'https://rssback.herokuapp.com/',
+  BASE_URL = 'https://rss-g0wt.onrender.com/',
   SIGN_IN = '/signin',
   SIGN_UP = '/signup',
   USERS = '/users',

@@ -1,6 +1,5 @@
 @import '../../../styles/constants';
 .item {
-  height: 11rem;
   padding: 1.5rem;
   word-wrap: break-word;
   border-radius: 0.5rem;
@@ -16,7 +15,7 @@
   justify-content: space-between;
 }
 .title {
-  width: 90%;
+  width: 85%;
 }
 .actions {
   display: flex;
@@ -49,7 +48,6 @@
   color: $accent-text;
 }
 .drag {
-  height: 11rem;
   padding: 1.5rem;
   border-radius: 0.5rem;
   background-color: #eff2f4;

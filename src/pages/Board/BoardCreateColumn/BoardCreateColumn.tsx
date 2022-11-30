@@ -39,7 +39,7 @@ const BoardCreateColumn: React.FC<Props> = (props) => {
 
   return (
     <>
-      <Button className={styles.button} type="button" onClick={openModal} kind="boardBtn" />
+      <Button className={styles.button} type="button" onClick={openModal} />
       <Modal kind="confirmation" onClose={closeModal} isOpen={isOpen}>
         <EditingModal
           entity="column"

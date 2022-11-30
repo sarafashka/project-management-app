@@ -22,7 +22,6 @@ const Column: React.FC<Props> = (props) => {
   const dispatch = useAppDispatch();
   const user = useAppSelector(selectUser);
   const board = useAppSelector(selectTasksList);
-  // const currentColumn = findColumn(board, id) as GetBoardByIdColumnData;
   const { title, tasks, order } = column;
 
   const handleSubmit = (title: string) => {

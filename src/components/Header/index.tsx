@@ -27,10 +27,10 @@ const { header, container, btnContainer, sticky } = styles;
 
 type HeaderProps = {
   className?: string;
-  isSticky: boolean;
+  isScroll: boolean;
 };
 
-const Header: React.FC<HeaderProps> = ({ className, isSticky }) => {
+const Header: React.FC<HeaderProps> = ({ className, isScroll }) => {
   const { pathname } = useLocation();
   const dispatch = useAppDispatch();
   const [isOpen, setIsOpen] = useState(false);
@@ -52,7 +52,7 @@ const Header: React.FC<HeaderProps> = ({ className, isSticky }) => {
 
   return (
     <>
-      <header className={classNames(header, { [`${sticky}`]: isSticky }, className)}>
+      <header className={classNames(header, { [`${sticky}`]: isScroll }, className)}>
         <div className={container}>
           <Logo />
           <div className={btnContainer}>

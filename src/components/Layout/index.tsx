@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Outlet } from 'react-router-dom';
 
 import Header from 'components/Header';
@@ -7,35 +7,30 @@ import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
 
 import styles from './Layout.module.scss';
 
-const { layout, wrapper } = styles;
+const { layout } = styles;
 
 const Layout = (): JSX.Element => {
-  const layoutRef = useRef<HTMLDivElement>(null);
-  const [isSticky, setIsSticky] = useState(false);
-
-  const changeHeaderStyle = () => {
-    const scrollTop = layoutRef.current?.scrollTop;
-    scrollTop !== undefined && setIsSticky(scrollTop > 0);
-  };
+  const [isScroll, setIsScroll] = useState(false);
 
   useEffect(() => {
-    const layoutEl = layoutRef.current;
-    layoutEl?.addEventListener('scroll', changeHeaderStyle);
+    const changeHeaderStyle = () => {
+      setIsScroll(window.pageYOffset > 0);
+    };
 
-    return () => layoutEl?.removeEventListener('scroll', changeHeaderStyle);
+    window.addEventListener('scroll', changeHeaderStyle);
+
+    return () => window.removeEventListener('scroll', changeHeaderStyle);
   }, []);
 
   return (
-    <div className={wrapper} ref={layoutRef}>
-      <div className={layout}>
-        <Header isSticky={isSticky} />
-        <main>
-          <ErrorBoundary>
-            <Outlet />
-          </ErrorBoundary>
-        </main>
-        <Footer />
-      </div>
+    <div className={layout}>
+      <Header isScroll={isScroll} />
+      <main>
+        <ErrorBoundary>
+          <Outlet />
+        </ErrorBoundary>
+      </main>
+      <Footer />
     </div>
   );
 };

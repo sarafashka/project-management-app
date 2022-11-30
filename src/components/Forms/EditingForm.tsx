@@ -20,7 +20,6 @@ const EditingForm: React.FC<EditingFormProps> = (props) => {
     register,
     handleSubmit,
     formState: { errors },
-    reset,
     setValue,
   } = useForm({
     defaultValues: {
@@ -65,7 +64,6 @@ const EditingForm: React.FC<EditingFormProps> = (props) => {
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     const dataFromEditForm = data as DataFromEditForm;
     onConfirm(dataFromEditForm);
-    reset();
   };
 
   return (

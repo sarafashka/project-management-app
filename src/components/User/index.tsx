@@ -103,8 +103,8 @@ const User: React.FC<UserProps> = ({ className }) => {
       <Modal
         kind="dropDown"
         isOpen={isOpen}
-        onCloseByScroll={toggleModal}
         onCloseByDocument={handleCloseByDocument}
+        onCloseByScroll={toggleModal}
         coords={coords}
       >
         <UserActions data={userActions} />

@@ -5,7 +5,6 @@ import styles from './TaskCard.module.scss';
 import { updateTask } from 'store/taskSlice/taskThunk';
 import { GetBoardByIdTaskData, DataFromEditForm, RequestUpdateTask } from 'types/types';
 import { selectUser } from 'store/selectors/selectors';
-import { findTask } from 'utils/utils';
 import Modal from 'components/Modal';
 import TaskDelete from '../TaskDelete';
 import EditingModal from 'components/Modal/EditingModal';
@@ -13,13 +12,13 @@ import { Draggable } from 'react-beautiful-dnd';
 import { useTranslation } from 'react-i18next';
 
 type Props = {
-  taskId: string;
   columnId: string;
   index: number;
+  task: GetBoardByIdTaskData;
 };
 
 const TaskCard: React.FC<Props> = (props) => {
-  const { taskId, columnId, index } = props;
+  const { columnId, index, task } = props;
   const [isOpen, setIsOpen] = useState(false);
   const { t } = useTranslation('translation', { keyPrefix: 'board' });
 
@@ -27,14 +26,13 @@ const TaskCard: React.FC<Props> = (props) => {
   const user = useAppSelector(selectUser);
   const tasksList = useAppSelector(selectTasksList);
 
-  const currentTask = findTask(tasksList, columnId, taskId) as GetBoardByIdTaskData;
-  const { userId, title, order, description } = currentTask;
+  const { userId, title, order, description, id } = task;
 
   const isOwner = () => userId === user.id;
 
   const handleClick = (data: DataFromEditForm) => {
     const dataForUpdatetask: RequestUpdateTask = {
-      taskId: taskId,
+      taskId: id,
       boardId: tasksList.id,
       columnId: columnId,
       body: {
@@ -61,7 +59,7 @@ const TaskCard: React.FC<Props> = (props) => {
 
   return (
     <>
-      <Draggable draggableId={taskId} index={index}>
+      <Draggable draggableId={id} index={index}>
         {(provided, snapshot) => (
           <li
             className={snapshot.isDragging ? styles.drag : styles.item}
@@ -73,10 +71,10 @@ const TaskCard: React.FC<Props> = (props) => {
               <h2 className={styles.title}>{title}</h2>
               <div className={styles.actions}>
                 <div className={styles.edit} onClick={openModal}></div>
-                <TaskDelete taskId={taskId} columnId={columnId} title={title} />
+                <TaskDelete taskId={id} columnId={columnId} title={title} />
               </div>
             </div>
-            <div className={styles.description}>{currentTask?.description}</div>
+            <div className={styles.description}>{description}</div>
             {isOwner() && <div className={styles.owner}>{t('my-task')}</div>}
           </li>
         )}

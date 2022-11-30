@@ -1,5 +1,5 @@
 import styles from './Board.module.scss';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from 'hooks/reduxTypedHooks';
 import { selectBoard } from 'store/selectors/selectors';
@@ -21,6 +21,8 @@ import { useTranslation } from 'react-i18next';
 import MemoizedColumn from 'components/Column';
 
 const Board: React.FC = () => {
+  const [columnsList, setColumnList] = useState<GetBoardByIdColumnData[]>([]);
+
   const navigate = useNavigate();
   const params = useParams();
   const { t } = useTranslation('translation', { keyPrefix: 'board' });
@@ -44,7 +46,17 @@ const Board: React.FC = () => {
   const { isLoading, error, tasksList } = board;
   const { id, title, columns } = tasksList;
 
-  const columnsSorting = [...columns].sort((a, b) => a.order - b.order);
+  useEffect(() => {
+    const columnsSorting = [...columns].sort((a, b) => a.order - b.order);
+    const columnsAndTaskSorting = columnsSorting.map((column) => {
+      const tasksSorting = [...column.tasks];
+      return {
+        ...column,
+        tasks: tasksSorting.sort((a, b) => a.order - b.order),
+      };
+    });
+    setColumnList(columnsAndTaskSorting);
+  }, [columns]);
 
   const onDragEnd: OnDragEndResponder = async (result) => {
     const { destination, source, draggableId, type } = result;
@@ -57,6 +69,13 @@ const Board: React.FC = () => {
       return;
     }
     if (type === 'column') {
+      const items = [...columnsList];
+      const [reorderedItem] = items.splice(source.index, 1);
+      if (destination) {
+        items.splice(destination.index, 0, reorderedItem);
+        setColumnList(items);
+      }
+
       const currentColumn = findColumn(tasksList, draggableId) as GetBoardByIdColumnData;
       const { order, title } = currentColumn;
       const distance = source.index - destination.index;
@@ -71,7 +90,17 @@ const Board: React.FC = () => {
       };
       await dispatch(updateOrderColumn(dataForUpdateColumn));
     }
+
     if (type === 'task') {
+      const items: GetBoardByIdColumnData[] = JSON.parse(JSON.stringify(columnsList));
+      const columnIndexSource = items.findIndex((column) => column.id === source.droppableId);
+      const [reorderedItem] = items[columnIndexSource].tasks.splice(source.index, 1);
+      const columnIndexDestination = items.findIndex(
+        (column) => column.id === destination.droppableId
+      );
+      items[columnIndexDestination].tasks.splice(destination.index, 0, reorderedItem);
+      setColumnList(items);
+
       const currentTask = findTask(
         tasksList,
         source.droppableId,
@@ -114,13 +143,13 @@ const Board: React.FC = () => {
       <Button className={styles.allBoards} onClick={goToBoards}>
         &#8592; {t('all-boards')}
       </Button>
-      <div>{columns.length === 0 && t('add-column')}</div>
+      <div>{columnsList.length === 0 && t('add-column')}</div>
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId="columns" direction="horizontal" type="column">
           {(provided) => (
             <div className={styles.list} {...provided.droppableProps} ref={provided.innerRef}>
-              {columnsSorting.map((item, index) => (
-                <MemoizedColumn key={item.id} id={item.id} index={index} />
+              {columnsList.map((item, index) => (
+                <MemoizedColumn key={item.id} id={item.id} index={index} column={item} />
               ))}
               {provided.placeholder}
             </div>

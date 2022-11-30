@@ -7,7 +7,6 @@ import ColumnTitle from './ColumnTitle/ColumnTitle';
 import Task from 'components/Task';
 import { selectUser } from 'store/selectors/selectors';
 import { selectTasksList } from 'store/selectors/selectors';
-import { findColumn } from 'utils/utils';
 import ColumnDelete from './ColumnDelete';
 import ColumnAddTask from './ColumnAddTask';
 import { Draggable } from 'react-beautiful-dnd';
@@ -15,15 +14,16 @@ import { Draggable } from 'react-beautiful-dnd';
 type Props = {
   id: string;
   index: number;
+  column: GetBoardByIdColumnData;
 };
 
-const Column: React.FC<Props> = (column) => {
-  const { id, index } = column;
+const Column: React.FC<Props> = (props) => {
+  const { id, index, column } = props;
   const dispatch = useAppDispatch();
   const user = useAppSelector(selectUser);
   const board = useAppSelector(selectTasksList);
-  const currentColumn = findColumn(board, id) as GetBoardByIdColumnData;
-  const { title, tasks } = currentColumn;
+  // const currentColumn = findColumn(board, id) as GetBoardByIdColumnData;
+  const { title, tasks, order } = column;
 
   const handleSubmit = (title: string) => {
     if (title) {
@@ -33,7 +33,7 @@ const Column: React.FC<Props> = (column) => {
         columnId: id,
         body: {
           title: newTitle,
-          order: currentColumn?.order,
+          order: order,
         },
       };
       dispatch(updateColumn(dataForUpdateColumn));
@@ -52,7 +52,7 @@ const Column: React.FC<Props> = (column) => {
               <ColumnDelete columnId={id} boardId={board.id} title={title} />
             </div>
           </div>
-          {<Task columnId={id} />}
+          {tasks && <Task columnId={id} tasks={tasks} />}
           <ColumnAddTask boardId={board.id} columnId={id} userId={user.id} />
         </div>
       )}

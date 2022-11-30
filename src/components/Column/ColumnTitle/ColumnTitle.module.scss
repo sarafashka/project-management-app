@@ -3,6 +3,7 @@
 .form {
   display: flex;
   flex-direction: column;
+  width: 60%;
   height: 2.5rem;
 }
 .input {
@@ -24,7 +25,7 @@
 }
 .buttons {
   display: flex;
-  justify-content: start;
+  justify-content: flex-start;
   gap: 1rem;
 }
 .submit,

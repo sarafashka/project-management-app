@@ -1,0 +1,18 @@
+@import '../../../styles/constants';
+
+.button {
+  width: 2.3rem;
+  height: 2.3rem;
+  border-radius: 6px;
+  background-image: url('../../../assets/img/btnPlus.png');
+  background-repeat: no-repeat;
+  background-size: auto;
+  background-color: $primary;
+  border: 2px solid $primary;
+  background-position: center;
+
+  &:hover {
+    background-color: #4c37d6;
+    border: 2px solid #4c37d6;
+  }
+}

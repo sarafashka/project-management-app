@@ -7,6 +7,12 @@ export const findTask = (array: GetBoardByIdData, columnId: string, taskId: stri
     ?.tasks.find((task) => task.id === taskId);
 };
 
+export const findTaskIndex = (array: GetBoardByIdData, columnId: string, taskId: string) => {
+  return array.columns
+    .find((column) => columnId === column.id)
+    ?.tasks.findIndex((task) => task.id === taskId);
+};
+
 export const findColumnTasks = (array: GetBoardByIdData, columnId: string) => {
   return array.columns.find((column) => columnId === column.id)?.tasks;
 };

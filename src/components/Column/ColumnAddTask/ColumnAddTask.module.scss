@@ -1,0 +1,13 @@
+@import '../../../styles/constants';
+
+.newTask {
+  border: none;
+  background-color: transparent;
+  text-align: start;
+  cursor: pointer;
+  transition: 0.25s;
+
+  &:hover {
+    color: $primary;
+  }
+}

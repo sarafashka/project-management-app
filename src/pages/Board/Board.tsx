@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from 'hooks/reduxTypedHooks';
 import { selectBoard } from 'store/selectors/selectors';
+import { resetSearch } from 'store/boardsSlice/boardsSlice';
 import Button from 'components/Button/Button';
 import { getAllTasks, updateOrderTask } from 'store/taskSlice/taskThunk';
 import Loader from 'components/Loader';
@@ -34,6 +35,7 @@ const Board: React.FC = () => {
   const goToBoards = () => {
     navigate('/boards/');
     dispatch(resetTasksList());
+    dispatch(resetSearch());
   };
 
   useEffect(() => {

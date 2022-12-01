@@ -64,7 +64,7 @@ const BoardCard: React.FC<BoardCardProps> = ({ className, boardData }) => {
 
   return (
     <>
-      <Link to={`${id}`} className={link} onClick={handleSelectBoard}>
+      <Link to={`${id}`} state="boardId" className={link} onClick={handleSelectBoard}>
         <div className={classNames(card, className)}>
           <span className={icon}></span>
           <div className={content}>

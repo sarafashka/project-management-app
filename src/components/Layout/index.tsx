@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
+import classNames from 'classnames';
 
 import Header from 'components/Header';
 import Footer from 'components/Footer';
@@ -7,10 +8,11 @@ import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
 
 import styles from './Layout.module.scss';
 
-const { layout } = styles;
+const { layout, fixLayout, fixMain } = styles;
 
 const Layout = (): JSX.Element => {
   const [isScroll, setIsScroll] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
     const changeHeaderStyle = () => {
@@ -23,9 +25,9 @@ const Layout = (): JSX.Element => {
   }, []);
 
   return (
-    <div className={layout}>
+    <div className={classNames(layout, { [fixLayout]: location.state === 'boardId' })}>
       <Header isScroll={isScroll} />
-      <main>
+      <main className={classNames({ [fixMain]: location.state === 'boardId' })}>
         <ErrorBoundary>
           <Outlet />
         </ErrorBoundary>

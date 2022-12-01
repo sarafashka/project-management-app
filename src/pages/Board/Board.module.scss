@@ -3,12 +3,16 @@
 
 .container {
   @include common-container;
+  display: grid;
+  grid-template-rows: auto auto auto 1fr;
+  height: 100%;
 }
 
 .list {
   display: flex;
   gap: 2rem;
-  width: 100%;
+  height: 100%;
+  padding-bottom: 10px;
   list-style: none;
   overflow-x: auto;
 }
@@ -23,6 +27,7 @@
 }
 
 .allBoards {
+  width: max-content;
   border: none;
   background-color: transparent;
   text-align: start;

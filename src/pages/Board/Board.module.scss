@@ -8,16 +8,20 @@
 .list {
   display: flex;
   gap: 2rem;
+  width: 100%;
   list-style: none;
   overflow-x: auto;
 }
+
 .header {
   display: flex;
   justify-content: space-between;
 }
+
 .title {
   color: $primary;
 }
+
 .allBoards {
   border: none;
   background-color: transparent;

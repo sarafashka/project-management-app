@@ -13,6 +13,7 @@ const errorsTranslate: Record<string, string> = {
   'Password can only contain letters (eng), numbers and symbols':
     'Пароль может содержать только буквы (eng), цифры и символы',
   'Password is required': 'Пароль обязателен',
+  'Max name length is 25 characters': 'Максимальная длина имени 25 символов',
 };
 
 export default errorsTranslate;

@@ -1,5 +1,9 @@
 export const nameOptions = {
   required: 'Please enter your name',
+  maxLength: {
+    value: 25,
+    message: 'Max name length is 25 characters',
+  },
   pattern: {
     value: /^[A-Za-z0-9 _]*[A-Za-z0-9][A-Za-z0-9 _]*$/,
     message: 'The name can only contain letters (eng) and numbers',

@@ -28,6 +28,7 @@
   background-repeat: no-repeat;
   background-size: 55%;
   background-position: center;
+  cursor: pointer;
   filter: invert(87%) sepia(0%) saturate(38%) hue-rotate(175deg) brightness(88%) contrast(81%);
   &:hover {
     filter: invert(41%) sepia(33%) saturate(1775%) hue-rotate(216deg) brightness(87%) contrast(88%);
@@ -50,6 +51,7 @@
 .drag {
   padding: 1.5rem;
   border-radius: 0.5rem;
+  word-wrap: break-word;
   background-color: #eff2f4;
   filter: drop-shadow(5px 5px 5px rgba(0, 0, 0, 0.2));
 }

@@ -3,3 +3,11 @@
 .layout {
   @include layout;
 }
+
+.fixLayout {
+  max-height: 100vh;
+}
+
+.fixMain {
+  overflow-y: hidden;
+}

@@ -8,7 +8,7 @@ import { authService } from '../../api/authService';
 import { resetSearch } from 'store/boardsSlice/boardsSlice';
 
 import tryImg from '../../assets/img/welcome-try.png';
-import dndimg from '../../assets/img/DnDtemp.png';
+import dndimg from '../../assets/img/DnDtemp.jpg';
 
 import TeamMemberCard from '../../components/TeamMemberCard/TeamMemberCard';
 import Button from '../../components/Button/Button';

@@ -10,7 +10,7 @@ interface PrivateRouteProps {
 const PrivateRoute: React.FC<PrivateRouteProps> = ({ children }) => {
   const location = useLocation();
   if (!authService.isUserLogged() && !publicRoutes.includes(location.pathname)) {
-    return <Navigate to="/auth" />;
+    return <Navigate to="/" />;
   }
   return <>{children}</>;
 };

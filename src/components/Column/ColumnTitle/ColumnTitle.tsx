@@ -15,6 +15,9 @@ const ColumnTitle: React.FC<Props> = (columnTitle) => {
   const { t } = useTranslation('translation');
 
   const clickSubmit = () => {
+    if (!title) {
+      clickCancel();
+    }
     columnTitle.submit(title);
     setIsEdited(false);
   };
@@ -34,7 +37,7 @@ const ColumnTitle: React.FC<Props> = (columnTitle) => {
   };
 
   return (
-    <form className={styles.form}>
+    <div className={styles.form}>
       <input
         className={styles.input}
         value={title}
@@ -52,7 +55,7 @@ const ColumnTitle: React.FC<Props> = (columnTitle) => {
           </Button>
         </div>
       )}
-    </form>
+    </div>
   );
 };
 export default ColumnTitle;

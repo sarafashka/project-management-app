@@ -113,14 +113,6 @@ const ProfileForm = () => {
           {t('profile.button.update')}
         </Button>
         <Button
-          className={styles.back}
-          type="button"
-          onClick={handleLogoutClick}
-          disabled={isLoading}
-        >
-          {t('profile.button.logout')}
-        </Button>
-        <Button
           className={styles.delete}
           type="button"
           onClick={() => {
@@ -129,6 +121,24 @@ const ProfileForm = () => {
           disabled={isLoading}
         >
           {t('profile.button.delete')}
+        </Button>
+        <Button
+          className={styles.sign}
+          type="button"
+          onClick={() => {
+            navigate('/boards');
+          }}
+          disabled={isLoading}
+        >
+          {t('profile.button.to-boards')}
+        </Button>
+        <Button
+          className={styles.back}
+          type="button"
+          onClick={handleLogoutClick}
+          disabled={isLoading}
+        >
+          {t('profile.button.logout')}
         </Button>
       </div>
       {isLoading && <Loader />}

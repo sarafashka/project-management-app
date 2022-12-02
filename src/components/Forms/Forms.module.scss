@@ -17,28 +17,7 @@
   @include middle-mobile {
     grid-template-columns: 1fr;
       justify-content: center;
-      flex-wrap: wrap;
     }
-}
-
-.sign,
-.back,
-.delete {
-  font-weight: 600;
-  text-transform: uppercase;
-  color: #ffffff;
-  border: 0;
-  background: #0a2689;
-}
-
-.back {
-  color: #aaaaaa;
-  background: transparent;
-}
-
-.delete {
-  color: black;
-  background: red;
 }
 
 .loading {

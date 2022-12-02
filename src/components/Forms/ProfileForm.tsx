@@ -109,11 +109,12 @@ const ProfileForm = () => {
         <ErrorMessage>{getErrorMessage(errors.password.message as string, lang)}</ErrorMessage>
       )}
       <div className={styles.buttons}>
-        <Button className={styles.sign} type="submit" disabled={isLoading}>
+        <Button className={styles.formBtn} kind="confirm" type="submit" disabled={isLoading}>
           {t('profile.button.update')}
         </Button>
         <Button
-          className={styles.delete}
+          className={styles.formBtn}
+          kind="confirm"
           type="button"
           onClick={() => {
             setIsModalOpened(true);
@@ -123,7 +124,8 @@ const ProfileForm = () => {
           {t('profile.button.delete')}
         </Button>
         <Button
-          className={styles.sign}
+          className={styles.formBtn}
+          kind="confirm"
           type="button"
           onClick={() => {
             navigate('/boards');
@@ -133,7 +135,8 @@ const ProfileForm = () => {
           {t('profile.button.to-boards')}
         </Button>
         <Button
-          className={styles.back}
+          className={styles.formBtn}
+          kind="cancel"
           type="button"
           onClick={handleLogoutClick}
           disabled={isLoading}

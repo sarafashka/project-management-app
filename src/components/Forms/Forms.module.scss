@@ -43,6 +43,7 @@
 .loading {
   text-align: center;
 }
+
 .container {
   display: flex;
   justify-content: center;
@@ -57,6 +58,7 @@
     gap: 11.9px;
   }
 }
+
 .btn {
   padding: 3.5% 0;
 
@@ -66,5 +68,17 @@
 
   @include middle-mobile {
     width: 38.55%;
+  }
+}
+
+.formBtn {
+  padding: 3.5% 0;
+
+  @include small-tablet {
+    width: 140px;
+  }
+
+  @include middle-mobile {
+    width: 50%;
   }
 }

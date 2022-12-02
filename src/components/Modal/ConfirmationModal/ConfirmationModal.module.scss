@@ -21,6 +21,7 @@
 
 .content {
   font-size: 20px;
+  word-wrap: break-word;
   text-align: center;
 
   @include big-tablet {

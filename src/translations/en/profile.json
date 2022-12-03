@@ -2,7 +2,8 @@
 	"button": {
 		"delete": "Delete user",
 		"logout": "Logout",
-		"update": "Update profile"
+		"update": "Update profile",
+		"to-boards": "To boards"
 	},
 	"edit-profile": "Edit profile",
 	"hello": "Hello",

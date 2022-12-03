@@ -74,7 +74,8 @@ const RegisterForm: React.FC = () => {
       )}
       <div className={styles.buttons}>
         <Button
-          className={styles.back}
+          className={styles.btn}
+          kind="cancel"
           type="button"
           onClick={() => {
             navigate('/');
@@ -82,7 +83,7 @@ const RegisterForm: React.FC = () => {
         >
           {t('button.back-to-main')}
         </Button>
-        <Button className={styles.sign} type="submit">
+        <Button className={styles.btn} kind="confirm" type="submit">
           {t('button.signUp')}
         </Button>
       </div>

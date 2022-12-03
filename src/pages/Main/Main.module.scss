@@ -14,35 +14,35 @@
   list-style: none;
 
   @include big-desktop {
-    grid-auto-rows: 27.87%;
+    grid-auto-rows: 13.54vw;
   }
 
   @media (max-width: 1700px) {
-    grid-auto-rows: 243px;
+    grid-auto-rows: 230px;
   }
 
   @include middle-desktop {
     grid-template-columns: repeat(4, calc((100% - 60px) / 4));
-    grid-auto-rows: 20.67%;
+    grid-auto-rows: 18.05vw;
   }
 
   @include small-desktop {
     grid-template-columns: repeat(3, calc((100% - 40px) / 3));
-    grid-auto-rows: 20.42%;
+    grid-auto-rows: 20.3vw;
   }
   
   @media (max-width: 1125px) {
-    grid-auto-rows: 247px;
+    grid-auto-rows: 228.4px;
   }
 
   @include big-tablet {
     max-width: 88%;
     grid-template-columns: repeat(2, calc((100% - 20px) / 2));
-    grid-auto-rows: 14.669%;
+    grid-auto-rows: 27.08vw;
   }
 
   @media (max-width: 850px) {
-    grid-auto-rows: 232px;
+    grid-auto-rows: 230px;
   }
 
   @include small-tablet {
@@ -84,6 +84,9 @@
 
   @media (max-width: 850px) {
     font-size: 15px;
+  }
+
+  @media (max-width: 420px) {
     letter-spacing: -1px;
   }
 }

@@ -11,7 +11,7 @@ import {
 
 interface BoardsState {
   boards: BoardData[];
-  isLoaded: boolean;
+  isLoading: boolean;
   error: AxiosErrorData | null;
   currentBoardId: string;
   queryParam: string;
@@ -20,7 +20,7 @@ interface BoardsState {
 
 const initialState: BoardsState = {
   boards: [],
-  isLoaded: false,
+  isLoading: false,
   error: null,
   currentBoardId: '',
   queryParam: '',
@@ -59,28 +59,28 @@ export const boardsSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getAllBoardsWithParamsAction.fulfilled, (state, { payload }) => {
-        state.isLoaded = false;
+        state.isLoading = false;
         state.boards = payload;
       })
       .addCase(deleteBoardAction.fulfilled, (state, { payload }) => {
-        state.isLoaded = false;
+        state.isLoading = false;
         state.boards = state.boards.filter((board) => board.id !== payload);
       })
       .addCase(createBoardAction.fulfilled, (state, { payload }) => {
-        state.isLoaded = false;
+        state.isLoading = false;
         state.boards.push(payload);
       })
       .addCase(updateBoardAction.fulfilled, (state, { payload }) => {
-        state.isLoaded = false;
+        state.isLoading = false;
         state.boards = state.boards.map((board) => (board.id === payload.id ? payload : board));
       })
       .addMatcher(isPending, (state) => {
-        state.isLoaded = true;
+        state.isLoading = true;
         state.error = null;
       })
       .addMatcher(isRejected, (state, { payload }: PayloadAction<AxiosErrorData>) => {
         state.error = payload;
-        state.isLoaded = false;
+        state.isLoading = false;
       });
   },
 });

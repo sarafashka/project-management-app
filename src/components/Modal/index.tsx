@@ -13,7 +13,7 @@ const modalRoot = document.getElementById('modal-root');
 type ModalProps = {
   className?: string;
   children?: React.ReactNode;
-  kind?: 'confirmation' | 'dropDown' | 'editing';
+  kind?: 'confirmation' | 'dropDown' | 'editing' | 'loader';
   onClose?: () => void;
   onCloseByScroll?: () => void;
   onCloseByDocument?: (e: Event) => void;
@@ -67,8 +67,8 @@ const Modal: React.FC<ModalProps> = ({
         kind !== 'dropDown' && document.body.classList.remove(hidden);
         current?.classList.remove(closeModal);
         modalRoot?.removeChild(current);
-        clearTimeout(timerId);
         setIsOpenModal(false);
+        clearTimeout(timerId);
       }, 300);
     }
   }, [current, isOpen, kind]);
@@ -76,7 +76,7 @@ const Modal: React.FC<ModalProps> = ({
   useEffect(() => {
     if (kind === 'dropDown') {
       const handleCloseByScroll = () => {
-        isOpen && window.pageYOffset > 0 && onCloseByScroll?.();
+        isOpen && window.scrollY > 0 && onCloseByScroll?.();
       };
 
       window.addEventListener('scroll', handleCloseByScroll);
@@ -89,16 +89,21 @@ const Modal: React.FC<ModalProps> = ({
     }
   }, [isOpen, kind, onCloseByDocument, onCloseByScroll]);
 
+  const modalContent = <div className={container}>{children}</div>;
   const wrapper = isOpenModal && (
     <>
       {kind !== 'dropDown' && <div className={overlay} onClick={onClose} />}
-      <div
-        className={classNames(popup, { [`${styles[kind || '']}`]: kind }, className)}
-        style={{ ...coords }}
-      >
-        {kind !== 'dropDown' && <Button className={closeBtn} onClick={onClose} kind="close" />}
-        <div className={container}>{children}</div>
-      </div>
+      {kind !== 'loader' ? (
+        <div
+          className={classNames(popup, { [`${styles[kind || '']}`]: kind }, className)}
+          style={{ ...coords }}
+        >
+          {kind !== 'dropDown' && <Button className={closeBtn} onClick={onClose} kind="close" />}
+          {modalContent}
+        </div>
+      ) : (
+        modalContent
+      )}
     </>
   );
 

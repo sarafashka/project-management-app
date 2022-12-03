@@ -1,5 +1,5 @@
 {
-	"searchPlaceholder": "Search by board title or description…",
+	"searchPlaceholder": "Search by title or description…",
   "messages": {
     "invalidSearchTitle": "Sorry!",
     "invalidSearchContent": "Nothing was found for your query. Try to search another term.",

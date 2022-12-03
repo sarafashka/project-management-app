@@ -2,13 +2,15 @@
 @import '../../styles/mixins';
 
 .card {
-  position: relative;
+  display: grid;
+  grid-template-rows: auto 1fr;
   width: 100%;
-  height: 320px;
-  padding: 3.28%;
+  height: 100%;
+  padding: 4.17%;
 
-  border-radius: 20px;
-  background: radial-gradient(farthest-side at 0 0, $background 97%, $primary 140%);
+  border-radius: 15px;
+  background: radial-gradient(farthest-side at 0 0, $background 97%, $cancel-background 140%);
+  border: 1px solid $cancel-background;
 
   transition: 0.5s;
 
@@ -16,24 +18,28 @@
     box-shadow: 0 0 12px $primary;
   }
 
-  @include big-desktop {
-    height: 16.66vw;
-
-    &:hover {
-      box-shadow: 0 0 0.62vw $primary;
-    }
+  @media (max-width: 1700px) {
+    padding: 13px;
   }
 
   @include middle-desktop {
-    height: 240px;
-
-    &:hover {
-      box-shadow: 0 0 8.9px $primary;
-    }
+    padding: 4.48%;
   }
 
-  @include middle-mobile {
-    width: 100%;
+  @include small-desktop {
+    padding: 3.75%;
+  }
+
+  @media (max-width: 1125px) {
+    padding: 13px;
+  }
+
+  @include big-tablet {
+    padding: 3.82%;
+  }
+
+  @media (max-width: 850px) {
+    padding: 13px;
   }
 }
 
@@ -41,44 +47,148 @@
   text-decoration: none;
 }
 
-.content {
-  width: 90%;
-}
-
-.cardTitle {
-  margin-bottom: 1.56%;
-
-  color: $main-text;
-  font-size: 22px;
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
 
   @include big-desktop {
-    font-size: 1.145vw;
+    margin-bottom: 1.04vw;
+  }
+
+  @media (max-width: 1700px) {
+    margin-bottom: 17.6px;
   }
 
   @include middle-desktop {
-    margin-bottom: 6px;
-    font-size: 16.5px;
+    margin-bottom: 1.38vw;
+  }
+
+  @include small-desktop {
+    margin-bottom: 1.56vw;
+  }
+
+  @media (max-width: 1125px) {
+    margin-bottom: 17.5px;
+  }
+
+  @include big-tablet {
+    margin-bottom: 2.08vw;
+  }
+
+  @media (max-width: 850px) {
+    margin-bottom: 17.5px;
+  }
+}
+
+.content {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  max-width: 100%;
+
+  overflow-wrap: break-word;
+  overflow-y: hidden;
+}
+
+.cardTitle {
+  margin-bottom: 3.05%;
+  width: 90%;
+  height: auto;
+
+  color: $main-text;
+  font-size: 20px;
+  line-height: 20px;
+
+  overflow: hidden;
+
+  @include big-desktop {
+    font-size: 1.04vw;
+    line-height: 1.04vw;
+  }
+
+  @media (max-width: 1700px) {
+    margin-bottom: 8.6px;
+    font-size: 17.5px;
+    line-height: 17.5px;
+  }
+
+  @include middle-desktop {
+    margin-bottom: 3.3%;
+    font-size: 1.385vw;
+    line-height: 1.385vw;
+  }
+
+  @include small-desktop {
+    margin-bottom: 2.7%;
+    font-size: 1.56vw;
+    line-height: 1.56vw;
+  }
+
+  @media (max-width: 1125px) {
+    margin-bottom: 8.5px;
+    font-size: 17px;
+    line-height: 17px;
+  }
+
+  @include big-tablet {
+    margin-bottom: 2.769%;
+    font-size: 2.08vw;
+    line-height: 2.08vw;
+  }
+
+  @media (max-width: 850px) {
+    margin-bottom: 8.5px;
+    font-size: 17px;
+    line-height: 17px;
   }
 }
 
 .cardDescription {
+  width: 100%;
+  padding-right: 10px;
+
   color: $text;
-  font-size: 19px;
+  font-size: 16px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  text-align: justify;
 
   @include big-desktop {
-    font-size: 0.989vw;
+    font-size: 0.83vw;
+  }
+
+  @media (max-width: 1700px) {
+    font-size: 14px;
   }
 
   @include middle-desktop {
-    font-size: 14.2px;
+    font-size: 1.11vw;
+  }
+
+  @include small-desktop {
+    font-size: 1.25vw;
+  }
+
+  @media (max-width: 1125px) {
+    font-size: 14px;
+  }
+
+  @include big-tablet {
+    font-size: 1.66vw;
+  }
+
+  @media (max-width: 850px) {
+    font-size: 14px;
   }
 }
 
 .icon {
   display: block;
-  width: 5.96%;
-  height: 12.14%;
-  margin-bottom: 2.62%;
+  min-width: 29px;
+  min-height: 29px;
+  width: 33px;
+  height: 33px;
 
   background-image: url('../../assets/svg/dashboard.svg');
   background-repeat: no-repeat;
@@ -87,20 +197,61 @@
   background-color: $primary;
   border-radius: 5px;
 
-  @include middle-desktop {
-    margin-bottom: 11.2px;
+  @include big-desktop {
+    width: 1.719vw;
+    height: 1.719vw;
   }
 
-  @include middle-mobile {
-    width: 25.5px;
-    height: 25.5px;
+  @include middle-desktop {
+    width: 2.29vw;
+    height: 2.29vw;
+  }
+
+  @include small-desktop {
+    width: 2.579vw;
+    height: 2.579vw;
+  }
+
+  @include big-tablet {
+    width: 3.438vw;
+    height: 3.438vw;
+  }
+}
+
+.btn {
+  &:hover {
+    .btnIcon {
+      fill: $primary;
+    }
+  }
+}
+
+.btn {
+  min-width: 24px;
+  min-height: 24px;
+
+  @include big-desktop {
+    width: 1.405vw;
+    height: 1.405vw;
+  }
+
+  @include middle-desktop {
+    width: 1.875vw;
+    height: 1.875vw;
+  }
+
+  @include small-desktop {
+    width: 2.109vw;
+    height: 2.109vw;
+  }
+
+  @include big-tablet {
+    width: 2.813vw;
+    height: 2.813vw;
   }
 }
 
 .btnContainer {
-  position: absolute;
-  top: 15px;
-  right: 15px;
   display: flex;
-  gap: 12px;
+  gap: 8px;
 }

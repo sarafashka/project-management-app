@@ -155,15 +155,18 @@
 
 .deleteBtn, 
 .edit {
-  display: block;
-  padding: 0;
-  width: 20px;
-  max-width: max-content;
+  width: 27px;
+  height: 27px;
+  padding: 3px;
+  border: 2px solid $text;
+  border-radius: 5px;
+
+  &:hover {
+    border-color: $primary;
+  }
 
   & .wrapperIcon {
-    width: 20px;
     max-width: max-content;
-    max-height: 20px;
-    height: 20px;
+    min-width: 10px;
   }
 }

@@ -16,7 +16,7 @@ const Layout = (): JSX.Element => {
 
   useEffect(() => {
     const changeHeaderStyle = () => {
-      setIsScroll(window.pageYOffset > 0);
+      setIsScroll(window.scrollY > 0);
     };
 
     window.addEventListener('scroll', changeHeaderStyle);

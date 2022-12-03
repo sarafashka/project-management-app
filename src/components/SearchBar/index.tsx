@@ -14,6 +14,7 @@ const { form, btn, iconContainer, icon, inputWrapper, clear, input } = styles;
 
 type SearchBarProps = {
   className?: string;
+  inputClassName?: string;
   placeholder?: string;
   onSubmit: (data: string) => void;
   value: string;
@@ -28,6 +29,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
   value,
   saveSearchValue,
   resetSearch,
+  inputClassName,
 }) => {
   const { register, handleSubmit, watch, setValue, setFocus, getValues } = useForm<SearchData>({
     defaultValues: { search: value },
@@ -68,7 +70,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
     <form className={classNames(form, className)} onSubmit={handleSubmit(submit)}>
       <Input
         className={inputWrapper}
-        inputClassName={input}
+        inputClassName={classNames(input, inputClassName)}
         placeholder={placeholder}
         reactHookFormProps={searchInputParams}
         onKeyDown={handleKeyDown}

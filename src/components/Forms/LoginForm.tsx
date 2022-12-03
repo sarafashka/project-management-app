@@ -90,7 +90,7 @@ const LoginForm: React.FC = () => {
           {t('button.signIn')}
         </Button>
       </div>
-      {(loginStatus === 'loading' || userLoadingStatus === 'loading') && <Loader />}
+      <Loader isOpen={loginStatus === 'loading' || userLoadingStatus === 'loading'} />
       {(loginStatus === 'failed' || userLoadingStatus === 'failed') && (
         <ErrorMessage>{getErrorMessage(errorMessage, lang)}</ErrorMessage>
       )}

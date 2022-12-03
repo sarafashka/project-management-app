@@ -1,5 +1,5 @@
 {
-	"searchPlaceholder": "Поиск по названию или описанию доски…",
+	"searchPlaceholder": "Поиск по названию или описанию…",
   "messages": {
     "invalidSearchTitle": "",
     "invalidSearchContent": "По Вашему запросу ничего не найдено. Попробуйте ввести другое значение",

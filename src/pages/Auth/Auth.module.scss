@@ -19,7 +19,7 @@
 
   background-color: $background;
   border-radius: 20px;
-  box-shadow: 0 0 30px $primary;
+  box-shadow: 0 0 30px $box-shadow;
 
   @include small-tablet {
     gap: 25px;

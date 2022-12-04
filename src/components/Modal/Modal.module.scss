@@ -45,7 +45,7 @@
 
   background-color: $background;
   border-radius: 20px;
-  box-shadow: 0 0 30px $primary;
+  box-shadow: 0 0 30px $box-shadow;
 
   z-index: 3;
 
@@ -53,11 +53,11 @@
     padding: 2.08vw;
 
     border-radius: 2.08vw;
-    box-shadow: 0 0 3.12vw $primary;
+    box-shadow: 0 0 3.12vw $box-shadow;
   }
 
   @include small-tablet {
-    box-shadow: 0 0 20px $primary;
+    box-shadow: 0 0 20px $box-shadow;
   }
 
   @include middle-mobile {

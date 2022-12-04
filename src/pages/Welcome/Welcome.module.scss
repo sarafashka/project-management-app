@@ -245,7 +245,7 @@
 
   &Buttons {
     display: flex;
-    gap: 10px;
+    gap: 5px;
 
     @include big-tablet {
       justify-content: center;

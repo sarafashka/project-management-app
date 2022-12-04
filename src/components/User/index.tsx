@@ -3,6 +3,7 @@ import classNames from 'classnames';
 
 import { useAppDispatch } from 'hooks/reduxTypedHooks';
 
+import ELEMENTS_ID from 'constants/elementsId';
 import { logout } from 'store/userSlice';
 import { userService } from '../../api/userService';
 
@@ -19,6 +20,7 @@ import { useTranslation } from 'react-i18next';
 import { resetSearch } from 'store/boardsSlice/boardsSlice';
 
 const { avatar, btn, dropDownBtn, open, btnIcon, content, userName } = styles;
+const { userBtn, userInfo } = ELEMENTS_ID;
 
 type UserProps = {
   className?: string;
@@ -69,7 +71,8 @@ const User: React.FC<UserProps> = ({ className }) => {
     if (
       isOpen &&
       (target instanceof HTMLElement || target instanceof SVGElement) &&
-      !target.closest('#userBtn')
+      !target.closest(`#${userBtn}`) &&
+      !target.closest(`#${userInfo}`)
     ) {
       toggleModal();
     }
@@ -91,7 +94,7 @@ const User: React.FC<UserProps> = ({ className }) => {
   ];
 
   return (
-    <div id="userBtn" ref={userRef}>
+    <div id={userBtn} ref={userRef}>
       <Button
         className={classNames(btn, className)}
         iconClassName={btnIcon}

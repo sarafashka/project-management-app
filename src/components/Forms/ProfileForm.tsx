@@ -91,6 +91,7 @@ const ProfileForm = () => {
         label={t('auth.form.enterYourName')}
         defaultValue={user.name}
         reactHookFormProps={nameInputParams}
+        className="edit"
       />
       {errors.name && (
         <ErrorMessage>{getErrorMessage(errors.name.message as string, lang)}</ErrorMessage>
@@ -99,6 +100,7 @@ const ProfileForm = () => {
         label={t('auth.form.enterLogin')}
         defaultValue={user.login}
         reactHookFormProps={loginInputParams}
+        className="edit"
       />
       {errors.login && (
         <ErrorMessage>{getErrorMessage(errors.login.message as string, lang)}</ErrorMessage>

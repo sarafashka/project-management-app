@@ -15,7 +15,7 @@
   transition: 0.5s;
 
   &:hover {
-    box-shadow: 0 0 12px $primary;
+    box-shadow: 0 0 12px $box-shadow;
   }
 
   @media (max-width: 1700px) {

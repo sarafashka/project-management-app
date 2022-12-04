@@ -16,8 +16,8 @@
 
   @include middle-mobile {
     grid-template-columns: 1fr;
-      justify-content: center;
-    }
+    justify-content: center;
+  }
 }
 
 .loading {
@@ -47,7 +47,7 @@
   }
 
   @include middle-mobile {
-    width: 38.55%;
+    width: 103.88px;
   }
 }
 

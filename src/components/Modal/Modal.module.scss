@@ -13,14 +13,16 @@
 
 .openModal {
   & .overlay,
-  & .popup {
+  & .popup,
+  & .container {
     animation: 0.3s open;
   }
 }
 
 .closeModal {
   & .overlay,
-  & .popup {
+  & .popup,
+  & .container {
     animation: 0.3s close forwards;
   }
 }

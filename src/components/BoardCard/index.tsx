@@ -16,7 +16,18 @@ import ConfirmationModal from 'components/Modal/ConfirmationModal';
 
 import styles from './BoardCard.module.scss';
 
-const { card, cardTitle, link, cardDescription, icon, content, btnContainer } = styles;
+const {
+  card,
+  header,
+  cardTitle,
+  link,
+  cardDescription,
+  icon,
+  content,
+  btnContainer,
+  btn,
+  btnIcon,
+} = styles;
 
 type BoardCardProps = {
   className?: string;
@@ -66,14 +77,26 @@ const BoardCard: React.FC<BoardCardProps> = ({ className, boardData }) => {
     <>
       <Link to={`${id}`} state="boardId" className={link} onClick={handleSelectBoard}>
         <div className={classNames(card, className)}>
-          <span className={icon}></span>
+          <div className={header}>
+            <span className={icon}></span>
+            <div className={btnContainer}>
+              <Button
+                className={btn}
+                onClick={openModal}
+                icon={<EditIcon className={btnIcon} />}
+                kind="edit"
+              />
+              <Button
+                className={btn}
+                onClick={openModal}
+                icon={<DeleteIcon className={btnIcon} />}
+                kind="deleteBtn"
+              />
+            </div>
+          </div>
           <div className={content}>
             <h3 className={cardTitle}>{title}</h3>
             <p className={cardDescription}>{description}</p>
-          </div>
-          <div className={btnContainer}>
-            <Button onClick={openModal} icon={<EditIcon />} kind="edit" />
-            <Button onClick={openModal} icon={<DeleteIcon />} kind="deleteBtn" />
           </div>
         </div>
       </Link>

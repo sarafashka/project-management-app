@@ -87,7 +87,7 @@ const RegisterForm: React.FC = () => {
           {t('button.signUp')}
         </Button>
       </div>
-      {registerStatus === 'loading' && <Loader />}
+      <Loader isOpen={registerStatus === 'loading'} />
       {registerStatus === 'failed' && (
         <ErrorMessage>{getErrorMessage(errorMessage, lang)}</ErrorMessage>
       )}

@@ -21,7 +21,7 @@ import { getAllBoardsWithParamsAction } from 'store/boardsSlice/boardsThunk';
 
 import styles from './Main.module.scss';
 
-const { container, list, item, searchBar } = styles;
+const { container, list, item, searchBar, input } = styles;
 
 const Main: React.FC = () => {
   const { t } = useTranslation('translation', { keyPrefix: 'main' });
@@ -36,7 +36,7 @@ const Main: React.FC = () => {
     },
   };
 
-  const { boards, isLoaded, error, searchValue, queryParam } = useAppSelector(selectBoards);
+  const { boards, isLoading, error, searchValue, queryParam } = useAppSelector(selectBoards);
   const dispatch = useAppDispatch();
 
   const handleSearchSubmit = (query: string) => {
@@ -64,20 +64,21 @@ const Main: React.FC = () => {
 
   return useMatch(AppRoutes.BOARDS) ? (
     <div className={container}>
-      <SearchBar
-        onSubmit={handleSearchSubmit}
-        className={searchBar}
-        placeholder={t('searchPlaceholder') || ''}
-        value={searchValue}
-        saveSearchValue={handleSearchSave}
-        resetSearch={handleResetSearch}
-      />
-      {isLoaded && <Loader />}
+      <Loader isOpen={isLoading} />
       {error && (
         <div>
           {error.statusCode} {error.message}
         </div>
       )}
+      <SearchBar
+        onSubmit={handleSearchSubmit}
+        className={searchBar}
+        inputClassName={input}
+        placeholder={t('searchPlaceholder') || ''}
+        value={searchValue}
+        saveSearchValue={handleSearchSave}
+        resetSearch={handleResetSearch}
+      />
       {boards.length !== 0 && (
         <ul className={list}>
           {boards.map((board) => (
@@ -87,7 +88,7 @@ const Main: React.FC = () => {
           ))}
         </ul>
       )}
-      {boards.length === 0 && !error && !isLoaded && (
+      {boards.length === 0 && !error && !isLoading && (
         <Message title={messages[`${!!queryParam}`].title}>
           {messages[`${!!queryParam}`].message}
         </Message>

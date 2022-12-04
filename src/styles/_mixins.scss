@@ -13,6 +13,12 @@
   }
 }
 
+@mixin small-desktop {
+  @media (max-width: $small-desktop) {
+    @content;
+  }
+}
+
 @mixin big-tablet {
   @media (max-width: $big-tablet) {
     @content;
@@ -51,7 +57,6 @@
 /* Common Container */
 @mixin common-container {
   max-width: 1920px;
-  width: 100%;
   margin: 0 auto;
   padding: 20px;
 
@@ -69,6 +74,7 @@
 /* Layout */
 @mixin layout {
   display: grid;
+  grid-template-columns: 100%;
   grid-template-rows: auto 1fr auto;
   min-height: 100vh;
 }

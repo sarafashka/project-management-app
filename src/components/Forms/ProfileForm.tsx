@@ -144,7 +144,7 @@ const ProfileForm = () => {
           {t('profile.button.logout')}
         </Button>
       </div>
-      {isLoading && <Loader />}
+      <Loader isOpen={isLoading} />
       {(userLoadingStatus === 'failed' || userUpdatingStatus === 'failed') && (
         <ErrorMessage>{getErrorMessage(errorMessage, lang)}</ErrorMessage>
       )}

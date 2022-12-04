@@ -131,7 +131,7 @@ const Board: React.FC = () => {
 
   return (
     <div className={styles.container}>
-      {isLoading && <Loader />}
+      <Loader isOpen={isLoading} />
       {error && (
         <div>
           {error.statusCode} {error.message}

@@ -6,6 +6,8 @@
   font-size: $font-size;
   font-weight: 400;
 
+  overscroll-behavior: none;
+
   &::-webkit-scrollbar {
     width: $scroll-width;
     height: $scroll-height;
@@ -31,11 +33,11 @@ html {
 body {
   display: flex;
   flex-direction: column;
+
   color: $main-text;
 }
 
 #root {
-  max-width: 100vw;
   max-height: 100vh;
 }
 
@@ -57,7 +59,6 @@ h3 {
 }
 
 main {
-  max-width: 100vw;
   background-color: $main-background;
 }
 

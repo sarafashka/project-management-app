@@ -1,0 +1,18 @@
+.avatar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  width: 43px;
+  height: 43px;
+
+  border-radius: 100%;
+  overflow: hidden;
+
+  transition: 0.5s;
+}
+
+.img {
+  min-width: 100%;
+  min-height: 100%;
+}

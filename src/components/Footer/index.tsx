@@ -10,7 +10,7 @@ import GitHubLinks from './GitHubLinks';
 import styles from './Footer.module.scss';
 import { useTranslation } from 'react-i18next';
 
-const { footer, container, column, icon } = styles;
+const { footer, container, column, icon, rssLogo, year } = styles;
 
 type FooterProps = {
   className?: string;
@@ -23,7 +23,7 @@ const Footer: React.FC<FooterProps> = ({ className }) => {
     <footer className={classNames(footer, className)}>
       <div className={container}>
         <a target="_blank" rel="noopener noreferrer" href="https://rs.school/react/">
-          <RSShoolIcon className={icon} />
+          <RSShoolIcon className={classNames(icon, rssLogo)} />
         </a>
         <span className={column}>
           {t('project')}
@@ -39,7 +39,7 @@ const Footer: React.FC<FooterProps> = ({ className }) => {
           {t('developers')}
           <GitHubLinks contacts={ABOUT} />
         </span>
-        © 2022
+        <span className={year}>© 2022</span>
       </div>
     </footer>
   );

@@ -4,6 +4,7 @@ import Input from '../Input/Input';
 import Button from '../Button/Button';
 import styles from './Forms.module.scss';
 import { useAppDispatch, useAppSelector } from '../../hooks/reduxTypedHooks';
+import AppRoutes from 'constants/routes';
 import { registerUser } from '../../store/authSlice';
 import { NewUser } from '../../types/types';
 import { useNavigate } from 'react-router-dom';
@@ -49,7 +50,7 @@ const RegisterForm: React.FC = () => {
       if (response.meta.requestStatus === 'rejected') {
         setErrorMessage(response.payload as string);
       } else {
-        navigate('/profile');
+        navigate(AppRoutes.BOARDS);
       }
     });
   };

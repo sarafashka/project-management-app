@@ -1,6 +1,11 @@
 import React, { Component, ErrorInfo, ReactNode } from 'react';
+import { Link } from 'react-router-dom';
 import styles from './ErrorBoundary.module.scss';
 import { withTranslation, WithTranslation } from 'react-i18next';
+import AppRoutes from 'constants/routes';
+import Button from 'components/Button/Button';
+
+const { errorBoundary, link, btn, title, content, message } = styles;
 
 interface Props extends WithTranslation {
   children?: ReactNode;
@@ -15,7 +20,7 @@ class ErrorBoundary extends Component<Props, State> {
     hasError: false,
   };
 
-  public static getDerivedStateFromError(error: Error): State {
+  public static getDerivedStateFromError(): State {
     return { hasError: true };
   }
 
@@ -26,9 +31,14 @@ class ErrorBoundary extends Component<Props, State> {
   public render() {
     if (this.state.hasError) {
       return (
-        <div className={styles.errorBoundary}>
-          <h1>{this.props.t('error404.oops')}</h1>
-          <a href="/">{this.props.t('error404.to-welcome-page')}</a>
+        <div className={errorBoundary}>
+          <div className={message}>
+            <h2 className={title}>{this.props.t('error404.oopsTitle')}</h2>
+            <p className={content}>{this.props.t('error404.oopsMessage')}</p>
+          </div>
+          <Link to={AppRoutes.WELCOME} className={link}>
+            <Button className={btn}>{this.props.t('error404.to-welcome-page')}</Button>
+          </Link>
         </div>
       );
     }

@@ -9,6 +9,14 @@
 
   background: $header-background;
   transition: 0.5s;
+
+  @include small-tablet {
+    padding: 1.304vw 0;
+  }
+
+  @media (max-width: 671px) {
+    padding: 6px 0;
+  }
 }
 
 .sticky {
@@ -20,9 +28,19 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 53.2px;
+  gap: 15px;
   padding-top: 5px;
   padding-bottom: 5px;
+
+  @include small-tablet {
+    padding-top: 0.652vw;
+    padding-bottom: 0.652vw;
+  }
+
+  @media (max-width: 671px) {
+    padding-top: 3.5px;
+    padding-bottom: 3.5px;
+  }
 }
 
 .btnContainer {
@@ -33,4 +51,32 @@
 
 .link {
   text-decoration: none;
+}
+
+.btn {
+  @include small-tablet {
+    padding: 1.304vw 1.957vw;
+    font-size: 2.087vw;
+  }
+
+  @media (max-width: 671px) {
+    padding: 8px 12px;
+    font-size: 14px;
+  }
+}
+
+.icon {
+  @include small-tablet {
+    max-width: 2.089vw;
+    max-height: 2.089vw;
+  }
+
+  @media (max-width: 671px) {
+    max-width: 14px;
+    max-height: 14px;
+  }
+
+  @include middle-mobile {
+    display: none;
+  }
 }

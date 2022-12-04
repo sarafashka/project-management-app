@@ -5,6 +5,7 @@ import Button from '../Button/Button';
 import styles from './Forms.module.scss';
 import { useAppDispatch, useAppSelector } from '../../hooks/reduxTypedHooks';
 import { login } from '../../store/authSlice';
+import AppRoutes from 'constants/routes';
 import { UserLogin } from '../../types/types';
 import { useNavigate } from 'react-router-dom';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
@@ -56,7 +57,7 @@ const LoginForm: React.FC = () => {
       if (response.meta.requestStatus === 'rejected') {
         setErrorMessage(response.payload as string);
       } else {
-        navigate('/boards');
+        navigate(AppRoutes.BOARDS);
       }
     });
   };

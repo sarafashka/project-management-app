@@ -24,6 +24,10 @@
   @include small-tablet {
     gap: 25px;
   }
+
+  @include middle-mobile {
+    width: 85%;
+  }
 }
 
 .buttons {

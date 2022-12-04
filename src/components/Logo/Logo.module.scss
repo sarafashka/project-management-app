@@ -1,21 +1,38 @@
 @import '../../styles/constants';
+@import '../../styles/mixins';
 
 .logo {
   display: flex;
   align-items: center;
   gap: 5px;
-  max-width: 200px;
+  max-width: 195px;
 
-  color: $main-text;
-  font-size: 16px;
-  font-weight: 500;
   text-decoration: none;
 
   &:hover .logoIconContent {
     stroke: $hover-primary;
   }
+
+  @include small-tablet {
+    max-width: 50px;
+  }
 }
 
 .logoIcon {
   width: 50px;
+
+  @include small-tablet {
+    min-width: 36px;
+    width: 6.52vw;
+  }
+}
+
+.logoText {
+  color: $main-text;
+  font-size: 16px;
+  font-weight: 500;
+
+  @include small-tablet {
+    display: none;
+  }
 }

@@ -38,7 +38,6 @@ const TaskDelete: React.FC<Props> = (props) => {
   };
 
   const closeModal = () => {
-    // event.stopPropagation();
     setIsOpen(false);
   };
 

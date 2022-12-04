@@ -1,6 +1,7 @@
 {
-	"oops": "Oops... Something went wrong :(",
+	"oopsTitle": "Oops...",
+	"oopsMessage": "Something went wrong :(",
 	"page-not-found": "Page not found",
-	"to-main-page": "To main page",
-	"to-welcome-page": "To welcome page"
+	"to-main-page": "Go to Main Page",
+	"to-welcome-page": "Go to Welcome Page"
 }

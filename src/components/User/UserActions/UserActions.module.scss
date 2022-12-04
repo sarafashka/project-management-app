@@ -1,20 +1,22 @@
 @import '../../../styles/constants';
+@import '../../../styles/mixins';
+
+.menu {
+  max-width: 400px;
+  overflow-x: hidden;
+}
 
 .item {
   list-style: none;
 
   transition: 0.5s;
 
-  &:first-child {
-    border-radius: 8px 8px 0 0;
-  }
-
   &:last-child {
     border-radius: 0 0 8px 8px;
   }
 
   &:hover {
-    background-color: $hover-user-actions;
+    background-color: $lavender;
   }
 
   &:hover .btn {
@@ -36,6 +38,16 @@
   padding: 10px;
 
   color: $text;
+
+  @include small-tablet {
+    padding: 1.304vw;
+    font-size: 2.087vw;
+  }
+
+  @media (max-width: 671px) {
+    padding: 8.7px;
+    font-size: 14px;
+  }
 }
 
 .btnIcon {
@@ -45,4 +57,63 @@
   max-height: 20px;
   width: 20px;
   height: 20px;
+
+  @include small-tablet {
+    max-width: 2.089vw;
+    max-height: 2.089vw;
+  }
+
+  @media (max-width: 671px) {
+    max-width: 14px;
+    max-height: 14px;
+  }
+}
+
+.user {
+  display: grid;
+  grid-template-columns: auto minmax(100px, 84%);
+  align-items: center;
+  gap: 5px;
+  width: 100%;
+  padding: 10px;
+
+  background: linear-gradient(to bottom, lavender 70%, $background 30%);
+  border-radius: 8px 8px 0 0;
+
+  @include small-tablet {
+    padding: 1.304vw;
+    font-size: 2.087vw;
+  }
+
+  @media (max-width: 671px) {
+    padding: 8.7px;
+    font-size: 14px;
+  }
+}
+
+.avatar {
+  width: 64px;
+  height: 64px;
+
+  @include small-tablet {
+    min-width: 58px;
+    min-height: 58px;
+    width: 7.04vw;
+    height: 7.04vw;
+  }
+}
+
+.name {
+  margin-top: -15px;
+  font-size: 16px;
+
+  overflow-wrap: break-word;
+
+  @include small-tablet {
+    font-size: 2.087vw;
+  }
+
+  @media (max-width: 671px) {
+    font-size: 14px;
+  }
 }

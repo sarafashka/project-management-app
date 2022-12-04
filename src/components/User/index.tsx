@@ -10,13 +10,15 @@ import AppRoutes from 'constants/routes';
 
 import Modal from 'components/Modal';
 import Button from 'components/Button/Button';
+import Avatar from './Avatar';
 import { DropDownIcon, SignOutIcon, EditIcon } from 'components/Icons/Icons';
 import UserActions from './UserActions';
 
 import styles from './User.module.scss';
 import { useTranslation } from 'react-i18next';
+import { resetSearch } from 'store/boardsSlice/boardsSlice';
 
-const { avatar, btn, img, dropDownBtn, open, btnIcon } = styles;
+const { avatar, btn, dropDownBtn, open, btnIcon, content, userName } = styles;
 
 type UserProps = {
   className?: string;
@@ -24,7 +26,7 @@ type UserProps = {
 
 const User: React.FC<UserProps> = ({ className }) => {
   const dispatch = useAppDispatch();
-  const { login } = userService.getUserData();
+  const { name } = userService.getUserData();
 
   const [isOpen, setIsOpen] = useState(false);
   const [coords, setCoords] = useState({ top: 0, right: 0 });
@@ -57,6 +59,7 @@ const User: React.FC<UserProps> = ({ className }) => {
 
   const handleSignOut = () => {
     dispatch(logout());
+    dispatch(resetSearch());
     toggleModal();
   };
 
@@ -95,10 +98,10 @@ const User: React.FC<UserProps> = ({ className }) => {
         icon={<DropDownIcon className={dropDownBtn} />}
         onClick={handleClick}
       >
-        <div className={avatar}>
-          <img className={img} src={require(`../../assets/img/1.jpg`)} alt={`${login} avatar`} />
+        <div className={content}>
+          <Avatar className={avatar} name={name} />
+          <span className={userName}>{name}</span>
         </div>
-        {login}
       </Button>
       <Modal
         kind="dropDown"
@@ -107,7 +110,7 @@ const User: React.FC<UserProps> = ({ className }) => {
         onCloseByScroll={toggleModal}
         coords={coords}
       >
-        <UserActions data={userActions} />
+        <UserActions data={userActions} userName={name} />
       </Modal>
     </div>
   );

@@ -23,7 +23,7 @@ import WelcomeHeaderNavigation from './WelcomeHeaderNavigation';
 
 import styles from './Header.module.scss';
 
-const { header, container, btnContainer, sticky, link } = styles;
+const { header, container, btnContainer, sticky, link, btn, icon } = styles;
 
 type HeaderProps = {
   className?: string;
@@ -58,12 +58,17 @@ const Header: React.FC<HeaderProps> = ({ className, isScroll }) => {
           <div className={btnContainer}>
             {!publicRoutes.includes(pathname) && (
               <Link to={AppRoutes.BOARDS} onClick={toggleModal} className={link}>
-                <Button kind="fillBackground" icon={<PlusIcon />}>
+                <Button
+                  className={btn}
+                  iconClassName={icon}
+                  kind="fillBackground"
+                  icon={<PlusIcon />}
+                >
                   {t('header.new-board')}
                 </Button>
               </Link>
             )}
-            <WelcomeHeaderNavigation />
+            {pathname === AppRoutes.WELCOME && <WelcomeHeaderNavigation />}
             <Switcher optionLabels={['ru', 'en']} />
             {pathname !== AppRoutes.AUTH && authService.isUserLogged() && <User />}
           </div>

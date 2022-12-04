@@ -20,6 +20,7 @@ import {
 import { useTranslation } from 'react-i18next';
 import { loginOptions, nameOptions, passwordOptions } from './inputOptions';
 import { getErrorMessage } from '../../utils/utils';
+import { resetSearch } from 'store/boardsSlice/boardsSlice';
 
 const ProfileForm = () => {
   const {
@@ -48,7 +49,7 @@ const ProfileForm = () => {
     return () => {
       dispatch(resetLoadingStatus());
     };
-  }, []);
+  }, [dispatch]);
 
   const nameInputParams = {
     ...register('name', nameOptions),
@@ -74,11 +75,13 @@ const ProfileForm = () => {
 
   const handleDeleteUserClick = async () => {
     await dispatch(deleteUser(user.id));
+    dispatch(resetSearch());
     navigate('/auth');
   };
 
   const handleLogoutClick = () => {
     dispatch(logout());
+    dispatch(resetSearch());
     navigate('/auth');
   };
 
@@ -129,6 +132,7 @@ const ProfileForm = () => {
           type="button"
           onClick={() => {
             navigate('/boards');
+            dispatch(resetSearch());
           }}
           disabled={isLoading}
         >

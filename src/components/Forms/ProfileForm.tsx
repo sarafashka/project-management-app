@@ -155,7 +155,7 @@ const ProfileForm = () => {
         <ErrorMessage>{getErrorMessage(errorMessage, lang)}</ErrorMessage>
       )}
       {userUpdatingStatus === 'succeeded' && (
-        <ErrorMessage>{t('profile.message.updated')}</ErrorMessage>
+        <ErrorMessage className={styles.green}>{t('profile.message.updated')}</ErrorMessage>
       )}
       <Modal
         kind={'confirmation'}

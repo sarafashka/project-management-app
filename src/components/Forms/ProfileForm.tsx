@@ -106,7 +106,7 @@ const ProfileForm = () => {
         <ErrorMessage>{getErrorMessage(errors.login.message as string, lang)}</ErrorMessage>
       )}
       <Input
-        label={t('auth.form.choosePassword')}
+        label={t('profile.newPassword')}
         type="password"
         reactHookFormProps={passwordInputParams}
       />

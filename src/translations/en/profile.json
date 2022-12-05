@@ -8,6 +8,7 @@
 	"edit-profile": "Edit profile",
 	"edit-profile-btn": "Edit Profile",
 	"hello": "Hello",
+	"newPassword": "Enter new password",
 	"message": {
 		"updated": "User data updated",
 		"warning": "WARNING! Your profile will be permanently deleted!"

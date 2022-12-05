@@ -8,15 +8,16 @@
 }
 
 .buttons {
-  margin-top: 15px;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 15px 30px;
-  justify-items: center;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
 
-  @include middle-mobile {
-    grid-template-columns: 1fr;
-    justify-content: center;
+  @include big-tablet {
+    gap: 1.56vw;
+  }
+
+  @include small-tablet {
+    gap: 9px;
   }
 }
 
@@ -27,7 +28,6 @@
 .container {
   display: flex;
   justify-content: center;
-  margin: 0 auto;
   gap: 15px;
 
   @include big-tablet {
@@ -35,31 +35,71 @@
   }
 
   @include small-tablet {
-    gap: 11.9px;
+    gap: 9px;
   }
 }
 
 .btn {
-  width: 154px;
-  padding: 3.5% 0;
+  width: 40%;
 
-  @include small-tablet {
-    width: 127.88px;
+  @include big-tablet {
+    padding-top: 1.041vw;
+    padding-bottom: 1.041vw;
   }
 
-  @include middle-mobile {
-    width: 103.88px;
+  @media (max-width: 770px) {
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+
+  @include small-tablet {
+    width: 127px;
   }
 }
 
-.formBtn {
-  padding: 3.5% 0;
+.authBtn {
+  width: 136px;
 
-  @include small-tablet {
-    width: 140px;
+  @include big-tablet {
+    padding-top: 1.041vw;
+    padding-bottom: 1.041vw;
   }
 
-  @include middle-mobile {
-    width: 50%;
+  @media (max-width: 770px) {
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+}
+
+.formButtons {
+  display: grid;
+  grid-template-columns: [col-one] 1fr 1fr;
+  gap: 10px;
+}
+
+.formBtn {
+  width: 200px;
+  padding-right: 8px;
+  padding-left: 8px;;
+
+  @include big-tablet {
+    width: 20.83vw;
+    min-width: 175px;
+    padding-top: 1.041vw;
+    padding-bottom: 1.041vw;
+  }
+
+  @media (max-width: 770px) {
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+
+  @media (max-width: 500px) {
+    min-width: 0;
+    width: 100%;
+  }
+
+  &:nth-child(2n + 1) {
+    justify-self: end;
   }
 }

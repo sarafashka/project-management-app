@@ -6,8 +6,8 @@
   align-items: center;
   flex-direction: column;
   justify-content: center;
-  min-height: 83vh;
-  gap: 20px;
+  height: 100%;
+  gap: 10px;
 }
 
 .profileTitle {
@@ -22,21 +22,36 @@
 }
 
 .frame {
-  display: flex;
-  align-items: flex-start;
-  flex-direction: column;
   width: 90%;
   max-width: 600px;
   margin: 20px;
-  padding: 32px;
+  padding: 20px;
   gap: 25px;
 
   background-color: $background;
   border-radius: 20px;
   box-shadow: 0 0 30px $box-shadow;
 
-  @include middle-mobile {
+  @include big-tablet {
+    padding: 2.08vw;
+
+    border-radius: 2.08vw;
+    box-shadow: 0 0 3.12vw $box-shadow;
+  }
+
+  @include small-tablet {
+    gap: 10px;
+    box-shadow: 0 0 20px $box-shadow;
+  }
+
+  @media (max-width: 500px) {
     width: 85%;
+  }
+
+  @include middle-mobile {
+    padding: 10px;
+
+    border-radius: 10px;
   }
 }
 
@@ -46,5 +61,17 @@
 
 .formTitle {
   width: 100%;
+  margin-bottom: 15px;
+  font-size: 20px;
   text-align: center;
+
+  @include big-tablet {
+    margin-bottom: 1.56vw;
+    font-size: 2.083vw;
+  }
+
+  @media (max-width: 865px) {
+    margin-bottom: 13px;
+    font-size: 18px;
+  }
 }

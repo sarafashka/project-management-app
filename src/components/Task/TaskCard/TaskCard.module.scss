@@ -9,6 +9,10 @@
   &:hover {
     filter: drop-shadow(5px 5px 5px rgba(0, 0, 0, 0.2));
   }
+
+  &:last-of-type {
+    margin-bottom: 1rem;
+  }
 }
 .header {
   display: flex;

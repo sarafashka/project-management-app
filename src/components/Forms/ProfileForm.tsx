@@ -113,7 +113,7 @@ const ProfileForm = () => {
       {errors.password && (
         <ErrorMessage>{getErrorMessage(errors.password.message as string, lang)}</ErrorMessage>
       )}
-      <div className={styles.buttons}>
+      <div className={styles.formButtons}>
         <Button className={styles.formBtn} kind="confirm" type="submit" disabled={isLoading}>
           {t('profile.button.update')}
         </Button>

@@ -28,6 +28,7 @@
 }
 
 .btn {
+  width: 154px;
   padding: 3.5% 0;
 
   @include small-tablet {
@@ -35,6 +36,6 @@
   }
 
   @include middle-mobile {
-    width: 38.55%;
+    width: 103.88px;
   }
 }

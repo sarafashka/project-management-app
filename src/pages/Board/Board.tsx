@@ -138,26 +138,30 @@ const Board: React.FC = () => {
         </div>
       )}
 
-      <div className={styles.header}>
-        <h2 className={styles.title}>{title}</h2>
-        <CreateColumn boardId={id} />
-      </div>
-      <Button className={styles.allBoards} onClick={goToBoards}>
-        &#8592; {t('all-boards')}
-      </Button>
-      <div>{columnsList.length === 0 && t('add-column')}</div>
-      <DragDropContext onDragEnd={onDragEnd}>
-        <Droppable droppableId="columns" direction="horizontal" type="column">
-          {(provided) => (
-            <div className={styles.list} {...provided.droppableProps} ref={provided.innerRef}>
-              {columnsList.map((item, index) => (
-                <MemoizedColumn key={item.id} id={item.id} index={index} column={item} />
-              ))}
-              {provided.placeholder}
-            </div>
-          )}
-        </Droppable>
-      </DragDropContext>
+      {id && (
+        <>
+          <div className={styles.header}>
+            <h2 className={styles.title}>{title}</h2>
+            <CreateColumn boardId={id} />
+          </div>
+          <Button className={styles.allBoards} onClick={goToBoards}>
+            &#8592; {t('all-boards')}
+          </Button>
+          <div>{columnsList.length === 0 && t('add-column')}</div>
+          <DragDropContext onDragEnd={onDragEnd}>
+            <Droppable droppableId="columns" direction="horizontal" type="column">
+              {(provided) => (
+                <div className={styles.list} {...provided.droppableProps} ref={provided.innerRef}>
+                  {columnsList.map((item, index) => (
+                    <MemoizedColumn key={item.id} id={item.id} index={index} column={item} />
+                  ))}
+                  {provided.placeholder}
+                </div>
+              )}
+            </Droppable>
+          </DragDropContext>
+        </>
+      )}
     </div>
   );
 };

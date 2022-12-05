@@ -1,7 +1,7 @@
 {
 	"button": {
 		"delete": "Delete User",
-		"logout": "Logout",
+		"sign-out": "Sign Out",
 		"update": "Update Profile",
 		"to-boards": "Go to Main Page"
 	},

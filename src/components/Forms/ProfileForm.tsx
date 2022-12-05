@@ -147,7 +147,7 @@ const ProfileForm = () => {
           onClick={handleLogoutClick}
           disabled={isLoading}
         >
-          {t('profile.button.logout')}
+          {t('profile.button.sign-out')}
         </Button>
       </div>
       <Loader isOpen={isLoading} />

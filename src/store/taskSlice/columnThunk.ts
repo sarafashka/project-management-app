@@ -2,7 +2,6 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import boardsService from 'api/boardsService';
 import { columnService } from 'api/columnService';
 import { AxiosError } from 'axios';
-import { RootState } from 'store/store';
 import {
   ColumnItem,
   GetBoardByIdData,

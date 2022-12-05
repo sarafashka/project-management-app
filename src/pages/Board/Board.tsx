@@ -16,7 +16,7 @@ import {
   RequestUpdateColumn,
   RequestUpdateTask,
 } from 'types/types';
-import { findColumn, findTask } from 'utils/utils';
+import { findColumn, findTask, getErrorMessage } from 'utils/utils';
 import { updateOrderColumn } from 'store/taskSlice/columnThunk';
 import { useTranslation } from 'react-i18next';
 import MemoizedColumn from 'components/Column';
@@ -26,7 +26,13 @@ const Board: React.FC = () => {
 
   const navigate = useNavigate();
   const params = useParams();
-  const { t } = useTranslation('translation', { keyPrefix: 'board' });
+  const { t, i18n } = useTranslation('translation', { keyPrefix: 'board' });
+  const [lang, setLang] = useState<string>(i18n.language);
+  const errorText = 'Sorry. This board does not exist.';
+
+  i18n.on('languageChanged', () => {
+    setLang(i18n.language);
+  });
 
   const dispatch = useAppDispatch();
 
@@ -134,7 +140,9 @@ const Board: React.FC = () => {
       <Loader isOpen={isLoading} />
       {error && (
         <div className={styles.error}>
-          {error.statusCode} {error.message}
+          {error.statusCode === 400
+            ? getErrorMessage(errorText, lang)
+            : `${error.statusCode} ${error.message}`}
         </div>
       )}
 

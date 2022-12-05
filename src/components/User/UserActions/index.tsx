@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import classNames from 'classnames';
 
 import { Icon } from 'types/types';
+import ELEMENTS_ID from 'constants/elementsId';
 
 import Button from 'components/Button/Button';
 import { SignOutIcon } from 'components/Icons/Icons';
@@ -28,7 +29,7 @@ const UserActions: React.FC<UserProps> = ({ className, data, userName }) => {
 
   return (
     <div className={menu}>
-      <div className={user}>
+      <div id={ELEMENTS_ID.userInfo} className={user}>
         <Avatar className={avatar} name={userName} />
         <span className={name}>{userName}</span>
       </div>

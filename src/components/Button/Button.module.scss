@@ -42,9 +42,9 @@
     position: absolute;
     display: block;
     width: 116%;
-    height: 14.8%;
+    height: 11%;
 
-    background: $primary;
+    background: $text;
     border-radius: 3.44rem;
 
     transition: 0.5s;
@@ -60,7 +60,7 @@
 
   &:hover::before,
   &:hover::after {
-    background: $hover-primary;
+    background: $primary;
   }
 }
 

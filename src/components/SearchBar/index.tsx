@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import classNames from 'classnames';
 
@@ -40,16 +40,13 @@ const SearchBar: React.FC<SearchBarProps> = ({
     ...register('search'),
   };
 
-  const [isSubmitted, setIsSubmitted] = useState(false);
-
   const handleClear = () => {
     setFocus('search', { shouldSelect: true });
-    isSubmitted ? resetSearch() : setValue('search', '');
-    setIsSubmitted(false);
+    setValue('search', '');
+    resetSearch();
   };
 
   const submit = ({ search }: SearchData) => {
-    setIsSubmitted(true);
     onSubmit(search);
   };
 
@@ -57,7 +54,6 @@ const SearchBar: React.FC<SearchBarProps> = ({
     if (e.code === 'Enter') {
       e.preventDefault();
       onSubmit(getValues('search'));
-      setIsSubmitted(true);
     }
   };
 

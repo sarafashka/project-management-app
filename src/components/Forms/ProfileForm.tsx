@@ -106,7 +106,7 @@ const ProfileForm = () => {
         <ErrorMessage>{getErrorMessage(errors.login.message as string, lang)}</ErrorMessage>
       )}
       <Input
-        label={t('auth.form.choosePassword')}
+        label={t('profile.newPassword')}
         type="password"
         reactHookFormProps={passwordInputParams}
       />
@@ -147,7 +147,7 @@ const ProfileForm = () => {
           onClick={handleLogoutClick}
           disabled={isLoading}
         >
-          {t('profile.button.logout')}
+          {t('profile.button.sign-out')}
         </Button>
       </div>
       <Loader isOpen={isLoading} />
@@ -155,7 +155,7 @@ const ProfileForm = () => {
         <ErrorMessage>{getErrorMessage(errorMessage, lang)}</ErrorMessage>
       )}
       {userUpdatingStatus === 'succeeded' && (
-        <ErrorMessage>{t('profile.message.updated')}</ErrorMessage>
+        <ErrorMessage className={styles.green}>{t('profile.message.updated')}</ErrorMessage>
       )}
       <Modal
         kind={'confirmation'}

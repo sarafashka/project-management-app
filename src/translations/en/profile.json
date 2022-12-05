@@ -1,13 +1,14 @@
 {
 	"button": {
 		"delete": "Delete User",
-		"logout": "Logout",
+		"sign-out": "Sign Out",
 		"update": "Update Profile",
 		"to-boards": "Go to Main Page"
 	},
 	"edit-profile": "Edit profile",
 	"edit-profile-btn": "Edit Profile",
 	"hello": "Hello",
+	"newPassword": "Enter new password",
 	"message": {
 		"updated": "User data updated",
 		"warning": "WARNING! Your profile will be permanently deleted!"

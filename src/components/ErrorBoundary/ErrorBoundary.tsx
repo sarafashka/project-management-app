@@ -1,11 +1,9 @@
 import React, { Component, ErrorInfo, ReactNode } from 'react';
-import { Link } from 'react-router-dom';
 import styles from './ErrorBoundary.module.scss';
 import { withTranslation, WithTranslation } from 'react-i18next';
-import AppRoutes from 'constants/routes';
 import Button from 'components/Button/Button';
 
-const { errorBoundary, link, btn, title, content, message } = styles;
+const { errorBoundary, btn, title, content, message } = styles;
 
 interface Props extends WithTranslation {
   children?: ReactNode;
@@ -36,9 +34,14 @@ class ErrorBoundary extends Component<Props, State> {
             <h2 className={title}>{this.props.t('error404.oopsTitle')}</h2>
             <p className={content}>{this.props.t('error404.oopsMessage')}</p>
           </div>
-          <Link to={AppRoutes.WELCOME} className={link}>
-            <Button className={btn}>{this.props.t('error404.to-welcome-page')}</Button>
-          </Link>
+          <Button
+            className={btn}
+            onClick={() => {
+              window.location.replace('/');
+            }}
+          >
+            {this.props.t('error404.to-welcome-page')}
+          </Button>
         </div>
       );
     }

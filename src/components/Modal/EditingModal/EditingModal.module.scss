@@ -19,23 +19,39 @@
 }
 
 .content {
+  margin-bottom: 15px;
   font-size: 20px;
   font-weight: 500;
   text-align: center;
   &::first-letter {
     text-transform: uppercase;
   }
+
+  @include big-tablet {
+    margin-bottom: 1.56vw;
+    font-size: 2.083vw;
+  }
+
+  @media (max-width: 865px) {
+    margin-bottom: 13px;
+    font-size: 18px;
+  }
 }
 
 .btn {
-  width: 154px;
-  padding: 3.5% 0;
+  width: 40%;
 
-  @include small-tablet {
-    width: 127.88px;
+  @include big-tablet {
+    padding-top: 1.041vw;
+    padding-bottom: 1.041vw;
   }
 
-  @include middle-mobile {
-    width: 103.88px;
+  @media (max-width: 770px) {
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+
+  @include small-tablet {
+    width: 127px;
   }
 }

@@ -80,7 +80,7 @@ const User: React.FC<UserProps> = ({ className }) => {
 
   const userActions = [
     {
-      name: t('profile.edit-profile'),
+      name: t('profile.edit-profile-btn'),
       Icon: EditIcon,
       onClick: toggleModal,
       path: AppRoutes.PROFILE,

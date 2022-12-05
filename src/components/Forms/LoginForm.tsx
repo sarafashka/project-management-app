@@ -78,7 +78,7 @@ const LoginForm: React.FC = () => {
       )}
       <div className={styles.buttons}>
         <Button
-          className={styles.btn}
+          className={styles.authBtn}
           kind="cancel"
           type="button"
           onClick={() => {
@@ -87,7 +87,7 @@ const LoginForm: React.FC = () => {
         >
           {t('button.back-to-main')}
         </Button>
-        <Button className={styles.btn} kind="confirm" type="submit">
+        <Button className={styles.authBtn} kind="confirm" type="submit">
           {t('button.signIn')}
         </Button>
       </div>

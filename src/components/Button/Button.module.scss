@@ -67,19 +67,17 @@
 .confirm,
 .cancel {
   width: 160px;
-  padding: 3.5% 0;
+  padding-left: 0;
+  padding-right: 0;
 
-  font-size: 18px;
   font-weight: 500;
 
-  border-radius: 10px;
-
   @include big-tablet {
-    font-size: 1.87vw;
+    font-size: 1.666vw;
   }
 
-  @include small-tablet {
-    font-size: 14.3px;
+  @media (max-width: 841px) {
+    font-size: 14px;
   }
 }
 

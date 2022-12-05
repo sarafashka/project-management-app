@@ -1,18 +1,29 @@
 @import '../../styles/constants';
+@import '../../styles/mixins';
 
 .label {
   display: flex;
   flex-direction: column;
-  font-size: 20px;
-  line-height: 24px;
+  font-size: 18px;
+  line-height: 22px;
   color: #666666;
-  gap: 10px;
+  gap: 8px;
+
+  @include big-tablet {
+    gap: 0.83vw;
+    font-size: 1.875vw;
+  }
+
+  @media (max-width: 865px) {
+    gap: 4px;
+    font-size: 16px;
+  }
 }
 
 .textarea {
   height: 140px;
   padding: 12px 18px;
-  font-size: 20px;
+  font-size: 18px;
   border: 2px solid $text;
   border-radius: 8px;
   resize: none;
@@ -22,12 +33,19 @@
   &:focus {
     border: 2px solid $primary;
   }
+
+  @include big-tablet {
+    padding: 1.479vw 1.875vw;
+    font-size: 1.875vw;
+  }
+
+  @media (max-width: 865px) {
+    padding: 12px 15px;
+    font-size: 16px;
+  }
 }
 
 .edit {
-  font-size: 1.4rem;
-  line-height: 1.6rem;
-  margin-bottom: 0.2rem;
   color: $text;
   background-color: transparent;
   border: 2px solid $edit-input;

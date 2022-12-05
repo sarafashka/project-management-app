@@ -98,49 +98,42 @@
 
   color: $main-text;
   font-size: 20px;
-  line-height: 20px;
+  line-height: normal;
 
   overflow: hidden;
 
   @include big-desktop {
     font-size: 1.04vw;
-    line-height: 1.04vw;
   }
 
   @media (max-width: 1700px) {
     margin-bottom: 12.2px;
     font-size: 17.5px;
-    line-height: 17.5px;
   }
 
   @include middle-desktop {
     margin-bottom: 4.623%;
     font-size: 1.385vw;
-    line-height: 1.385vw;
   }
 
   @include small-desktop {
     margin-bottom: 3.805%;
     font-size: 1.56vw;
-    line-height: 1.56vw;
   }
 
   @media (max-width: 1125px) {
     margin-bottom: 12.1px;
     font-size: 17px;
-    line-height: 17px;
   }
 
   @include big-tablet {
     margin-bottom: 3.863%;
     font-size: 2.08vw;
-    line-height: 2.08vw;
   }
 
   @media (max-width: 850px) {
     margin-bottom: 12.35px;
     font-size: 17px;
-    line-height: 17px;
   }
 }
 

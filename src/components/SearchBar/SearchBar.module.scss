@@ -38,6 +38,10 @@
       fill: $primary;
     }
   }
+
+  @media (max-width: 420px) {
+    width: 44px;
+  }
 }
 
 .iconContainer {
@@ -69,5 +73,9 @@
     min-height: 15px;
     width: 2.08vw;
     height: 2.08vw;
+  }
+
+  @media (max-width: 420px) {
+    right: 50px;
   }
 }

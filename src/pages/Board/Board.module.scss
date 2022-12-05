@@ -21,6 +21,11 @@
   display: flex;
   justify-content: space-between;
 }
+.error {
+  display: flex;
+  justify-content: space-between;
+  padding-left: 20px;
+}
 
 .title {
   color: $primary;

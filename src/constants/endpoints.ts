@@ -1,5 +1,5 @@
 enum Endpoint {
-  BASE_URL = 'http://185.130.225.43:4000/',
+  BASE_URL = 'https://185.130.225.43/',
   SIGN_IN = '/signin',
   SIGN_UP = '/signup',
   USERS = '/users',
